@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Link, useLocation } from 'react-router-dom';
+
 import COLORS from '../styles/color';
 import Board from '../assets/images/board.svg';
 import FillBoard from '../assets/images/fill_board.svg';
@@ -6,7 +8,6 @@ import Home from '../assets/images/home.svg';
 import FillHome from '../assets/images/fill_home.svg';
 import Lanking from '../assets/images/lanking.svg';
 import FillLanking from '../assets/images/fill_lanking.svg';
-import { Link, useLocation } from 'react-router-dom';
 
 const Bottom = () => {
   const location = useLocation();

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-// import SmallButton from '../../component/SmallButton';
 import Search from '../component/Search';
 // import ChatList from '../../component/ChatList';
 // import { getChats } from '../../../api/Chat/Chats';
@@ -10,6 +9,7 @@ import Search from '../component/Search';
 import { handleResize } from '../utils/handleResize';
 import NewButton from '../component/NewButton';
 import chatSrc from '../assets/images/make_chatting.svg';
+import Chat from '../component/Chat';
 
 const Main = () => {
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
@@ -63,7 +63,7 @@ const Main = () => {
       key={chat.chatId || chat.conversationId}
     >
       <ChatListBox>
-        {/* <ChatList title={chat.title || chat.ask} content={chat.content || chat.answer} /> */}
+        <Chat title={chat.title || chat.ask} content={chat.content || chat.answer} />
       </ChatListBox>
     </Link>
   );
