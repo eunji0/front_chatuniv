@@ -10,6 +10,7 @@ import { handleResize } from '../utils/handleResize';
 import NewButton from '../component/NewButton';
 import chatSrc from '../assets/images/make_chatting.svg';
 import Chat from '../component/Chat';
+import { getChats } from '../api/chatapi';
 
 const Main = () => {
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
@@ -46,16 +47,16 @@ const Main = () => {
   //     });
   // }, [location.search]);
 
-  // useEffect(() => {
-  //   getChats()
-  //     .then((data) => {
-  //       setChats(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error chats:', error);
-  //       setError('채팅방을 불러오는 중 오류가 발생했습니다.');
-  //     });
-  // }, []);
+  useEffect(() => {
+    getChats()
+      .then((data) => {
+        setChats(data);
+      })
+      .catch((error) => {
+        console.error('Error chats:', error);
+        setError('채팅방을 불러오는 중 오류가 발생했습니다.');
+      });
+  }, []);
 
   const renderChatRoom = (chat) => (
     <Link
@@ -131,6 +132,7 @@ const BLayout = styled.div`
   align-items: center;
   gap: 15px;
   z-index: 98;
+  cursor: pointer;
 `;
 
 const ListBox = styled.div`
