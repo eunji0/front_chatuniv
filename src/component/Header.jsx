@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
-import mypageSrc from '../images/mypage.svg';
+import COLORS from '../styles/color';
+import mypageSrc from '../assets/images/mypage.svg';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(true);
   const handleLogin = () => {
-    setIsLogin(false);
+    setIsLogin(!isLogin);
   };
 
   return (
@@ -18,7 +18,7 @@ const Header = () => {
         </LogoBox>
         <UserBox>
           {isLogin ? (
-            <LogoutButton onClick={handleLogin}> 로그아웃</LogoutButton>
+            <Logout onClick={handleLogin}> 로그아웃</Logout>
           ) : (
             <Link to="/login">로그인</Link>
           )}
@@ -33,6 +33,10 @@ const Header = () => {
 
 export default Header;
 
+const Logout = styled.div`
+  color: ${COLORS.PURPLE100};
+  cursor: pointer;
+`;
 const Box = styled.div`
   width: 100%;
 `;
@@ -43,7 +47,7 @@ const Layout = styled.div`
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  background-color: ${({ theme }) => theme.colors.WHITE};
+  background-color: ${COLORS.WHITE};
 `;
 
 const LogoBox = styled.div`
@@ -54,7 +58,7 @@ const LogoBox = styled.div`
 `;
 
 const Logo = styled(Link)`
-  color: ${({ theme }) => theme.colors.BLACK};
+  color: ${COLORS.BLACK};
   font-size: 24px;
   font-weight: 600;
 
@@ -68,7 +72,7 @@ const UserBox = styled.div`
   padding: 5px;
   align-items: center;
   gap: 20px;
-  color: ${({ theme }) => theme.colors.PURPLE100};
+  color: ${COLORS.PURPLE100};
   font-size: 16px;
 
   @media (max-width: 529px) {
@@ -77,7 +81,7 @@ const UserBox = styled.div`
 `;
 
 const LogoutButton = styled.button`
-  color: ${({ theme }) => theme.colors.PURPLE100};
+  color: ${COLORS.PURPLE100};
   font-size: 16px;
   @media (max-width: 529px) {
     font-size: 12px;

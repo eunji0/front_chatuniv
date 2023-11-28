@@ -9,10 +9,10 @@ export default createGlobalStyle`
   ${reset}
     * {
       box-sizing : border-box;
+      text-decoration: none !important;
     }
     body {
-      margin: 0 auto;
-      width: 1000px;
+      margin: 0 auto;;
       font-family: "Roboto";
       src: url(${RobotoWoff}) format("woff"),
           url(${RobotoWoff2}) format("woff2"),

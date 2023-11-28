@@ -1,51 +1,30 @@
-import { ThemeProvider } from 'styled-components';
 import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
 
-import { COLORS } from './styles/color';
 import IntroductionSrc from './assets/images/introduction.svg';
-import Header from './assets/component/Header';
-import Footer from './assets/component/Footer';
-import Post from './assets/pages/Board/Post';
-import Detail from './assets/pages/Board/Detail';
-import Login from './assets/pages/Login/Login';
-import Main from './assets/pages/Main/Main';
-import Lanking from './assets/pages/Statistics/Lanking';
-import Mypage from './assets/pages/Mypage/Mypage';
-import BoardList from './assets/pages/Mypage/BoardList';
-import Chatting from './assets/pages/Chat/Chatting';
-import CommentHistory from './assets/pages/Mypage/CommentHistory';
-import MyChatList from './assets/pages/Mypage/MyChatList';
+import Header from './component/Header';
+import COLORS from './styles/color';
+import Main from './page/Main';
+import Bottom from './component/Bottom';
 
 const App = () => {
   return (
     <>
-      <ThemeProvider theme={COLORS}>
-        <Router>
-          <Layout>
-            <InLayout>
-              <ImgBox alt="back_Introduction" src={IntroductionSrc} />
-              <Frame>
-                <Routes>
-                  <Route element={<HeaderLayout />}>
-                    {/* <Route path="/board/:id" element={<Detail />} />
-                    <Route path="/board" element={<Post />} />
-                    <Route path="/" element={<Main />} />
-                    <Route path="/lanking" element={<Lanking />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/mypage" element={<Mypage />} />
-                    <Route path="/chatting/:id" element={<Chatting />} /> */}
-                  </Route>
-                  {/* <Route path="/mypage/boardlist" element={<BoardList />} />
-                  <Route path="/mypage/comment" element={<CommentHistory />} />
-                  <Route path="/mypage/mychatlist" element={<MyChatList />} /> */}
-                </Routes>
-                <Footer />
-              </Frame>
-            </InLayout>
-          </Layout>
-        </Router>
-      </ThemeProvider>
+      <Router>
+        <Layout>
+          <InLayout>
+            <ImgBox alt="back_Introduction" src={IntroductionSrc} />
+            <Frame>
+              <Routes>
+                <Route element={<HeaderLayout />}>
+                  <Route path="/" element={<Main />} />
+                </Route>
+              </Routes>
+              <Bottom />
+            </Frame>
+          </InLayout>
+        </Layout>
+      </Router>
     </>
   );
 };
@@ -107,6 +86,6 @@ const Frame = styled.div`
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
-  background-color: ${({ theme }) => theme.colors.WHITE};
+  background-color: ${COLORS.WHITE};
   height: 100vh;
 `;
