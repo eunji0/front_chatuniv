@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import COLORS from '../styles/color';
 import { validateEmail, validatePassword } from '../utils/validation';
+import { loginUser } from '../api/loginapi';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,11 +13,18 @@ const Login = () => {
   const isEmailValid = validateEmail(email);
   const isPasswordValid = validatePassword(password);
 
-  const handleSubmit = () => {
-    // 유효성 검사가 통과되었는지 확인
+  const handleSubmit = async () => {
     if (isEmailValid && isPasswordValid) {
-      // 로그인 또는 회원가입 등의 로직 수행
-      console.log('로그인 성공');
+      try {
+        // 로그인 api 호출
+        const response = await loginUser(email, password);
+
+        // 토큰을 로컬 스토리지에 저장
+        localStorage.setItem('authToken', response.data.token);
+      } catch (error) {
+        // 에러 처리
+        console.error('로그인 에러:', error);
+      }
     } else {
       // 입력값이 유효하지 않다면 submitted를 true로 설정하여 에러 메시지를 표시
       setSubmitted(true);
