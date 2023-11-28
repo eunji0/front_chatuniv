@@ -1,35 +1,30 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
-    commonjs: true,
-    es2021: true,
     es6: true,
-    node: true,
-    jest: true,
   },
-  extends: ['airbnb-base', 'prettier'],
-  overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: ['.eslintrc.{js,cjs}'],
-      parserOptions: {
-        sourceType: 'script',
-      },
-    },
-  ],
+  extends: ['prettier', 'eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@babel', 'import'],
   parserOptions: {
-    ecmaVersion: 'latest',
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false,
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 13,
+    sourceType: 'module',
   },
   rules: {
-    'import/extensions': 'off',
-    'class-methods-use-this': 'off',
-    // 들여쓰기 깊이 제한
-    'max-depth': ['error', 2],
-    // 함수의 매개변수 개수 제한
-    'max-params': ['error', 3],
-    // 함수의 길이 제한
-    // 'max-lines-per-function': ['error', { max: 15 }],
+    semi: 'error',
+    'prefer-const': 'warn',
+    'no-undef': 'off',
+    'import/order': [
+      'warn',
+      {
+        groups: ['builtin', 'external', ['parent', 'sibling'], 'index'],
+        'newlines-between': 'always',
+      },
+    ],
   },
 };
