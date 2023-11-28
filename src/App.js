@@ -6,6 +6,7 @@ import Header from './component/Header';
 import COLORS from './styles/color';
 import Main from './page/Main';
 import Bottom from './component/Bottom';
+import Lanking from './page/Lanking';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               <Routes>
                 <Route element={<HeaderLayout />}>
                   <Route path="/" element={<Main />} />
+                  <Route path="/lanking" element={<Lanking />} />
                 </Route>
               </Routes>
               <Bottom />
