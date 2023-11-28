@@ -8,6 +8,7 @@ import Main from './page/Main';
 import Bottom from './component/Bottom';
 import Lanking from './page/Lanking';
 import Board from './page/Board';
+import Login from './page/Login';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
                   <Route path="/" element={<Main />} />
                   <Route path="/lanking" element={<Lanking />} />
                   <Route path="/board" element={<Board />} />
+                  <Route path="/login" element={<Login />} />
                 </Route>
               </Routes>
               <Bottom />
