@@ -7,6 +7,7 @@ import COLORS from './styles/color';
 import Main from './page/Main';
 import Bottom from './component/Bottom';
 import Lanking from './page/Lanking';
+import Board from './page/Board';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
                 <Route element={<HeaderLayout />}>
                   <Route path="/" element={<Main />} />
                   <Route path="/lanking" element={<Lanking />} />
+                  <Route path="/board" element={<Board />} />
                 </Route>
               </Routes>
               <Bottom />

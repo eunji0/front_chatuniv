@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import COLORS from '../styles/color';
+
 const Post = ({ title, content, user, timeinfo }) => {
   return (
     <Layout>

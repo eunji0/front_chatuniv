@@ -1,9 +1,14 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import COLORS from '../styles/color';
 import Post from '../component/Post';
+import NewButton from '../component/NewButton';
+import boardimg from '../assets/images/make_board.svg';
 
 const Board = () => {
+  const [loading, setLoading] = useState(true);
+
   const renderPosts = (postId) => (
     <Link to={`/board/${postId}`} key={postId}>
       <Post />
@@ -30,9 +35,11 @@ const Board = () => {
     <Layout>
       <TopBox>
         <BoardText>게시판</BoardText>
-        <DataBox></DataBox>
+        <DataBox>{renderPostList()}</DataBox>
       </TopBox>
-      <BottomBox>{renderPostList()}</BottomBox>
+      <BottomBox>
+        <NewButton img={boardimg} text={'게시글 작성하기'} />
+      </BottomBox>
     </Layout>
   );
 };
@@ -55,6 +62,7 @@ const TopBox = styled.div`
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
+  height: 100%;
 `;
 
 const BottomBox = styled.div`
