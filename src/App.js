@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
 import IntroductionSrc from './assets/images/introduction.svg';
 import Header from './component/Header';
@@ -12,7 +13,7 @@ import Login from './page/Login';
 
 const App = () => {
   return (
-    <>
+    <RecoilRoot>
       <Router>
         <Layout>
           <InLayout>
@@ -31,7 +32,7 @@ const App = () => {
           </InLayout>
         </Layout>
       </Router>
-    </>
+    </RecoilRoot>
   );
 };
 

@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+
+import { isLoginState } from '../recoil/atoms';
 import COLORS from '../styles/color';
 import mypageSrc from '../assets/images/mypage.svg';
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const handleLogin = () => {
-    setIsLogin(!isLogin);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+  const handleLogout = () => {
+    setIsLogin(false);
   };
 
   return (
@@ -18,7 +20,7 @@ const Header = () => {
         </LogoBox>
         <UserBox>
           {isLogin ? (
-            <Logout onClick={handleLogin}> 로그아웃</Logout>
+            <Logout onClick={handleLogout}> 로그아웃</Logout>
           ) : (
             <Link to="/login">로그인</Link>
           )}

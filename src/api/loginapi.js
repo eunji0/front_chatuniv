@@ -1,11 +1,15 @@
 import axios from 'axios';
 
+export let authToken = '';
+
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post('https://woowacourse.store/api/auth/sign-in', {
       email: email,
       password: password,
     });
+
+    authToken = response.data.accessToken;
 
     // 성공적인 응답 처리
     console.log('응답 데이터:', response.data);

@@ -1,10 +1,13 @@
 import axios from 'axios';
 
+import { authToken } from './loginapi';
+
 export const getChats = async () => {
+  console.log(`${authToken}`);
   try {
     const response = await axios.get('https://woowacourse.store/api/chats', {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGEuY29tIiwiaWF0IjoxNzAxMTgzNzczLCJleHAiOjE3MDExODczNzN9.xezt6uxITHOiVCPL7f0IKbBmsj9_MpKiysgFFV4GR5g`,
+        Authorization: `Bearer ${authToken}`,
       },
     });
 

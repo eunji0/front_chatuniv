@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
+import { isLoginState } from '../recoil/atoms';
 import COLORS from '../styles/color';
 import { validateEmail, validatePassword } from '../utils/validation';
 import { loginUser } from '../api/loginapi';
@@ -9,22 +12,20 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+  const navigate = useNavigate();
 
   const isEmailValid = validateEmail(email);
   const isPasswordValid = validatePassword(password);
 
   const handleSubmit = async () => {
     if (isEmailValid && isPasswordValid) {
-      try {
-        // 로그인 api 호출
-        const response = await loginUser(email, password);
-
-        // 토큰을 로컬 스토리지에 저장
-        localStorage.setItem('authToken', response.data.token);
-      } catch (error) {
-        // 에러 처리
-        console.error('로그인 에러:', error);
-      }
+      // 로그인 api 호출
+      const response = await loginUser(email, password);
+      // 토큰을 로컬 스토리지에 저장
+      localStorage.setItem('authToken', response);
+      setIsLogin(true);
+      navigate('/');
     } else {
       // 입력값이 유효하지 않다면 submitted를 true로 설정하여 에러 메시지를 표시
       setSubmitted(true);
