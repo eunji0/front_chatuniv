@@ -1,31 +1,30 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import userSrc from "../images/user.svg";
-import sendSrc from "../images/send.svg";
-import { postCommentForBoard } from "../../api/Board/Comments";
-import { postCommentForChat } from "../../api/Chat/Comment";
+import userSrc from '../assets/images/user.svg';
+import sendSrc from '../assets/images/send.svg';
+import COLORS from '../styles/color';
 
 const CommentForm = ({ apiType }) => {
   const { id } = useParams();
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
 
   const handleCommentSubmit = async (e) => {
-    try {
-      if (apiType === "board") {
-        const result = await postCommentForBoard(id, content);
-        console.log("게시판 댓글이 성공적으로 등록되었습니다:", result);
-        setContent("");
-      } else if (apiType === "chat") {
-        const result = await postCommentForChat(id, content);
-        // 채팅 댓글 API 호출 후의 처리
-        console.log("채팅 댓글이 성공적으로 등록되었습니다:", result);
-        setContent("");
-      }
-    } catch (error) {
-      console.error("댓글 등록 중 에러:", error);
-    }
+    // try {
+    //   if (apiType === "board") {
+    //     const result = await postCommentForBoard(id, content);
+    //     console.log("게시판 댓글이 성공적으로 등록되었습니다:", result);
+    //     setContent("");
+    //   } else if (apiType === "chat") {
+    //     const result = await postCommentForChat(id, content);
+    //     // 채팅 댓글 API 호출 후의 처리
+    //     console.log("채팅 댓글이 성공적으로 등록되었습니다:", result);
+    //     setContent("");
+    //   }
+    // } catch (error) {
+    //   console.error("댓글 등록 중 에러:", error);
+    // }
   };
 
   return (
@@ -67,12 +66,12 @@ const Commentinput = styled.input`
   gap: 10px;
   flex: 1 0 0;
   border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
-  color: ${({ theme }) => theme.colors.BLACK};
+  border-bottom: 1px solid ${COLORS.GRAY};
+  color: ${COLORS.BLACK};
 
   &:focus {
     outline: none;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.PURPLE50};
+    border-bottom: 2px solid ${COLORS.PURPLE50};
   }
 `;
 
@@ -82,6 +81,9 @@ const SendBox = styled.button`
   align-items: flex-end;
   gap: 10px;
   align-self: stretch;
+  background-color: transparent;
+  border: none;
+  outline: none;
 `;
 
 const User = styled.img`

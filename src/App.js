@@ -10,6 +10,7 @@ import Bottom from './component/Bottom';
 import Lanking from './page/Lanking';
 import Board from './page/Board';
 import Login from './page/Login';
+import ChatRoom from './page/ChatRoom';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
                   <Route path="/lanking" element={<Lanking />} />
                   <Route path="/board" element={<Board />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/chatting/:chatId" element={<ChatRoom />} />
                 </Route>
               </Routes>
               <Bottom />

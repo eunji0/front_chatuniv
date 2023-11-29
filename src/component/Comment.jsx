@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import CommentForm from "./CommentForm";
-import CommentList from "./CommentList";
+import CommentForm from './CommentForm';
+import CommentList from './CommentList';
+import COLORS from '../styles/color';
 
 const Comment = ({ apiType }) => {
   return (
@@ -19,7 +20,7 @@ export default Comment;
 
 const Layout = styled.div`
   display: flex;
-  padding: 30px 10px 10px 10px;
+  padding: 10px 10px 10px 10px;
   flex-direction: column;
   align-items: flex-start;
   flex: 1 0 0;
@@ -32,7 +33,7 @@ const TxtBox = styled.div`
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
+  border-bottom: 1px solid ${COLORS.GRAY};
 `;
 
 const TxtComment = styled.div`
@@ -40,7 +41,7 @@ const TxtComment = styled.div`
   padding: 10px 15px;
   align-items: flex-start;
   gap: 10px;
-  color: ${({ theme }) => theme.colors.PURPLE100};
+  color: ${COLORS.PURPLE100};
   text-align: center;
   font-size: 16px;
   font-weight: 700;

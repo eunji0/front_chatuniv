@@ -1,47 +1,48 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import userSrc from "../images/user.svg";
-import { deleteComment, getCommentsForBoard, updateComment } from "../../api/Board/Comments";
-import { getCommentsForChat } from "../../api/Chat/Comment";
+import userSrc from '../assets/images/user.svg';
+import COLORS from '../styles/color';
+// import { deleteComment, getCommentsForBoard, updateComment } from "../../api/Board/Comments";
+// import { getCommentsForChat } from "../../api/Chat/Comment";
 
 const CommentList = ({ apiType }) => {
   const { id } = useParams();
   const [comments, setComments] = useState([]);
-  const userEmail = "a@a.com";
+  // const userEmail = "a@a.com";
   const [editedComment, setEditedComment] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const pageSize = 2;
-        const commentId = 3;
-        //더보기 버튼 추가하기
-        if (apiType === "board") {
-          const commentData = await getCommentsForBoard(id, pageSize, commentId);
-          setComments(commentData.commentResponse);
-        } else if (apiType === "chat") {
-          const commentData = await getCommentsForChat(id, pageSize, commentId);
-          setComments(commentData.commentResponse);
-        }
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const pageSize = 2;
+  //       const commentId = 3;
+  //       //더보기 버튼 추가하기
+  //       if (apiType === "board") {
+  //         const commentData = await getCommentsForBoard(id, pageSize, commentId);
+  //         setComments(commentData.commentResponse);
+  //       } else if (apiType === "chat") {
+  //         const commentData = await getCommentsForChat(id, pageSize, commentId);
+  //         setComments(commentData.commentResponse);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching comments:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [id]);
+  //   fetchData();
+  // }, [id]);
 
   const handleDeleteComment = async (commentId) => {
-    try {
-      await deleteComment(commentId);
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.commentId !== commentId),
-      );
-    } catch (error) {
-      console.error("댓글 삭제 에러:", error);
-    }
+    //   try {
+    //     await deleteComment(commentId);
+    //     setComments((prevComments) =>
+    //       prevComments.filter((comment) => comment.commentId !== commentId),
+    //     );
+    //   } catch (error) {
+    //     console.error("댓글 삭제 에러:", error);
+    //   }
   };
 
   const handleEditComment = (commentId) => setEditedComment(commentId);
@@ -55,17 +56,17 @@ const CommentList = ({ apiType }) => {
   };
 
   const handleUpdateComment = async (commentId, newContent) => {
-    try {
-      await updateComment(commentId, newContent);
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.commentId === commentId ? { ...comment, content: newContent } : comment,
-        ),
-      );
-      setEditedComment(null);
-    } catch (error) {
-      console.error("댓글 수정 에러:", error);
-    }
+    // try {
+    //   await updateComment(commentId, newContent);
+    //   setComments((prevComments) =>
+    //     prevComments.map((comment) =>
+    //       comment.commentId === commentId ? { ...comment, content: newContent } : comment,
+    //     ),
+    //   );
+    //   setEditedComment(null);
+    // } catch (error) {
+    //   console.error("댓글 수정 에러:", error);
+    // }
   };
 
   return (
@@ -160,15 +161,15 @@ const EditBox = styled.div`
 
 const FixBox = styled.div`
   border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.PURPLE100};
-  background: ${({ theme }) => theme.colors.WHITE};
+  border: 1px solid ${COLORS.PURPLE100};
+  background: ${COLORS.WHITE};
   cursor: pointer;
 
   display: flex;
   padding: 3px;
   align-items: flex-start;
   gap: 10px;
-  color: ${({ theme }) => theme.colors.PURPLE100};
+  color: ${COLORS.PURPLE100};
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -186,7 +187,7 @@ const Box = styled.div`
   gap: 8px;
   align-self: stretch;
   border-radius: 10px;
-  background: ${({ theme }) => theme.colors.WHITE};
+  background: ${COLORS.WHITE};
 `;
 
 const MyBox = styled.div`
@@ -196,7 +197,7 @@ const MyBox = styled.div`
   gap: 8px;
   align-self: stretch;
   border-radius: 10px;
-  background: ${({ theme }) => theme.colors.PURPLE10};
+  background: ${COLORS.PURPLE10};
 `;
 
 const CommentBox = styled.div`
@@ -220,7 +221,7 @@ const UserBox = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   align-self: stretch;
-  color: ${({ theme }) => theme.colors.BLACK};
+  color: ${COLORS.BLACK};
   font-size: 14px;
   font-weight: 400;
   justify-content: space-between;
@@ -237,10 +238,10 @@ const ContentBox = styled.div`
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
-  color: ${({ theme }) => theme.colors.BLACK};
+  color: ${COLORS.BLACK};
   font-size: 16px;
   font-weight: 400;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
+  border-bottom: 1px solid ${COLORS.GRAY};
 
   @media (max-width: 529px) {
     font-size: 12px;
@@ -253,7 +254,7 @@ const ContentBox2 = styled.div`
   align-items: flex-start;
   gap: 10px;
   align-self: stretch;
-  color: ${({ theme }) => theme.colors.BLACK};
+  color: ${COLORS.BLACK};
   font-size: 16px;
   font-weight: 400;
 
@@ -270,13 +271,13 @@ const CommentInput = styled.input`
   flex: 1 0 0;
   width: 90%;
   border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.GRAY};
-  color: ${({ theme }) => theme.colors.BLACK};
+  border-bottom: 1px solid ${COLORS.GRAY};
+  color: ${COLORS.BLACK};
   background: none;
 
   &:focus {
     outline: none;
-    border-bottom: 2px solid ${({ theme }) => theme.colors.PURPLE50};
+    border-bottom: 2px solid ${COLORS.PURPLE50};
   }
 `;
 
