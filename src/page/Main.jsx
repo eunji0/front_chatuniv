@@ -51,7 +51,7 @@ const Main = () => {
       })
       .catch((error) => {
         console.error('Error chats:', error);
-        setError('채팅방을 불러오는 중 오류가 발생했습니다.');
+        setError('로그인해주세요.');
       });
   }, []);
 

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 import { authToken } from './loginapi';
 
+//채팅방 전체 조회
 export const getChats = async () => {
-  console.log(`${authToken}`);
   try {
     const response = await axios.get('https://woowacourse.store/api/chats', {
       headers: {
@@ -11,7 +11,6 @@ export const getChats = async () => {
       },
     });
 
-    console.log('a', response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -19,17 +18,18 @@ export const getChats = async () => {
   }
 };
 
-export const getChatSearch = async (keyword, pageSize) => {
+//채팅방 검색
+export const getChatSearch = async (keyword) => {
   try {
     const response = await axios.get(
-      `https://woowacourse.store/api/chats/search?keyword=${keyword}&pageSize=${pageSize}`,
+      `https://woowacourse.store/api/chats/search?keyword=${keyword}`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       },
     );
-    console.log('search', response.data);
+
     return response.data;
   } catch (error) {
     console.error(error);

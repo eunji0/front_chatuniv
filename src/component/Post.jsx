@@ -10,7 +10,7 @@ const Post = ({ title, content, user, timeinfo }) => {
         <Content>{content}</Content>
       </TitleContentBox>
       <PostInfo>
-        `${user}|${timeinfo}`
+        {user} | {timeinfo}
       </PostInfo>
     </Layout>
   );
@@ -21,6 +21,7 @@ export default Post;
 const Layout = styled.div`
   display: flex;
   padding: 10px;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
