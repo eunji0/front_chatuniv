@@ -4,9 +4,11 @@ import Chatting from '../component/Chatting';
 import Comment from '../component/Comment';
 
 const ChatRoom = () => {
+  const chatId = window.location.pathname.split('/').pop();
+
   return (
     <Layout>
-      <Chatting />
+      <Chatting chatId={chatId} />
       <Comment apiType="chat" />
     </Layout>
   );

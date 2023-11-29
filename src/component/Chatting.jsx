@@ -6,7 +6,7 @@ import outcloseSrc from '../assets/images/out_close.svg';
 import { getChatRoom } from '../api/chatapi';
 import ModeButton from './ModeButton';
 
-const Chatting = () => {
+const Chatting = ({ chatId }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,12 +14,10 @@ const Chatting = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const chatId = window.location.pathname.split('/').pop();
         const data = await getChatRoom({ chatId });
-
         setChats(data);
         setLoading(false);
-        console.log(chats);
+        console.log(data); // 업데이트된 데이터를 확인
       } catch (error) {
         console.error('Error fetching chat room:', error);
         setError('Failed to fetch chat room data.');
@@ -28,19 +26,23 @@ const Chatting = () => {
     };
 
     fetchData();
-  }, []);
+  }, [chatId]);
 
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   };
 
+  console.log(chats);
+
   return (
     <Layout>
       <InLayout>
         <TitleLayout>
-          <TitleText>
-            {chats.length > 0 && truncateText(chats.conversations[0].answer, 20)}
-          </TitleText>
+          {chats.conversations && chats.conversations.length > 0 ? (
+            <TitleText>{truncateText(chats.conversations[0].content, 20)}</TitleText>
+          ) : (
+            <p>New Chat</p>
+          )}
           <img alt="나가기" src={outcloseSrc} />
         </TitleLayout>
         <ContentLayout>
