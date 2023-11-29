@@ -48,7 +48,7 @@ const TitleText = styled.div`
 
 const ContentBox = styled.div`
   display: flex;
-  height: 150px;
+  height: 80px;
   padding: 10px 20px;
   flex-direction: column;
   align-items: flex-start;

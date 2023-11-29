@@ -3,14 +3,11 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import Search from '../component/Search';
-// import ChatList from '../../component/ChatList';
-// import { getChats } from '../../../api/Chat/Chats';
-// import { getChatSearch } from '../../../api/Chat/ChatSearch';
 import { handleResize } from '../utils/handleResize';
 import NewButton from '../component/NewButton';
 import chatSrc from '../assets/images/make_chatting.svg';
 import Chat from '../component/Chat';
-import { getChats } from '../api/chatapi';
+import { getChatSearch, getChats } from '../api/chatapi';
 
 const Main = () => {
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
@@ -26,26 +23,26 @@ const Main = () => {
     return () => cleanupResize();
   }, []);
 
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(location.search);
-  //   const newSearchTerm = queryParams.get('q');
-  //   setSearchTerm(newSearchTerm || '');
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const newSearchTerm = queryParams.get('q');
+    setSearchTerm(newSearchTerm || '');
 
-  //   setLoading(true);
-  //   setError(null);
+    setLoading(true);
+    setError(null);
 
-  //   getChatSearch(newSearchTerm, 10, 4)
-  //     .then((data) => {
-  //       setSearchList(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error search:', error);
-  //       setError('검색 중 오류가 발생했습니다.');
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, [location.search]);
+    getChatSearch(newSearchTerm, 10, 4)
+      .then((data) => {
+        setSearchList(data);
+      })
+      .catch((error) => {
+        console.error('Error search:', error);
+        setError('검색 중 오류가 발생했습니다.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [location.search]);
 
   useEffect(() => {
     getChats()
