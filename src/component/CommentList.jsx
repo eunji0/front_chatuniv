@@ -1,48 +1,51 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import userSrc from '../assets/images/user.svg';
 import COLORS from '../styles/color';
-// import { deleteComment, getCommentsForBoard, updateComment } from "../../api/Board/Comments";
-// import { getCommentsForChat } from "../../api/Chat/Comment";
+import {
+  deleteComment,
+  getCommentsForBoard,
+  getCommentsForChat,
+  updateComment,
+} from '../api/commentapi';
+import { userEmail } from '../api/loginapi';
 
 const CommentList = ({ apiType }) => {
-  const { id } = useParams();
+  const id = window.location.pathname.split('/').pop();
   const [comments, setComments] = useState([]);
-  // const userEmail = "a@a.com";
   const [editedComment, setEditedComment] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const pageSize = 2;
-  //       const commentId = 3;
-  //       //더보기 버튼 추가하기
-  //       if (apiType === "board") {
-  //         const commentData = await getCommentsForBoard(id, pageSize, commentId);
-  //         setComments(commentData.commentResponse);
-  //       } else if (apiType === "chat") {
-  //         const commentData = await getCommentsForChat(id, pageSize, commentId);
-  //         setComments(commentData.commentResponse);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching comments:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const pageSize = 2;
+        const commentId = 3;
+        //더보기 버튼 추가하기
+        if (apiType === 'board') {
+          const commentData = await getCommentsForBoard(id, pageSize, commentId);
+          setComments(commentData.commentResponse);
+        } else if (apiType === 'chat') {
+          const commentData = await getCommentsForChat(id, pageSize, commentId);
+          setComments(commentData.commentResponse);
+        }
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
 
-  //   fetchData();
-  // }, [id]);
+    fetchData();
+  }, [id]);
 
   const handleDeleteComment = async (commentId) => {
-    //   try {
-    //     await deleteComment(commentId);
-    //     setComments((prevComments) =>
-    //       prevComments.filter((comment) => comment.commentId !== commentId),
-    //     );
-    //   } catch (error) {
-    //     console.error("댓글 삭제 에러:", error);
-    //   }
+    try {
+      await deleteComment(commentId);
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.commentId !== commentId),
+      );
+    } catch (error) {
+      console.error('댓글 삭제 에러:', error);
+    }
   };
 
   const handleEditComment = (commentId) => setEditedComment(commentId);
@@ -56,17 +59,17 @@ const CommentList = ({ apiType }) => {
   };
 
   const handleUpdateComment = async (commentId, newContent) => {
-    // try {
-    //   await updateComment(commentId, newContent);
-    //   setComments((prevComments) =>
-    //     prevComments.map((comment) =>
-    //       comment.commentId === commentId ? { ...comment, content: newContent } : comment,
-    //     ),
-    //   );
-    //   setEditedComment(null);
-    // } catch (error) {
-    //   console.error("댓글 수정 에러:", error);
-    // }
+    try {
+      await updateComment(commentId, newContent);
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.commentId === commentId ? { ...comment, content: newContent } : comment,
+        ),
+      );
+      setEditedComment(null);
+    } catch (error) {
+      console.error('댓글 수정 에러:', error);
+    }
   };
 
   return (

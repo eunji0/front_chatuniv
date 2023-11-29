@@ -41,7 +41,7 @@ const Chatting = ({ chatId }) => {
           {chats.conversations && chats.conversations.length > 0 ? (
             <TitleText>{truncateText(chats.conversations[0].content, 20)}</TitleText>
           ) : (
-            <p>New Chat</p>
+            <TitleText>New Chat</TitleText>
           )}
           <img alt="나가기" src={outcloseSrc} />
         </TitleLayout>

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export let authToken = '';
+export let userEmail = '';
 
 export const loginUser = async (email, password) => {
   try {
@@ -10,6 +11,7 @@ export const loginUser = async (email, password) => {
     });
 
     authToken = response.data.accessToken;
+    userEmail = email;
 
     // 성공적인 응답 처리
     console.log('응답 데이터:', response.data);

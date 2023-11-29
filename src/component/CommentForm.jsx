@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import userSrc from '../assets/images/user.svg';
@@ -8,7 +7,7 @@ import COLORS from '../styles/color';
 import { postCommentForBoard, postCommentForChat } from '../api/commentapi';
 
 const CommentForm = ({ apiType }) => {
-  const { id } = useParams();
+  const id = window.location.pathname.split('/').pop();
   const [content, setContent] = useState('');
 
   const handleCommentSubmit = async (e) => {
