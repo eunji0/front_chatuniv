@@ -13,8 +13,11 @@ export const loginUser = async (email, password) => {
 
     // 성공적인 응답 처리
     console.log('응답 데이터:', response.data);
+
+    return authToken; // 토큰 반환
   } catch (error) {
     // 에러 처리
     console.error('에러 발생:', error);
+    throw error; // 에러를 상위로 전파
   }
 };

@@ -1,32 +1,50 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 
 import COLORS from '../styles/color';
 import outcloseSrc from '../assets/images/out_close.svg';
-import smileSrc from '../assets/images/smile.svg';
-import angrySrc from '../assets/images/angry.svg';
+import { getChatRoom } from '../api/chatapi';
+import ModeButton from './ModeButton';
 
 const Chatting = () => {
+  const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const chatId = window.location.pathname.split('/').pop();
+        const data = await getChatRoom({ chatId });
+
+        setChats(data);
+        setLoading(false);
+        console.log(chats);
+      } catch (error) {
+        console.error('Error fetching chat room:', error);
+        setError('Failed to fetch chat room data.');
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const truncateText = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+
   return (
     <Layout>
       <InLayout>
         <TitleLayout>
-          <TitleText>Title</TitleText>
+          <TitleText>
+            {chats.length > 0 && truncateText(chats.conversations[0].answer, 20)}
+          </TitleText>
           <img alt="나가기" src={outcloseSrc} />
         </TitleLayout>
         <ContentLayout>
-          <ButtonLayout>
-            <ButtonIn>
-              <ButtonBox>
-                순한맛
-                <img alt="순한맛" src={smileSrc} />
-              </ButtonBox>
-              <BarText>|</BarText>
-              <ButtonBox>
-                매운맛
-                <img alt="매운맛" src={angrySrc} />
-              </ButtonBox>
-            </ButtonIn>
-          </ButtonLayout>
+          <ModeButton />
         </ContentLayout>
       </InLayout>
     </Layout>
@@ -58,7 +76,7 @@ const InLayout = styled.div`
 
 const TitleLayout = styled.div`
   display: flex;
-  height: 70px;
+  height: 60px;
   padding: 10px 20px 10px 10px;
   justify-content: space-between;
   align-items: flex-end;
@@ -87,50 +105,6 @@ const TitleText = styled.div`
 
   color: ${COLORS.WHITE};
   font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
-
-const ButtonLayout = styled.div`
-  display: flex;
-  padding-right: 0px;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  align-self: stretch;
-`;
-
-const ButtonIn = styled.div`
-  display: flex;
-  padding: 5px;
-  justify-content: center;
-  align-items: center;
-  gap: 3px;
-  border-radius: 20px;
-  background: ${COLORS.WHITE};
-`;
-
-const ButtonBox = styled.button`
-  display: flex;
-  padding: 3px;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  border-radius: 20px;
-  background: ${COLORS.PURPLE30};
-  border: none;
-
-  color: ${COLORS.BLACK};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
-
-const BarText = styled.div`
-  color: ${COLORS.BLACK};
-  font-size: 10px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

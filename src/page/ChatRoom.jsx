@@ -4,11 +4,6 @@ import Chatting from '../component/Chatting';
 import Comment from '../component/Comment';
 
 const ChatRoom = () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const chatId = urlParams.get('chatId');
-
-  console.log(chatId);
-
   return (
     <Layout>
       <Chatting />

@@ -36,3 +36,19 @@ export const getChatSearch = async (keyword) => {
     throw error;
   }
 };
+
+//기존 채팅방 조회
+export const getChatRoom = async ({ chatId }) => {
+  try {
+    const response = await axios.get(`https://woowacourse.store/api/chats/${chatId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

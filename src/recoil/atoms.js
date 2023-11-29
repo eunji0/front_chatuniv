@@ -1,3 +1,4 @@
+// atoms.js
 import { atom } from 'recoil';
 
 export const isLoginState = atom({
