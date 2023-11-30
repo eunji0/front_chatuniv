@@ -37,7 +37,7 @@ const Layout = styled.div`
 
 const TLayout = styled.div`
   display: flex;
-  height: 100%;
+  height: 90%;
   padding: 15px 10px;
   flex-direction: column;
   align-items: center;

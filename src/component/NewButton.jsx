@@ -19,6 +19,7 @@ const Layout = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 
   border-radius: 50px;
   background: ${COLORS.WHITE};

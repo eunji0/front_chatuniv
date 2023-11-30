@@ -19,10 +19,12 @@ const Post = ({ boardId }) => {
           const data = await getPost({ boardId });
           setPost(data);
           setLoading(false);
-        } else {
-          const response = await postChat();
-          console.log(response);
         }
+        // if (boardId === 'newBoard') {
+        //   const data = await getPost({ boardId });
+        //   setPost(data);
+        //   setLoading(false);
+        // }
       } catch (error) {
         console.error('Error fetching chat room:', error);
         setError('Failed to fetch chat room data.');

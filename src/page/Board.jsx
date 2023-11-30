@@ -7,22 +7,24 @@ import NewButton from '../component/NewButton';
 import boardimg from '../assets/images/make_board.svg';
 import { getPosts } from '../api/boardapi';
 import PostList from '../component/PostList';
+import PostModal from '../component/modal/PostModal';
 
 const Board = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [error, setError] = useState(null); // setError 추가
+  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     getPosts()
       .then((data) => {
         setPosts(data.boards);
-        setLoading(false); // 데이터 로딩이 끝났음을 설정
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error chats:', error);
         setError('로그인해주세요.');
-        setLoading(false); // 에러가 발생하더라도 로딩은 완료되었음을 설정
+        setLoading(false);
       });
   }, []);
 
@@ -49,6 +51,17 @@ const Board = () => {
     return posts.length > 0 ? posts.map((post) => renderPosts(post)) : <p>게시글이 없습니다.</p>;
   };
 
+  const handleNewButtonClick = () => {
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden'; // 모달이 열릴 때 body의 스크롤을 막음
+  };
+
+  useEffect(() => {
+    // 모달이 닫힐 때 body의 스크롤을 다시 활성화
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isModalOpen]);
   return (
     <Layout>
       <TopBox>
@@ -56,13 +69,27 @@ const Board = () => {
         <DataBox>{renderPostList()}</DataBox>
       </TopBox>
       <BottomBox>
-        <NewButton img={boardimg} text={'게시글 작성하기'} />
+        <ButtonBox onClick={handleNewButtonClick}>
+          <NewButton img={boardimg} text={'게시글 작성하기'} />
+        </ButtonBox>
       </BottomBox>
+      {isModalOpen && <Backdrop onClick={() => setIsModalOpen(false)}></Backdrop>}
+      {isModalOpen && <PostModal onClose={() => setIsModalOpen(false)} />}
     </Layout>
   );
 };
 
 export default Board;
+
+const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 어두운 배경색 및 투명도 조절 */
+  z-index: 99; /* 모달보다 위에 위치하도록 설정 */
+`;
 
 const Layout = styled.div`
   display: flex;
@@ -101,6 +128,10 @@ const BottomBox = styled.div`
   align-self: stretch;
 `;
 
+const ButtonBox = styled.button`
+  background-color: transparent;
+  border: none;
+`;
 const BoardText = styled.div`
   display: flex;
   padding: 10px;
