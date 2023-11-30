@@ -54,3 +54,25 @@ export const postBoard = async ({ title, content }) => {
     console.error(error);
   }
 };
+
+//게시글 삭제
+export const deletePost = async ({ boardId }) => {
+  try {
+    const response = await axios.delete(`https://woowacourse.store/api/boards/${boardId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (response.status === 204) {
+      alert('게시글이 삭제되었습니다.');
+    } else {
+      console.log('게시판 삭제 실패:', response.data);
+    }
+  } catch (error) {
+    console.error('Error deleting board:', error);
+    throw error;
+  }
+};
+
+//게시글 수정

@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import COLORS from '../styles/color';
 import userSrc from '../assets/images/user.svg';
 import moreSrc from '../assets/images/more.svg';
-import { getPost } from '../api/boardapi';
+import { deletePost, getPost, getPosts } from '../api/boardapi';
 
 const Post = ({ boardId }) => {
   const [post, setPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log(boardId);
+  const userEmail = localStorage.getItem('userEmail');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +33,17 @@ const Post = ({ boardId }) => {
   }, [boardId]);
 
   console.log(post);
+  console.log(userEmail);
+
+  const handleDeleteClick = async () => {
+    try {
+      await deletePost({ boardId });
+      await getPosts();
+      navigate('/board');
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
 
   return (
     <Layout>
@@ -44,7 +57,14 @@ const Post = ({ boardId }) => {
             <TimeBox>{post.createAt}</TimeBox>
           </TimeLayout>
         </UserInfoBox>
-        <MoreImg alt="more" src={moreSrc} />
+        {userEmail === 'banana@naver.com' ? (
+          <ButtonLayout>
+            <ButtonBox>수정</ButtonBox>
+            <ButtonBox onClick={handleDeleteClick}>삭제</ButtonBox>
+          </ButtonLayout>
+        ) : (
+          <MoreImg alt="more" src={moreSrc} />
+        )}
       </TopBox>
       <BottomBox>
         <TitleText>{post.title}</TitleText>
@@ -64,7 +84,7 @@ const Layout = styled.div`
   flex: 1 0 0;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid ${COLORS.GRAY};
+  border: 2px solid ${COLORS.GRAY};
   background: ${COLORS.WHITE};
 `;
 const TopBox = styled.div`
@@ -125,7 +145,7 @@ const IDBox = styled.div`
   color: ${COLORS.BLACK};
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   line-height: normal;
 `;
 
@@ -165,5 +185,30 @@ const ContentText = styled.div`
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
+  line-height: normal;
+`;
+
+const ButtonLayout = styled.div`
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;
+
+const ButtonBox = styled.div`
+  cursor: pointer;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 2px solid ${COLORS.GRAY};
+
+  color: ${COLORS.GRAY};
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
   line-height: normal;
 `;
