@@ -1,25 +1,58 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 
 import COLORS from '../styles/color';
 import userSrc from '../assets/images/user.svg';
 import moreSrc from '../assets/images/more.svg';
+import { getPost } from '../api/boardapi';
 
-const Post = () => {
+const Post = ({ boardId }) => {
+  const [post, setPost] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  console.log(boardId);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (boardId !== 'newBoard') {
+          const data = await getPost({ boardId });
+          setPost(data);
+          setLoading(false);
+        } else {
+          const response = await postChat();
+          console.log(response);
+        }
+      } catch (error) {
+        console.error('Error fetching chat room:', error);
+        setError('Failed to fetch chat room data.');
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [boardId]);
+
+  console.log(post);
+
   return (
     <Layout>
       <TopBox>
         <UserImg alt="userimg" src={userSrc} />
         <UserInfoBox>
           <IDLayout>
-            <IDBox>userID</IDBox>
+            <IDBox>{post.email}</IDBox>
           </IDLayout>
           <TimeLayout>
-            <TimeBox>time</TimeBox>
+            <TimeBox>{post.createAt}</TimeBox>
           </TimeLayout>
         </UserInfoBox>
         <MoreImg alt="more" src={moreSrc} />
       </TopBox>
-      <BottomBox></BottomBox>
+      <BottomBox>
+        <TitleText>{post.title}</TitleText>
+        <ContentText>{post.content}</ContentText>
+      </BottomBox>
     </Layout>
   );
 };
@@ -106,6 +139,33 @@ const TimeBox = styled.div`
   align-self: stretch;
   color: ${COLORS.GRAY};
   font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+const TitleText = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+
+  color: ${COLORS.BLACK};
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
+
+const ContentText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+  align-self: stretch;
+  color: ${COLORS.BLACK};
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

@@ -16,3 +16,19 @@ export const getPosts = async () => {
     throw error;
   }
 };
+
+//게시글 단건 조회
+export const getPost = async ({ boardId }) => {
+  try {
+    const response = await axios.get(`https://woowacourse.store/api/boards/${boardId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
