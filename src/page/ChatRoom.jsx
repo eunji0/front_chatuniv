@@ -8,8 +8,12 @@ const ChatRoom = () => {
 
   return (
     <Layout>
-      <Chatting chatId={chatId} />
-      <Comment apiType="chat" />
+      <TLayout>
+        <Chatting chatId={chatId} />
+      </TLayout>
+      <BLayout>
+        <Comment apiType="chat" />
+      </BLayout>
     </Layout>
   );
 };
@@ -23,4 +27,25 @@ const Layout = styled.div`
   gap: 10px;
   flex: 1 0 0;
   align-self: stretch;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;
+
+const TLayout = styled.div`
+  display: flex;
+  height: 100%;
+  padding: 15px 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  align-self: stretch;
+`;
+
+const BLayout = styled.div`
+  height: 20%;
+  width: 100%;
 `;
