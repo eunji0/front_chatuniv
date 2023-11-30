@@ -62,6 +62,16 @@ const Board = () => {
       document.body.style.overflow = 'auto';
     };
   }, [isModalOpen]);
+
+  const updatePostList = async () => {
+    try {
+      const data = await getPosts();
+      setPosts(data.boards);
+    } catch (error) {
+      console.error('Error updating post list:', error);
+    }
+  };
+
   return (
     <Layout>
       <TopBox>
@@ -74,7 +84,15 @@ const Board = () => {
         </ButtonBox>
       </BottomBox>
       {isModalOpen && <Backdrop onClick={() => setIsModalOpen(false)}></Backdrop>}
-      {isModalOpen && <PostModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && (
+        <PostModal
+          onClose={() => {
+            setIsModalOpen(false);
+            document.body.style.overflow = 'auto';
+            updatePostList(); // 새로운 게시글이 업로드되면 목록 업데이트
+          }}
+        />
+      )}
     </Layout>
   );
 };

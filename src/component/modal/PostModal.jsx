@@ -1,9 +1,33 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import COLORS from '../../styles/color';
 import closeSrc from '../../assets/images/modal_close.svg';
+import { getPosts, postBoard } from '../../api/boardapi';
 
 const PostModal = ({ onClose }) => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const handleSaveClick = async () => {
+    try {
+      if (title.trim() !== '' && content.trim() !== '') {
+        await postBoard({ title, content });
+
+        await getPosts();
+
+        onClose();
+        setTitle('');
+        setContent('');
+        alert('게시글이 업로드 되었습니다.');
+      } else {
+        alert('제목과 내용을 입력하세요.');
+      }
+    } catch (error) {
+      console.error('Error saving post:', error);
+    }
+  };
+
   return (
     <Layout>
       <TopBox>
@@ -12,13 +36,21 @@ const PostModal = ({ onClose }) => {
       </TopBox>
       <BottomBox>
         <TitleBox>
-          <TitleInput placeholder="제목을 입력해주세요." />
+          <TitleInput
+            placeholder="제목을 입력해주세요."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </TitleBox>
         <ContentBox>
-          <ContentInput placeholder="내용을 입력해주세요" />
+          <ContentInput
+            placeholder="내용을 입력해주세요"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
         </ContentBox>
       </BottomBox>
-      <SaveButton>완료</SaveButton>
+      <SaveButton onClick={handleSaveClick}>완료</SaveButton>
     </Layout>
   );
 };

@@ -32,3 +32,25 @@ export const getPost = async ({ boardId }) => {
     throw error;
   }
 };
+
+//게시글 생성하기
+export const postBoard = async ({ title, content }) => {
+  try {
+    const response = await axios.post(
+      'https://woowacourse.store/api/boards',
+      {
+        title: title,
+        content: content,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
+
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
