@@ -11,6 +11,7 @@ import Lanking from './page/Lanking';
 import Board from './page/Board';
 import Login from './page/Login';
 import ChatRoom from './page/ChatRoom';
+import BoardDetail from './page/BoardDetail';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
                   <Route path="/board" element={<Board />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/chatting/:chatId" element={<ChatRoom />} />
+                  <Route path="/board/:boardId" element={<BoardDetail />} />
                 </Route>
               </Routes>
               <Bottom />

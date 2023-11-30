@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import COLORS from '../styles/color';
-import Post from '../component/Post';
 import NewButton from '../component/NewButton';
 import boardimg from '../assets/images/make_board.svg';
 import { getPosts } from '../api/boardapi';
+import PostList from '../component/PostList';
 
 const Board = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,12 @@ const Board = () => {
 
   const renderPosts = (post) => (
     <LinkBox to={`/board/${post.boardId}`} key={post.boardId}>
-      <Post title={post.title} content={post.content} user={post.email} timeinfo={post.createAt} />
+      <PostList
+        title={post.title}
+        content={post.content}
+        user={post.email}
+        timeinfo={post.createAt}
+      />
     </LinkBox>
   );
 
