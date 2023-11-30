@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { authToken } from './loginapi';
+const authToken = localStorage.getItem('authToken');
 
 //게시판 댓글 리스트
 export const getCommentsForBoard = async (boardId) => {

@@ -1,8 +1,5 @@
 import axios from 'axios';
 
-export let authToken = '';
-export let userEmail = '';
-
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post('https://woowacourse.store/api/auth/sign-in', {
@@ -10,16 +7,13 @@ export const loginUser = async (email, password) => {
       password: password,
     });
 
-    authToken = response.data.accessToken;
-    userEmail = email;
+    // 로컬 스토리지에 저장
+    localStorage.setItem('authToken', response.data.accessToken);
+    localStorage.setItem('userEmail', email);
 
-    // 성공적인 응답 처리
-    console.log('응답 데이터:', response.data);
-
-    return authToken; // 토큰 반환
+    return response.data.accessToken;
   } catch (error) {
-    // 에러 처리
-    console.error('에러 발생:', error);
-    throw error; // 에러를 상위로 전파
+    console.error('로그인 오류:', error);
+    throw error;
   }
 };

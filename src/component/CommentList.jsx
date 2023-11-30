@@ -9,12 +9,12 @@ import {
   getCommentsForChat,
   updateComment,
 } from '../api/commentapi';
-import { userEmail } from '../api/loginapi';
 
 const CommentList = ({ apiType }) => {
   const id = window.location.pathname.split('/').pop();
   const [comments, setComments] = useState([]);
   const [editedComment, setEditedComment] = useState(null);
+  const userEmail = localStorage.getItem('userEmail');
 
   useEffect(() => {
     const fetchData = async () => {

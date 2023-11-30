@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { useEffect } from 'react';
 
 import { isLoginState } from '../recoil/atoms';
 import COLORS from '../styles/color';
@@ -8,9 +9,20 @@ import mypageSrc from '../assets/images/mypage.svg';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+  const authToken = localStorage.getItem('authToken');
+
   const handleLogout = () => {
     setIsLogin(false);
+    localStorage.setItem('authToken', '');
+    localStorage.setItem('userEmail', '');
+    console.log('logout', localStorage);
   };
+
+  useEffect(() => {
+    if (authToken) {
+      setIsLogin(true);
+    }
+  }, [isLogin]);
 
   return (
     <Box>

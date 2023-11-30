@@ -17,7 +17,6 @@ const Chatting = ({ chatId }) => {
         const data = await getChatRoom({ chatId });
         setChats(data);
         setLoading(false);
-        console.log(data); // 업데이트된 데이터를 확인
       } catch (error) {
         console.error('Error fetching chat room:', error);
         setError('Failed to fetch chat room data.');

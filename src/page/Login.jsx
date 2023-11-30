@@ -14,6 +14,7 @@ const Login = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const navigate = useNavigate();
+  const authToken = localStorage.getItem('authToken');
 
   const isEmailValid = validateEmail(email);
   const isPasswordValid = validatePassword(password);
@@ -22,28 +23,23 @@ const Login = () => {
     if (isEmailValid && isPasswordValid) {
       try {
         // 로그인 api 호출
-        const response = await loginUser(email, password);
-        // 토큰을 로컬 스토리지에 저장
-        localStorage.setItem('authToken', response);
+        await loginUser(email, password);
         setIsLogin(true);
         navigate('/');
+        console.log('login', localStorage);
       } catch (error) {
-        // 에러 처리 - 예를 들어, 사용자에게 오류 메시지 표시
         console.error('로그인 오류:', error);
       }
     } else {
-      // 입력값이 유효하지 않다면 submitted를 true로 설정하여 에러 메시지를 표시
       setSubmitted(true);
     }
   };
 
   useEffect(() => {
-    // 페이지 로드 시 로컬 스토리지에서 토큰을 읽어와서 로그인 상태를 복원
-    const storedToken = localStorage.getItem('authToken');
-    if (storedToken) {
+    if (authToken) {
       setIsLogin(true);
     }
-  }, []); // 빈 배열은 컴포넌트가 마운트될 때 한 번만 실행
+  }, [isLogin]);
 
   return (
     <Layout>
