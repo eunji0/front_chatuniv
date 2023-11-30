@@ -22,10 +22,10 @@ const CommentList = ({ apiType }) => {
         const pageSize = 2;
         const commentId = 3;
         //더보기 버튼 추가하기
-        if (apiType === 'board') {
+        if (apiType === 'board' && id != 'newChat') {
           const commentData = await getCommentsForBoard(id, pageSize, commentId);
           setComments(commentData.commentResponse);
-        } else if (apiType === 'chat') {
+        } else if (apiType === 'chat' && id != 'newChat') {
           const commentData = await getCommentsForChat(id, pageSize, commentId);
           setComments(commentData.commentResponse);
         }

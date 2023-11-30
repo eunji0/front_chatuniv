@@ -92,7 +92,9 @@ const Main = () => {
       </InLayout>
 
       <BLayout>
-        <NewButton img={chatSrc} text={'채팅방 만들기'} />
+        <Link to={`/chatting/newChat`}>
+          <NewButton img={chatSrc} text={'채팅방 만들기'} />
+        </Link>
       </BLayout>
     </Layout>
   );

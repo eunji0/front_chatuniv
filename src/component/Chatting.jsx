@@ -6,19 +6,26 @@ import outcloseSrc from '../assets/images/out_close.svg';
 import { getChatRoom } from '../api/chatapi';
 import ModeButton from './ModeButton';
 import sendSrc from '../assets/images/send.svg';
-import { postChatAsk } from '../api/chattingapi';
+import { postChat, postChatAsk } from '../api/chattingapi';
 
 const Chatting = ({ chatId }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  console.log(chatId);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getChatRoom({ chatId });
-        setChats(data);
-        setLoading(false);
+        if (chatId !== 'newChat') {
+          // chatId가 'newChat'이 아닌 경우에만 데이터를 가져오도록
+          const data = await getChatRoom({ chatId });
+          setChats(data);
+          setLoading(false);
+        } else {
+          const response = await postChat();
+          console.log(response);
+        }
       } catch (error) {
         console.error('Error fetching chat room:', error);
         setError('Failed to fetch chat room data.');
@@ -37,10 +44,12 @@ const Chatting = ({ chatId }) => {
 
   const handleChatAskSubmit = async (e) => {
     try {
-      const result = await postChatAsk(chatId, prompt);
-      // 채팅 댓글 API 호출 후의 처리
-      console.log('채팅 질문이 성공적으로 등록되었습니다:', result);
-      setPrompt('');
+      if (chatId !== 'newChat') {
+        const result = await postChatAsk(chatId, prompt);
+        // 채팅 댓글 API 호출 후의 처리
+        console.log('채팅 질문이 성공적으로 등록되었습니다:', result);
+        setPrompt('');
+      }
     } catch (error) {
       console.error('채팅 질문 등록 중 에러:', error);
     }
