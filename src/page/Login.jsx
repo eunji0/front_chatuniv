@@ -8,13 +8,14 @@ import COLORS from '../styles/color';
 import { validateEmail, validatePassword } from '../utils/validation';
 import { loginUser } from '../api/loginapi';
 
+export const authToken = localStorage.getItem('authToken');
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const navigate = useNavigate();
-  const authToken = localStorage.getItem('authToken');
 
   const isEmailValid = validateEmail(email);
   const isPasswordValid = validatePassword(password);

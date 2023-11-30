@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const authToken = localStorage.getItem('authToken');
+import { authToken } from '../page/Login';
 
 //채팅방 전체 조회
 export const getChats = async () => {

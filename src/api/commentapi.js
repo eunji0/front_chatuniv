@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const authToken = localStorage.getItem('authToken');
+import { authToken } from '../page/Login';
 
 //게시판 댓글 리스트
 export const getCommentsForBoard = async (boardId) => {

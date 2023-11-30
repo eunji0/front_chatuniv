@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const authToken = localStorage.getItem('authToken');
-
+import { authToken } from '../page/Login';
 //게시글 전체 조회
 export const getPosts = async () => {
   try {

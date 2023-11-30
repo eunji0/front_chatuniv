@@ -6,6 +6,7 @@ import outcloseSrc from '../assets/images/out_close.svg';
 import { getChatRoom } from '../api/chatapi';
 import ModeButton from './ModeButton';
 import sendSrc from '../assets/images/send.svg';
+import { postChatAsk } from '../api/chattingapi';
 
 const Chatting = ({ chatId }) => {
   const [chats, setChats] = useState([]);
@@ -32,7 +33,25 @@ const Chatting = ({ chatId }) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   };
 
-  console.log(chats);
+  const [content, setContent] = useState('');
+
+  const handleChatAskSubmit = async (e) => {
+    try {
+      const result = await postChatAsk(chatId, content);
+      // 채팅 댓글 API 호출 후의 처리
+      console.log('채팅 질문이 성공적으로 등록되었습니다:', result);
+      setContent('');
+    } catch (error) {
+      console.error('채팅 질문 등록 중 에러:', error);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      // 엔터 키가 눌렸을 때 채팅 보내기
+      handleChatAskSubmit();
+    }
+  };
 
   return (
     <InLayout>
@@ -49,8 +68,14 @@ const Chatting = ({ chatId }) => {
         <ContentBox></ContentBox>
         <InputLayout>
           <InputBox>
-            <InputText placeholder="무엇이든 물어보세요!" />
-            <img alt="send" src={sendSrc} />
+            <InputText
+              placeholder="무엇이든 물어보세요!"
+              type="text"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <img alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />
           </InputBox>
         </InputLayout>
       </ContentLayout>
@@ -91,6 +116,12 @@ const ContentBox = styled.div`
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
 `;
 
 const ContentLayout = styled.div`
