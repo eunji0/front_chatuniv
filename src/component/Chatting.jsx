@@ -33,14 +33,14 @@ const Chatting = ({ chatId }) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   };
 
-  const [content, setContent] = useState('');
+  const [prompt, setPrompt] = useState('');
 
   const handleChatAskSubmit = async (e) => {
     try {
-      const result = await postChatAsk(chatId, content);
+      const result = await postChatAsk(chatId, prompt);
       // 채팅 댓글 API 호출 후의 처리
       console.log('채팅 질문이 성공적으로 등록되었습니다:', result);
-      setContent('');
+      setPrompt('');
     } catch (error) {
       console.error('채팅 질문 등록 중 에러:', error);
     }
@@ -71,8 +71,8 @@ const Chatting = ({ chatId }) => {
             <InputText
               placeholder="무엇이든 물어보세요!"
               type="text"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
             />
             <img alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />

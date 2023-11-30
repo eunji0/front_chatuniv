@@ -3,12 +3,12 @@ import axios from 'axios';
 import { authToken } from '../page/Login';
 
 //채팅 질문하기
-export const postChatAsk = async (chatId, content) => {
+export const postChatAsk = async (chatId, prompt) => {
   try {
     const response = await axios.post(
-      `https://woowacourse.store/api/conversations/${chatId}/comments`,
+      `https://woowacourse.store/api/chats/${chatId}/mild`,
       {
-        content: content,
+        prompt: prompt,
       },
       {
         headers: {
