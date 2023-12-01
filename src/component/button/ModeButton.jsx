@@ -6,28 +6,27 @@ import smileSrc from '../../assets/images/smile.svg';
 import angrySrc from '../../assets/images/angry.svg';
 import SpicyModal from '../modal/SpicyModal';
 
-const ModeButton = () => {
+const ModeButton = ({ selectedMode, onSpicyClick, onMildClick }) => {
   const [isSpicyModalOpen, setSpicyModalOpen] = useState(false);
-  const [selectedMode, setSelectedMode] = useState('순한맛');
-  console.log(selectedMode);
 
   const handleSpicyClick = () => {
     setSpicyModalOpen(true);
   };
 
   const handleYesClick = () => {
-    setSelectedMode('매운맛');
+    onSpicyClick('매운맛');
     setSpicyModalOpen(false);
   };
 
-  const handleNoClick = () => {
+  const handleMildClick = () => {
+    onMildClick('순한맛'); // 새로 추가된 함수로 인해 "순한맛" 모드로 변경
     setSpicyModalOpen(false);
   };
 
   return (
     <ButtonLayout>
       <ButtonIn>
-        <ButtonBox onClick={() => setSelectedMode('순한맛')} selected={selectedMode === '순한맛'}>
+        <ButtonBox onClick={handleMildClick} selected={selectedMode === '순한맛'}>
           순한맛
           <img alt="순한맛" src={smileSrc} />
         </ButtonBox>
@@ -37,7 +36,9 @@ const ModeButton = () => {
           <img alt="매운맛" src={angrySrc} />
         </ButtonBox>
       </ButtonIn>
-      {isSpicyModalOpen && <SpicyModal onYesClick={handleYesClick} onNoClick={handleNoClick} />}
+      {isSpicyModalOpen && (
+        <SpicyModal onYesClick={handleYesClick} onNoClick={() => setSpicyModalOpen(false)} />
+      )}
     </ButtonLayout>
   );
 };

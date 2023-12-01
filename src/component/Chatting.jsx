@@ -6,12 +6,14 @@ import outcloseSrc from '../assets/images/out_close.svg';
 import { getChatRoom } from '../api/chatapi';
 import ModeButton from './button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
-import { postChat, postChatAsk } from '../api/chattingapi';
+import { postChat, postMildAsk } from '../api/chattingapi';
 
 const Chatting = ({ chatId }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedMode, setSelectedMode] = useState('순한맛');
+  console.log(selectedMode);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +46,7 @@ const Chatting = ({ chatId }) => {
   const handleChatAskSubmit = async (e) => {
     try {
       if (chatId !== 'newChat') {
-        const result = await postChatAsk(chatId, prompt);
+        const result = await postMildAsk(chatId, prompt);
         // 채팅 댓글 API 호출 후의 처리
         console.log('채팅 질문이 성공적으로 등록되었습니다:', result);
         setPrompt('');
@@ -61,6 +63,10 @@ const Chatting = ({ chatId }) => {
     }
   };
 
+  const handleModeChange = (mode) => {
+    setSelectedMode(mode);
+  };
+
   console.log(chats);
   console.log(chats.conversations);
 
@@ -75,7 +81,11 @@ const Chatting = ({ chatId }) => {
         {/* <img alt="나가기" src={outcloseSrc} /> */}
       </TitleLayout>
       <ContentLayout>
-        <ModeButton />
+        <ModeButton
+          selectedMode={selectedMode}
+          onSpicyClick={() => handleModeChange('매운맛')}
+          onMildClick={() => handleModeChange('순한맛')}
+        />
         <ContentBox>
           {chatId &&
             chats.conversations &&
