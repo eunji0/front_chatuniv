@@ -1,19 +1,20 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import COLORS from '../styles/color';
 import outcloseSrc from '../assets/images/out_close.svg';
 import { getChatRoom } from '../api/chatapi';
 import ModeButton from './button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
-import { postChat, postMildAsk } from '../api/chattingapi';
+import { postChat, postMildAsk, postRawAsk } from '../api/chattingapi';
 
-const Chatting = ({ chatId }) => {
+const Chatting = () => {
+  let chatId = window.location.pathname.split('/').pop();
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedMode, setSelectedMode] = useState('순한맛');
-  console.log(selectedMode);
+  const contentBoxRef = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,9 +24,6 @@ const Chatting = ({ chatId }) => {
           const data = await getChatRoom({ chatId });
           setChats(data);
           setLoading(false);
-        } else {
-          // const response = await postChat();
-          // chatId = response;
         }
       } catch (error) {
         console.error('Error fetching chat room:', error);
@@ -35,7 +33,14 @@ const Chatting = ({ chatId }) => {
     };
 
     fetchData();
-  }, [chatId]);
+  }, [chatId, chats]);
+
+  useEffect(() => {
+    // 컴포넌트가 업데이트될 때마다 스크롤을 아래로 이동
+    if (contentBoxRef.current) {
+      contentBoxRef.current.scrollTop = contentBoxRef.current.scrollHeight;
+    }
+  }, []);
 
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
@@ -45,14 +50,40 @@ const Chatting = ({ chatId }) => {
 
   const handleChatAskSubmit = async (e) => {
     try {
-      if (chatId !== 'newChat') {
-        const result = await postMildAsk(chatId, prompt);
-        // 채팅 댓글 API 호출 후의 처리
-        console.log('채팅 질문이 성공적으로 등록되었습니다:', result);
+      // 현재 채팅방에 대한 여부 확인
+      const isCurrentChat = chatId !== 'newChat';
+
+      // 현재 채팅방일 때만 질문 등록
+      if (isCurrentChat) {
+        let result;
+
+        if (selectedMode === '순한맛') {
+          result = await postMildAsk(chatId, prompt);
+        } else if (selectedMode === '매운맛') {
+          result = await postRawAsk(chatId, prompt);
+        }
+
+        console.log(`${selectedMode} 질문이 성공적으로 등록되었습니다:`, result);
+        setPrompt('');
+      } else {
+        // 새로운 채팅방 생성
+        const response = await postChat();
+        chatId = response;
+        const newUrl = `/chatting/${chatId}`;
+        window.history.pushState({}, '', newUrl);
+
+        // 새로운 채팅방에 대한 질문 등록
+        const result =
+          selectedMode === '순한맛'
+            ? await postMildAsk(chatId, prompt)
+            : await postRawAsk(chatId, prompt);
+
+        console.log(`채팅방 생성 및 ${selectedMode} 질문이 성공적으로 등록되었습니다:`, result);
         setPrompt('');
       }
     } catch (error) {
       console.error('채팅 질문 등록 중 에러:', error);
+      alert(error.response.data);
     }
   };
 
@@ -66,9 +97,6 @@ const Chatting = ({ chatId }) => {
   const handleModeChange = (mode) => {
     setSelectedMode(mode);
   };
-
-  console.log(chats);
-  console.log(chats.conversations);
 
   return (
     <InLayout>
@@ -86,7 +114,7 @@ const Chatting = ({ chatId }) => {
           onSpicyClick={() => handleModeChange('매운맛')}
           onMildClick={() => handleModeChange('순한맛')}
         />
-        <ContentBox>
+        <ContentBox ref={contentBoxRef}>
           {chatId &&
             chats.conversations &&
             chats.conversations.map((conversation) => (
@@ -137,10 +165,10 @@ const AskLayout = styled.div`
 `;
 
 const AnswerLayout = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   padding: 10px;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   gap: 5px;
   align-self: stretch;
