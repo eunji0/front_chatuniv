@@ -19,14 +19,12 @@ const CommentList = ({ apiType }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const pageSize = 2;
-        const commentId = 3;
         //더보기 버튼 추가하기
         if (apiType === 'board' && id != 'newChat') {
-          const commentData = await getCommentsForBoard(id, pageSize, commentId);
+          const commentData = await getCommentsForBoard(id);
           setComments(commentData.commentResponse);
         } else if (apiType === 'chat' && id != 'newChat') {
-          const commentData = await getCommentsForChat(id, pageSize, commentId);
+          const commentData = await getCommentsForChat(id);
           setComments(commentData.commentResponse);
         }
       } catch (error) {

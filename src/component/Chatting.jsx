@@ -12,7 +12,6 @@ const Chatting = ({ chatId }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  console.log(chatId);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +61,9 @@ const Chatting = ({ chatId }) => {
     }
   };
 
+  console.log(chats);
+  console.log(chats.conversations);
+
   return (
     <InLayout>
       <TitleLayout>
@@ -70,11 +72,28 @@ const Chatting = ({ chatId }) => {
         ) : (
           <TitleText>New Chat</TitleText>
         )}
-        <img alt="나가기" src={outcloseSrc} />
+        {/* <img alt="나가기" src={outcloseSrc} /> */}
       </TitleLayout>
       <ContentLayout>
         <ModeButton />
-        <ContentBox></ContentBox>
+        <ContentBox>
+          {chatId &&
+            chats.conversations &&
+            chats.conversations.map((conversation) => (
+              <ChatLayout key={conversation.conversationId}>
+                <AskLayout>
+                  <AskBox>
+                    <AskText>{conversation.content}</AskText>
+                  </AskBox>
+                </AskLayout>
+                <AnswerLayout>
+                  <AnswerBox>
+                    <AnswerText>{conversation.answer}</AnswerText>
+                  </AnswerBox>
+                </AnswerLayout>
+              </ChatLayout>
+            ))}
+        </ContentBox>
         <InputLayout>
           <InputBox>
             <InputText
@@ -94,6 +113,62 @@ const Chatting = ({ chatId }) => {
 
 export default Chatting;
 
+const ChatLayout = styled.div`
+  width: 100%;
+`;
+
+const AskLayout = styled.div`
+  display: flex;
+  padding: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+  align-self: stretch;
+`;
+
+const AnswerLayout = styled.div`
+  width: 90%;
+  display: flex;
+  padding: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+  align-self: stretch;
+`;
+
+const AnswerBox = styled.div`
+  display: flex;
+  padding: 5px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 5px;
+  background: ${COLORS.WHITE};
+`;
+
+const AskBox = styled.div`
+  display: flex;
+  padding: 5px;
+  align-items: flex-end;
+  gap: 10px;
+  border-radius: 5px;
+  background: ${COLORS.PURPLE100};
+`;
+
+const AskText = styled.div`
+  color: ${COLORS.WHITE};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+const AnswerText = styled.div`
+  color: ${COLORS.PURPLE100};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
 const InLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -121,9 +196,9 @@ const ContentBox = styled.div`
   display: flex;
   padding: 0px 10px;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
   flex: 1 0 0;
+  align-items: center;
+  width: 100%;
   align-self: stretch;
   overflow-y: auto;
 

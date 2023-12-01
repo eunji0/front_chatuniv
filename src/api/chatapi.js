@@ -4,6 +4,7 @@ import { authToken } from '../page/Login';
 
 //채팅방 전체 조회
 export const getChats = async () => {
+  console.log(authToken);
   try {
     const response = await axios.get('https://woowacourse.store/api/chats', {
       headers: {

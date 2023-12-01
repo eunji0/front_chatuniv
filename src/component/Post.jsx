@@ -57,7 +57,7 @@ const Post = ({ boardId }) => {
             <TimeBox>{post.createAt}</TimeBox>
           </TimeLayout>
         </UserInfoBox>
-        {userEmail === 'banana@naver.com' ? (
+        {userEmail === post.email ? (
           <ButtonLayout>
             <ButtonBox>수정</ButtonBox>
             <ButtonBox onClick={handleDeleteClick}>삭제</ButtonBox>
