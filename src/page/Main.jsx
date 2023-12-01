@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import Search from '../component/Search';
 import { handleResize } from '../utils/handleResize';
-import NewButton from '../component/NewButton';
+import NewButton from '../component/button/NewButton';
 import chatSrc from '../assets/images/make_chatting.svg';
 import Chat from '../component/Chat';
 import { getChatSearch, getChats } from '../api/chatapi';

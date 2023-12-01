@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import COLORS from '../../styles/color';
 
-const SpicyModal = ({ onClose }) => {
+const SpicyModal = ({ onYesClick, onNoClick }) => {
   return (
     <Layout>
       <TitleText>매운맛으로 설정하시겠습니까?</TitleText>
@@ -11,8 +11,8 @@ const SpicyModal = ({ onClose }) => {
         욕설이나 비방이 섞인 답변을 받을 수 있습니다.
       </ContentText>
       <ButtonLayout>
-        <ButtonBox>예</ButtonBox>
-        <ButtonBox onClick={onClose}>아니오</ButtonBox>
+        <ButtonBox onClick={onYesClick}>예</ButtonBox>
+        <ButtonBox onClick={onNoClick}>아니오</ButtonBox>
       </ButtonLayout>
     </Layout>
   );

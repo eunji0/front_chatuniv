@@ -1,50 +1,43 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import COLORS from '../styles/color';
-import smileSrc from '../assets/images/smile.svg';
-import angrySrc from '../assets/images/angry.svg';
-import SpicyModal from './modal/SpicyModal';
+import COLORS from '../../styles/color';
+import smileSrc from '../../assets/images/smile.svg';
+import angrySrc from '../../assets/images/angry.svg';
+import SpicyModal from '../modal/SpicyModal';
 
 const ModeButton = () => {
   const [isSpicyModalOpen, setSpicyModalOpen] = useState(false);
   const [selectedMode, setSelectedMode] = useState('순한맛');
+  console.log(selectedMode);
 
   const handleSpicyClick = () => {
     setSpicyModalOpen(true);
   };
 
-  const handleModeClick = (mode) => {
-    // Toggle the selected mode
-    setSelectedMode((prevMode) => (prevMode === mode ? '' : mode));
+  const handleYesClick = () => {
+    setSelectedMode('매운맛');
+    setSpicyModalOpen(false);
+  };
+
+  const handleNoClick = () => {
+    setSpicyModalOpen(false);
   };
 
   return (
     <ButtonLayout>
       <ButtonIn>
-        <ButtonBox onClick={() => handleModeClick('순한맛')} selected={selectedMode === '순한맛'}>
+        <ButtonBox onClick={() => setSelectedMode('순한맛')} selected={selectedMode === '순한맛'}>
           순한맛
           <img alt="순한맛" src={smileSrc} />
         </ButtonBox>
         <BarText>|</BarText>
-        <ButtonBox
-          onClick={() => {
-            handleModeClick('매운맛');
-            handleSpicyClick();
-          }}
-          selected={selectedMode === '매운맛'}
-        >
+        <ButtonBox onClick={handleSpicyClick} selected={selectedMode === '매운맛'}>
           매운맛
           <img alt="매운맛" src={angrySrc} />
         </ButtonBox>
       </ButtonIn>
-      {isSpicyModalOpen && (
-        <SpicyModal
-          onClose={() => {
-            setSpicyModalOpen(false);
-          }}
-        />
-      )}
+      {isSpicyModalOpen && <SpicyModal onYesClick={handleYesClick} onNoClick={handleNoClick} />}
     </ButtonLayout>
   );
 };

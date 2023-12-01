@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import COLORS from '../styles/color';
+import COLORS from '../../styles/color';
 
 const NewButton = ({ img, text }) => {
   return (

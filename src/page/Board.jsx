@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import COLORS from '../styles/color';
-import NewButton from '../component/NewButton';
+import NewButton from '../component/button/NewButton';
 import boardimg from '../assets/images/make_board.svg';
 import { getPosts } from '../api/boardapi';
 import PostList from '../component/PostList';

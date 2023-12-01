@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import COLORS from '../styles/color';
 import outcloseSrc from '../assets/images/out_close.svg';
 import { getChatRoom } from '../api/chatapi';
-import ModeButton from './ModeButton';
+import ModeButton from './button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
 import { postChat, postChatAsk } from '../api/chattingapi';
 
