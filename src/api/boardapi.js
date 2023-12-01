@@ -48,8 +48,9 @@ export const postBoard = async ({ title, content }) => {
         },
       },
     );
-
-    return response;
+    if (response.status === 201) {
+      alert('게시글이 업로드 되었습니다.');
+    }
   } catch (error) {
     console.error(error);
   }

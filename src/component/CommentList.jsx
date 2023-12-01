@@ -70,6 +70,10 @@ const CommentList = ({ apiType }) => {
     }
   };
 
+  const truncateEmail = (text, maxLength) => {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  };
+
   return (
     <Layout>
       {comments.length === 0 ? (
@@ -83,7 +87,9 @@ const CommentList = ({ apiType }) => {
                 <CommentBox>
                   <CommentLayout>
                     <MyUserBox>
-                      {comment.email}
+                      {userEmail === comment.email
+                        ? comment.email
+                        : truncateEmail(comment.email, 2)}
                       {editedComment === comment.commentId ? (
                         <FixBox
                           onClick={() => handleUpdateComment(comment.commentId, comment.content)}

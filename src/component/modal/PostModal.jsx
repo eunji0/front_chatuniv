@@ -19,7 +19,6 @@ const PostModal = ({ onClose }) => {
         onClose();
         setTitle('');
         setContent('');
-        alert('게시글이 업로드 되었습니다.');
       } else {
         alert('제목과 내용을 입력하세요.');
       }
