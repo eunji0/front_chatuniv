@@ -28,12 +28,12 @@ const CommentList = ({ apiType }) => {
           setComments(commentData.commentResponse);
         }
       } catch (error) {
-        console.error('Error fetching comments:', error);
+        alert('Error fetching comments:', error);
       }
     };
 
     fetchData();
-  }, [id]);
+  }, []);
 
   const handleDeleteComment = async (commentId) => {
     try {

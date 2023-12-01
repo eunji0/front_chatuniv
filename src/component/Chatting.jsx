@@ -40,7 +40,7 @@ const Chatting = () => {
     if (contentBoxRef.current) {
       contentBoxRef.current.scrollTop = contentBoxRef.current.scrollHeight;
     }
-  }, []);
+  }, [contentBoxRef.current]);
 
   const truncateText = (text, maxLength) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;

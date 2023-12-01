@@ -99,6 +99,7 @@ export const getCommentsForChat = async (chatId) => {
 
 //채팅 댓글 생성
 export const postCommentForChat = async (chatId, content) => {
+  console.log(chatId, authToken);
   try {
     const response = await axios.post(
       `https://woowacourse.store/api/conversations/${chatId}/comments`,

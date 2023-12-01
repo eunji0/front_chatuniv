@@ -53,7 +53,7 @@ const Main = () => {
         console.error('Error chats:', error);
         setError('로그인해주세요.');
       });
-  }, []);
+  }, [error]);
 
   const renderChatRoom = (chat) => (
     <Link
