@@ -1,23 +1,50 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import COLORS from '../styles/color';
 import smileSrc from '../assets/images/smile.svg';
 import angrySrc from '../assets/images/angry.svg';
+import SpicyModal from './modal/SpicyModal';
 
 const ModeButton = () => {
+  const [isSpicyModalOpen, setSpicyModalOpen] = useState(false);
+  const [selectedMode, setSelectedMode] = useState('순한맛');
+
+  const handleSpicyClick = () => {
+    setSpicyModalOpen(true);
+  };
+
+  const handleModeClick = (mode) => {
+    // Toggle the selected mode
+    setSelectedMode((prevMode) => (prevMode === mode ? '' : mode));
+  };
+
   return (
     <ButtonLayout>
       <ButtonIn>
-        <ButtonBox>
+        <ButtonBox onClick={() => handleModeClick('순한맛')} selected={selectedMode === '순한맛'}>
           순한맛
           <img alt="순한맛" src={smileSrc} />
         </ButtonBox>
         <BarText>|</BarText>
-        <ButtonBox>
+        <ButtonBox
+          onClick={() => {
+            handleModeClick('매운맛');
+            handleSpicyClick();
+          }}
+          selected={selectedMode === '매운맛'}
+        >
           매운맛
           <img alt="매운맛" src={angrySrc} />
         </ButtonBox>
       </ButtonIn>
+      {isSpicyModalOpen && (
+        <SpicyModal
+          onClose={() => {
+            setSpicyModalOpen(false);
+          }}
+        />
+      )}
     </ButtonLayout>
   );
 };
@@ -50,7 +77,7 @@ const ButtonBox = styled.button`
   align-items: center;
   gap: 2px;
   border-radius: 20px;
-  background: ${COLORS.PURPLE30};
+  background: ${(props) => (props.selected ? COLORS.PURPLE30 : COLORS.WHITE)};
   border: none;
 
   color: ${COLORS.BLACK};
@@ -58,6 +85,10 @@ const ButtonBox = styled.button`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  &:hover {
+    background: ${COLORS.PURPLE30};
+  }
 `;
 
 const BarText = styled.div`

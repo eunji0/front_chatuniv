@@ -65,16 +65,11 @@ export const postChat = async () => {
 
     // 성공적으로 생성된 경우
     if (response.status === 201) {
-      console.log('채팅방이 성공적으로 생성되었습니다.');
-
-      console.log('headers', response.headers);
-
       // 응답 헤더에서 Location 값을 가져오기
       const locationHeader = response.headers['location'];
       console.log('생성된 채팅방의 위치:', locationHeader);
-      console.log('생성된 채팅방의 위치:', response.headers.location);
 
-      // 이제 locationHeader를 사용하여 적절한 처리를 할 수 있습니다.
+      return +locationHeader.split('/').pop();
     }
   } catch (error) {
     // 에러 처리

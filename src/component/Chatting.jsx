@@ -22,8 +22,8 @@ const Chatting = ({ chatId }) => {
           setChats(data);
           setLoading(false);
         } else {
-          const response = await postChat();
-          console.log(response);
+          // const response = await postChat();
+          // chatId = response;
         }
       } catch (error) {
         console.error('Error fetching chat room:', error);
