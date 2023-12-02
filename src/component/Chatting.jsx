@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 
 import COLORS from '../styles/color';
-import outcloseSrc from '../assets/images/out_close.svg';
 import { getChatRoom } from '../api/chatapi';
 import ModeButton from './button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
@@ -48,7 +47,7 @@ const Chatting = () => {
 
   const [prompt, setPrompt] = useState('');
 
-  const handleChatAskSubmit = async (e) => {
+  const handleChatAskSubmit = async () => {
     try {
       // 현재 채팅방에 대한 여부 확인
       const isCurrentChat = chatId !== 'newChat';
@@ -141,7 +140,7 @@ const Chatting = () => {
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <img alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />
+            <ImgBox2 alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />
           </InputBox>
         </InputLayout>
       </ContentLayout>
@@ -150,6 +149,11 @@ const Chatting = () => {
 };
 
 export default Chatting;
+
+const ImgBox2 = styled.img`
+  width: 26px;
+  height: 26px;
+`;
 
 const ChatLayout = styled.div`
   width: 100%;
@@ -175,6 +179,7 @@ const AnswerLayout = styled.div`
 `;
 
 const AnswerBox = styled.div`
+  width: 90%;
   display: flex;
   padding: 5px;
   align-items: flex-start;
@@ -189,6 +194,7 @@ const AskBox = styled.div`
   align-items: flex-end;
   gap: 10px;
   border-radius: 5px;
+  width: auto;
   background: ${COLORS.PURPLE100};
 `;
 

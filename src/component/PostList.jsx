@@ -27,7 +27,7 @@ const Layout = styled.div`
   gap: 10px;
   align-self: stretch;
   border-radius: 10px 10px 0px 0px;
-  border-bottom: 1px solid ${COLORS.GRAY};
+  border-bottom: 2px solid ${COLORS.GRAY};
   background: ${COLORS.WHITE};
 `;
 

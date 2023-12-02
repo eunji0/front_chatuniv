@@ -9,10 +9,10 @@ const Members = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSave = async (e) => {
+  const handleSave = async () => {
     try {
       console.log(currentPassword, newPassword, confirmPassword);
-      const reponse = await updatePassword({
+      await updatePassword({
         currentPassword,
         newPassword,
         newPasswordCheck: confirmPassword,

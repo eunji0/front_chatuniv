@@ -28,12 +28,12 @@ const ModeButton = ({ selectedMode, onSpicyClick, onMildClick }) => {
       <ButtonIn>
         <ButtonBox onClick={handleMildClick} selected={selectedMode === '순한맛'}>
           순한맛
-          <img alt="순한맛" src={smileSrc} />
+          <ImgBox alt="순한맛" src={smileSrc} />
         </ButtonBox>
         <BarText>|</BarText>
         <ButtonBox onClick={handleSpicyClick} selected={selectedMode === '매운맛'}>
           매운맛
-          <img alt="매운맛" src={angrySrc} />
+          <ImgBox alt="매운맛" src={angrySrc} />
         </ButtonBox>
       </ButtonIn>
       {isSpicyModalOpen && (
@@ -45,6 +45,11 @@ const ModeButton = ({ selectedMode, onSpicyClick, onMildClick }) => {
 
 export default ModeButton;
 
+const ImgBox = styled.img`
+  width: 15px;
+  height: 16px;
+`;
+
 const ButtonLayout = styled.div`
   display: flex;
   padding-right: 0px;
@@ -52,9 +57,11 @@ const ButtonLayout = styled.div`
   align-items: flex-end;
   gap: 10px;
   align-self: stretch;
+  padding-right: 10px;
 `;
 
 const ButtonIn = styled.div`
+  width: auto;
   display: flex;
   padding: 5px;
   justify-content: center;
@@ -73,6 +80,7 @@ const ButtonBox = styled.button`
   border-radius: 20px;
   background: ${(props) => (props.selected ? COLORS.PURPLE30 : COLORS.WHITE)};
   border: none;
+  min-width: 70px;
 
   color: ${COLORS.BLACK};
   font-size: 14px;

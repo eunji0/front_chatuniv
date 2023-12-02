@@ -30,7 +30,7 @@ const PostModal = ({ onClose }) => {
   return (
     <Layout>
       <TopBox>
-        <img alt="close" src={closeSrc} onClick={onClose} />
+        <ImgBox alt="close" src={closeSrc} onClick={onClose} />
         <TopTextBox>게시글 작성하기</TopTextBox>
       </TopBox>
       <BottomBox>
@@ -56,12 +56,17 @@ const PostModal = ({ onClose }) => {
 
 export default PostModal;
 
+const ImgBox = styled.img`
+  width: 25px;
+  height: 26px;
+`;
+
 const Layout = styled.div`
   z-index: 100;
   position: relative;
   bottom: 500px;
   display: flex;
-  width: 450px;
+  max-width: 450px;
   padding-bottom: 0px;
   flex-direction: column;
   align-items: center;
@@ -170,6 +175,7 @@ const SaveButton = styled.button`
   border-radius: 50px;
   background: ${COLORS.BLACK};
   margin-bottom: 20px;
+  width: auto;
 
   color: ${COLORS.WHITE};
   font-size: 14px;

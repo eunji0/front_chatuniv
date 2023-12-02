@@ -15,6 +15,7 @@ export default NewButton;
 
 const Layout = styled.div`
   display: flex;
+  width: auto;
   padding: 10px;
   justify-content: center;
   align-items: center;
@@ -34,5 +35,6 @@ const Buttonimg = styled.img`
 const ButtonText = styled.div`
   color: ${COLORS.BLACK};
   font-size: 16px;
+  width: auto;
   font-weight: 400;
 `;

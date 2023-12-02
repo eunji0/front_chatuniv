@@ -162,11 +162,13 @@ const MyUserBox = styled.div`
 
 const EditBox = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
+  width: auto;
   gap: 5px;
 `;
 
 const FixBox = styled.div`
+  width: auto;
   border-radius: 5px;
   border: 1px solid ${COLORS.PURPLE100};
   background: ${COLORS.WHITE};

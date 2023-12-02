@@ -12,8 +12,8 @@ const MypageHeader = () => {
   return (
     <Box>
       <Layout>
-        <Link to="/mypage">
-          <img alt="back" src={goBackSrc} />
+        <Link style={{ width: 'auto' }} to="/mypage">
+          <ImgBox alt="back" src={goBackSrc} />
         </Link>
         <TitleBox>
           <Title>{title}</Title>
@@ -24,6 +24,11 @@ const MypageHeader = () => {
 };
 
 export default MypageHeader;
+
+const ImgBox = styled.img`
+  width: 26px;
+  height: 26px;
+`;
 
 const Box = styled.div`
   width: 100%;
@@ -47,6 +52,7 @@ const TitleBox = styled.div`
 `;
 
 const Title = styled.div`
+  width: auto;
   display: flex;
   padding: 10px;
   align-items: flex-start;

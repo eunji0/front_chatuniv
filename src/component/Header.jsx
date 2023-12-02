@@ -36,9 +36,9 @@ const Header = () => {
           ) : (
             <Link to="/login">로그인</Link>
           )}
-          <Link to="/mypage/members">
+          <LinkBox to="/mypage/members">
             <Mypage alt="mypage" src={mypageSrc} />
-          </Link>
+          </LinkBox>
         </UserBox>
       </Layout>
     </Box>
@@ -50,7 +50,9 @@ export default Header;
 const Logout = styled.div`
   color: ${COLORS.PURPLE100};
   cursor: pointer;
+  width: auto;
 `;
+
 const Box = styled.div`
   width: 100%;
 `;
@@ -85,24 +87,27 @@ const UserBox = styled.div`
   display: flex;
   padding: 5px;
   align-items: center;
-  gap: 20px;
+  justify-content: flex-end;
+  gap: 10px;
   color: ${COLORS.PURPLE100};
   font-size: 16px;
+  max-width: 120px;
 
-  @media (max-width: 529px) {
-    font-size: 12px;
-  }
-`;
-
-const LogoutButton = styled.button`
-  color: ${COLORS.PURPLE100};
-  font-size: 16px;
   @media (max-width: 529px) {
     font-size: 12px;
   }
 `;
 
 const Mypage = styled.img`
+  width: 35px;
+  height: 35px;
+  @media (max-width: 529px) {
+    width: 25px;
+    height: 25px;
+  }
+`;
+
+const LinkBox = styled(Link)`
   width: 35px;
   height: 35px;
   @media (max-width: 529px) {

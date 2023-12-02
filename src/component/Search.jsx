@@ -45,7 +45,7 @@ const Search = () => {
         <WordLayout>
           <WordBox>
             <ClearSearchBtn onClick={handleClearSearch}>
-              <ImgBox alt="close" src={closeSrc} />
+              <ImgBox2 alt="close" src={closeSrc} />
             </ClearSearchBtn>
             <span>{searchTerm}</span>
           </WordBox>
@@ -69,9 +69,14 @@ const Search = () => {
 export default Search;
 
 const ImgBox = styled.img`
-  width: 25px;
-  height: 25px;
+  width: 100% !important;
+  height: 100% !important;
 `;
+
+const ImgBox2 = styled.img`
+  height: 15px;
+`;
+
 const Layout = styled.form`
   display: flex;
   padding: 10px;
@@ -102,9 +107,11 @@ const SearchBtn = styled.button`
   width: 25px;
   height: 25px;
   margin-right: 10px;
+  padding: 0;
 `;
 
 const WordBox = styled.div`
+  width: auto;
   display: flex;
   padding: 5px;
   align-items: center;
@@ -125,6 +132,8 @@ const ClearSearchBtn = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
+  width: 25px;
+  padding: 0;
 `;
 
 const WordLayout = styled.div`

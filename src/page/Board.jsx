@@ -72,6 +72,8 @@ const Board = () => {
     }
   };
 
+  console.log(isModalOpen);
+
   return (
     <Layout>
       <TopBox>
@@ -79,7 +81,9 @@ const Board = () => {
         <DataBox>{renderPostList()}</DataBox>
       </TopBox>
       <BottomBox>
-        <NewButton onClick={handleNewButtonClick} img={boardimg} text={'게시글 작성하기'} />
+        <ButtonBox onClick={handleNewButtonClick}>
+          <NewButton img={boardimg} text={'게시글 작성하기'} />
+        </ButtonBox>
       </BottomBox>
       {isModalOpen && <Backdrop onClick={() => setIsModalOpen(false)}></Backdrop>}
       {isModalOpen && (
@@ -97,6 +101,12 @@ const Board = () => {
 
 export default Board;
 
+const ButtonBox = styled.div`
+  background-color: transparent;
+  border: none;
+  width: auto;
+`;
+
 const Backdrop = styled.div`
   position: fixed;
   top: 0;
@@ -109,7 +119,8 @@ const Backdrop = styled.div`
 
 const Layout = styled.div`
   display: flex;
-  padding: 5px 10px 25px 10px;
+  gap: 5px;
+  padding: 5px 10px 15px 10px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -124,7 +135,7 @@ const Layout = styled.div`
 `;
 
 const LinkBox = styled(Link)`
-  /* width: 100%; */
+  width: 100%;
 `;
 
 const TopBox = styled.div`
@@ -163,7 +174,7 @@ const DataBox = styled.div`
   align-items: flex-start;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid ${COLORS.GRAY};
+  border: 2px solid ${COLORS.GRAY};
   background: ${COLORS.WHITE};
   overflow-y: auto !important;
 

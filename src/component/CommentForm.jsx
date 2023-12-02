@@ -10,7 +10,7 @@ const CommentForm = ({ apiType }) => {
   const id = window.location.pathname.split('/').pop();
   const [content, setContent] = useState('');
 
-  const handleCommentSubmit = async (e) => {
+  const handleCommentSubmit = async () => {
     try {
       if (apiType === 'board') {
         const result = await postCommentForBoard(id, content);
@@ -33,7 +33,7 @@ const CommentForm = ({ apiType }) => {
       <CommentFormBox>
         <Commentinput type="text" value={content} onChange={(e) => setContent(e.target.value)} />
         <SendBox type="submit" onClick={handleCommentSubmit}>
-          <img alt="send" src={sendSrc} />
+          <ImgBox alt="send" src={sendSrc} />
         </SendBox>
       </CommentFormBox>
     </Layout>
@@ -41,6 +41,11 @@ const CommentForm = ({ apiType }) => {
 };
 
 export default CommentForm;
+
+const ImgBox = styled.img`
+  width: 26px;
+  height: 26px;
+`;
 
 const Layout = styled.div`
   display: flex;
@@ -76,11 +81,9 @@ const Commentinput = styled.input`
 `;
 
 const SendBox = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  width: auto;
+  padding: 0;
   gap: 10px;
-  align-self: stretch;
   background-color: transparent;
   border: none;
   outline: none;
