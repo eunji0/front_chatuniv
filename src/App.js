@@ -12,6 +12,9 @@ import Board from './page/Board';
 import Login from './page/Login';
 import ChatRoom from './page/ChatRoom';
 import BoardDetail from './page/BoardDetail';
+import Members from './page/mypage/Members';
+import MyPage from './page/MyPage';
+import MypageHeader from './component/MypageHeader';
 
 const App = () => {
   return (
@@ -29,6 +32,10 @@ const App = () => {
                   <Route path="/login" element={<Login />} />
                   <Route path="/chatting/:chatId" element={<ChatRoom />} />
                   <Route path="/board/:boardId" element={<BoardDetail />} />
+                  <Route path="/mypage" element={<MyPage />} />
+                </Route>
+                <Route element={<MypageHeaderLayout />}>
+                  <Route path="/mypage/members" element={<Members />} />
                 </Route>
               </Routes>
               <Bottom />
@@ -46,6 +53,15 @@ const HeaderLayout = () => {
   return (
     <>
       <Header />
+      {<Outlet />}
+    </>
+  );
+};
+
+const MypageHeaderLayout = () => {
+  return (
+    <>
+      <MypageHeader />
       {<Outlet />}
     </>
   );
