@@ -45,12 +45,12 @@ const Search = () => {
         <WordLayout>
           <WordBox>
             <ClearSearchBtn onClick={handleClearSearch}>
-              <img alt="close" src={closeSrc} />
+              <ImgBox alt="close" src={closeSrc} />
             </ClearSearchBtn>
             <span>{searchTerm}</span>
           </WordBox>
           <SearchBtn type="submit">
-            <img alt="search" src={searchSrc} />
+            <ImgBox alt="search" src={searchSrc} />
           </SearchBtn>
         </WordLayout>
       )}
@@ -68,6 +68,10 @@ const Search = () => {
 
 export default Search;
 
+const ImgBox = styled.img`
+  width: 25px;
+  height: 25px;
+`;
 const Layout = styled.form`
   display: flex;
   padding: 10px;

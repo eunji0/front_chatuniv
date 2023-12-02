@@ -17,7 +17,7 @@ const Members = () => {
         newPassword,
         newPasswordCheck: confirmPassword,
       });
-      console.log(reponse);
+      alert('비밀번호가 변경되었습니다');
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');

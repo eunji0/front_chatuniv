@@ -19,8 +19,8 @@ const Layout = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
-  cursor: pointer;
 
+  cursor: pointer;
   border-radius: 50px;
   background: ${COLORS.WHITE};
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

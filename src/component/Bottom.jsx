@@ -18,19 +18,27 @@ const Bottom = () => {
 
   return (
     <Layout>
-      <Link to="/board">
-        {isBoardPath ? <img src={FillBoard} alt="board" /> : <img src={Board} alt="none_board" />}
-      </Link>
-      <Link to="/">
-        {isHomePath ? <img src={FillHome} alt="home" /> : <img src={Home} alt="none_home" />}
-      </Link>
-      <Link to="/lanking">
-        {isLankingPath ? (
-          <img src={FillLanking} alt="lanking" />
+      <LinkBox to="/board">
+        {isBoardPath ? (
+          <ImgSize src={FillBoard} alt="board" />
         ) : (
-          <img src={Lanking} alt="none_lanking" />
+          <ImgSize src={Board} alt="none_board" />
         )}
-      </Link>
+      </LinkBox>
+      <LinkBox to="/">
+        {isHomePath ? (
+          <ImgSize src={FillHome} alt="home" />
+        ) : (
+          <ImgSize src={Home} alt="none_home" />
+        )}
+      </LinkBox>
+      <LinkBox to="/lanking">
+        {isLankingPath ? (
+          <ImgSize src={FillLanking} alt="lanking" />
+        ) : (
+          <ImgSize src={Lanking} alt="none_lanking" />
+        )}
+      </LinkBox>
     </Layout>
   );
 };
@@ -41,9 +49,21 @@ const Layout = styled.div`
   display: flex;
   padding: 15px 30px 25px 30px;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   align-self: stretch;
 
   border-top: 1px solid ${COLORS.GRAY};
   background: ${COLORS.WHITE};
+`;
+
+const ImgSize = styled.img`
+  width: 30px;
+  height: 30px;
+`;
+
+const LinkBox = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
 `;

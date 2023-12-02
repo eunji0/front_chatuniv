@@ -36,7 +36,7 @@ const Header = () => {
           ) : (
             <Link to="/login">로그인</Link>
           )}
-          <Link to="/mypage">
+          <Link to="/mypage/members">
             <Mypage alt="mypage" src={mypageSrc} />
           </Link>
         </UserBox>

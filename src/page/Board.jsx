@@ -79,9 +79,7 @@ const Board = () => {
         <DataBox>{renderPostList()}</DataBox>
       </TopBox>
       <BottomBox>
-        <ButtonBox onClick={handleNewButtonClick}>
-          <NewButton img={boardimg} text={'게시글 작성하기'} />
-        </ButtonBox>
+        <NewButton onClick={handleNewButtonClick} img={boardimg} text={'게시글 작성하기'} />
       </BottomBox>
       {isModalOpen && <Backdrop onClick={() => setIsModalOpen(false)}></Backdrop>}
       {isModalOpen && (
@@ -114,7 +112,7 @@ const Layout = styled.div`
   padding: 5px 10px 25px 10px;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   flex: 1 0 0;
   align-self: stretch;
   overflow-y: auto !important;
@@ -126,7 +124,7 @@ const Layout = styled.div`
 `;
 
 const LinkBox = styled(Link)`
-  width: 100%;
+  /* width: 100%; */
 `;
 
 const TopBox = styled.div`
@@ -146,10 +144,6 @@ const BottomBox = styled.div`
   align-self: stretch;
 `;
 
-const ButtonBox = styled.button`
-  background-color: transparent;
-  border: none;
-`;
 const BoardText = styled.div`
   display: flex;
   padding: 10px;

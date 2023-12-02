@@ -92,9 +92,9 @@ const Main = () => {
       </InLayout>
 
       <BLayout>
-        <Link to={`/chatting/newChat`}>
+        <LinkBox to={`/chatting/newChat`}>
           <NewButton img={chatSrc} text={'채팅방 만들기'} />
-        </Link>
+        </LinkBox>
       </BLayout>
     </Layout>
   );
@@ -102,6 +102,16 @@ const Main = () => {
 
 export default Main;
 
+const LinkBox = styled(Link)`
+  display: flex;
+  padding: 0px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  z-index: 98;
+  cursor: pointer;
+`;
 const Layout = styled.div`
   display: flex;
   padding: 0px 10px 10px 10px;
@@ -129,9 +139,8 @@ const BLayout = styled.div`
   padding: 0px;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 15px;
-  z-index: 98;
-  cursor: pointer;
 `;
 
 const ListBox = styled.div`

@@ -33,7 +33,7 @@ const CommentList = ({ apiType }) => {
     };
 
     fetchData();
-  }, []);
+  }, [comments]);
 
   const handleDeleteComment = async (commentId) => {
     try {
