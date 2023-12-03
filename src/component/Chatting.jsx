@@ -6,13 +6,16 @@ import { getChatRoom } from '../api/chatapi';
 import ModeButton from './button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
 import commentSrc from '../assets/images/comment.svg';
+import fillCommentSrc from '../assets/images/fill_comment.svg';
 import { postChat, postMildAsk, postRawAsk } from '../api/chattingapi';
+import { truncateText } from '../utils/utils';
 
 const Chatting = () => {
   let chatId = window.location.pathname.split('/').pop();
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
   const [selectedMode, setSelectedMode] = useState('순한맛');
   const contentBoxRef = useRef();
 
@@ -42,10 +45,6 @@ const Chatting = () => {
       contentBoxRef.current.scrollTop = contentBoxRef.current.scrollHeight;
     }
   }, [contentBoxRef.current]);
-
-  const truncateText = (text, maxLength) => {
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-  };
 
   const [prompt, setPrompt] = useState('');
 
@@ -128,10 +127,13 @@ const Chatting = () => {
                 <AnswerLayout>
                   <AnswerBox>
                     <AnswerText>{conversation.answer}</AnswerText>
-                    <CommentBox>
-                      <CommentImg alt="댓글 달기" src={commentSrc} />
-                    </CommentBox>
                   </AnswerBox>
+                  <CommentBox
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    <CommentImg alt="댓글 달기" src={isHovered ? fillCommentSrc : commentSrc} />
+                  </CommentBox>
                 </AnswerLayout>
               </ChatLayout>
             ))}
@@ -155,19 +157,13 @@ const Chatting = () => {
 
 export default Chatting;
 
-const CommentBox = styled.button`
-  display: flex;
-  padding: 5px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.5);
-`;
-
 const CommentImg = styled.img`
   width: 16px;
   height: 12px;
+
+  &:hover {
+    fill: ${COLORS.BLACK};
+  }
 `;
 
 const ImgBox2 = styled.img`
@@ -188,18 +184,41 @@ const AskLayout = styled.div`
   align-self: stretch;
 `;
 
+const CommentBox = styled.button`
+  border: none;
+  display: none;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.5);
+
+  &:hover {
+    > ${CommentImg} {
+      content: url(${fillCommentSrc});
+    }
+  }
+`;
+
 const AnswerLayout = styled.div`
   width: 100%;
   display: flex;
   padding: 10px;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   gap: 5px;
   align-self: stretch;
+
+  &:hover {
+    > ${CommentBox} {
+      display: flex;
+    }
+  }
 `;
 
 const AnswerBox = styled.div`
-  width: 90%;
+  width: 80%;
   display: flex;
   padding: 5px;
   align-items: flex-start;
