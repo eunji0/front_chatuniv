@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import userSrc from '../assets/images/user.svg';
-import COLORS from '../styles/color';
+import COLORS from '../../styles/color';
 import {
   deleteComment,
   getCommentsForBoard,
   getCommentsForChat,
   updateComment,
-} from '../api/commentapi';
+} from '../../api/commentapi';
+import userSrc from '../../assets/images/user.svg';
 
 const CommentList = ({ apiType }) => {
   const id = window.location.pathname.split('/').pop();

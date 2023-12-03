@@ -32,8 +32,9 @@ const Chatting = () => {
     };
 
     fetchData();
-  }, [chatId, chats]);
+  }, [chatId]);
 
+  console.log(chats);
   useEffect(() => {
     // 컴포넌트가 업데이트될 때마다 스크롤을 아래로 이동
     if (contentBoxRef.current) {

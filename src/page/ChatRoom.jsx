@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Chatting from '../component/Chatting';
-import Comment from '../component/Comment';
+import Comment from '../component/comment/Comment';
 
 const ChatRoom = () => {
   return (

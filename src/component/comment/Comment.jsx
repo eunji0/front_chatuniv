@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
-import COLORS from '../styles/color';
+import COLORS from '../../styles/color';
 
 const Comment = ({ apiType }) => {
   return (

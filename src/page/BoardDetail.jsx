@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Post from '../component/Post';
-import Comment from '../component/Comment';
+import Comment from '../component/comment/Comment';
 
 const BoardDetail = () => {
   const boardId = window.location.pathname.split('/').pop();

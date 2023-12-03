@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import userSrc from '../assets/images/user.svg';
-import sendSrc from '../assets/images/send.svg';
-import COLORS from '../styles/color';
-import { postCommentForBoard, postCommentForChat } from '../api/commentapi';
+import userSrc from '../../assets/images/user.svg';
+import sendSrc from '../../assets/images/send.svg';
+import COLORS from '../../styles/color';
+import { postCommentForBoard, postCommentForChat } from '../../api/commentapi';
 
 const CommentForm = ({ apiType }) => {
   const id = window.location.pathname.split('/').pop();
