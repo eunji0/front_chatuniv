@@ -9,44 +9,22 @@ import commentSrc from '../assets/images/comment.svg';
 import fillCommentSrc from '../assets/images/fill_comment.svg';
 import { postChat, postMildAsk, postRawAsk } from '../api/chattingapi';
 import { truncateText } from '../utils/utils';
+import ChatCommentForm from './comment/ChatCommentForm';
 
-const Chatting = () => {
-  let chatId = window.location.pathname.split('/').pop();
-  const [chats, setChats] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const Chatting = ({ chatId, chats, loadingTrue }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [prompt, setPrompt] = useState('');
+  const [changeComment, setChangeComment] = useState(false);
   const [selectedMode, setSelectedMode] = useState('순한맛');
+  const [isContent, setContent] = useState({});
   const contentBoxRef = useRef();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (chatId !== 'newChat') {
-          // chatId가 'newChat'이 아닌 경우에만 데이터를 가져오도록
-          const data = await getChatRoom({ chatId });
-          setChats(data);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Error fetching chat room:', error);
-        setError('Failed to fetch chat room data.');
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [chatId]);
-
-  console.log(chats);
   useEffect(() => {
     // 컴포넌트가 업데이트될 때마다 스크롤을 아래로 이동
     if (contentBoxRef.current) {
       contentBoxRef.current.scrollTop = contentBoxRef.current.scrollHeight;
     }
-  }, [contentBoxRef.current]);
-
-  const [prompt, setPrompt] = useState('');
+  }, [chats]);
 
   const handleChatAskSubmit = async () => {
     try {
@@ -62,7 +40,7 @@ const Chatting = () => {
         } else if (selectedMode === '매운맛') {
           result = await postRawAsk(chatId, prompt);
         }
-
+        loadingTrue();
         console.log(`${selectedMode} 질문이 성공적으로 등록되었습니다:`, result);
         setPrompt('');
       } else {
@@ -78,6 +56,7 @@ const Chatting = () => {
             ? await postMildAsk(chatId, prompt)
             : await postRawAsk(chatId, prompt);
 
+        loadingTrue();
         console.log(`채팅방 생성 및 ${selectedMode} 질문이 성공적으로 등록되었습니다:`, result);
         setPrompt('');
       }
@@ -89,7 +68,6 @@ const Chatting = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      // 엔터 키가 눌렸을 때 채팅 보내기
       handleChatAskSubmit();
     }
   };
@@ -98,15 +76,19 @@ const Chatting = () => {
     setSelectedMode(mode);
   };
 
+  const handleCommentForm = (id, content) => {
+    setChangeComment(true);
+    setContent({ id, content });
+  };
+
   return (
     <InLayout>
       <TitleLayout>
-        {chats.conversations && chats.conversations.length > 0 ? (
-          <TitleText>{truncateText(chats.conversations[0].content, 20)}</TitleText>
+        {chats && chats.length > 0 ? (
+          <TitleText>{truncateText(chats[0].content, 20)}</TitleText>
         ) : (
           <TitleText>New Chat</TitleText>
         )}
-        {/* <img alt="나가기" src={outcloseSrc} /> */}
       </TitleLayout>
       <ContentLayout>
         <ModeButton
@@ -114,10 +96,10 @@ const Chatting = () => {
           onSpicyClick={() => handleModeChange('매운맛')}
           onMildClick={() => handleModeChange('순한맛')}
         />
+
         <ContentBox ref={contentBoxRef}>
-          {chatId &&
-            chats.conversations &&
-            chats.conversations.map((conversation) => (
+          {chats.length > 0 &&
+            chats.map((conversation) => (
               <ChatLayout key={conversation.conversationId}>
                 <AskLayout>
                   <AskBox>
@@ -131,6 +113,9 @@ const Chatting = () => {
                   <CommentBox
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
+                    onClick={() =>
+                      handleCommentForm(conversation.conversationId, conversation.answer)
+                    }
                   >
                     <CommentImg alt="댓글 달기" src={isHovered ? fillCommentSrc : commentSrc} />
                   </CommentBox>
@@ -138,17 +123,22 @@ const Chatting = () => {
               </ChatLayout>
             ))}
         </ContentBox>
+
         <InputLayout>
-          <InputBox>
-            <InputText
-              placeholder="무엇이든 물어보세요!"
-              type="text"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <ImgBox2 alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />
-          </InputBox>
+          {changeComment ? (
+            <ChatCommentForm info={isContent} resetChange={() => setChangeComment(false)} />
+          ) : (
+            <InputBox>
+              <InputText
+                placeholder="무엇이든 물어보세요!"
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <ImgBox2 alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />
+            </InputBox>
+          )}
         </InputLayout>
       </ContentLayout>
     </InLayout>

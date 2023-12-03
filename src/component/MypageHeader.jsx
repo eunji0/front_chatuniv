@@ -12,7 +12,7 @@ const MypageHeader = () => {
   return (
     <Box>
       <Layout>
-        <Link style={{ width: 'auto' }} to="/mypage">
+        <Link style={{ width: 'auto' }} to="/">
           <ImgBox alt="back" src={goBackSrc} />
         </Link>
         <TitleBox>

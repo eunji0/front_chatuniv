@@ -1,22 +1,89 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 
 import Chatting from '../component/Chatting';
 import Comment from '../component/comment/Comment';
+import { getChatRoom } from '../api/chatapi';
+import ChatCommentList from '../component/comment/ChatCommentList';
+import COLORS from '../styles/color';
 
 const ChatRoom = () => {
+  const chatId = window.location.pathname.split('/').pop();
+  const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (chatId !== 'newChat') {
+          const data = await getChatRoom({ chatId });
+          console.log(data);
+          setChats(data.conversations);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error chat room:', error);
+        setLoading(false);
+      }
+    };
+
+    if (loading) {
+      fetchData();
+    }
+  }, [chats, loading]);
+
+  const ids = chats.map((v) => v.conversationId);
+
+  console.log(chatId);
+
   return (
     <Layout>
       <TLayout>
-        <Chatting />
+        <Chatting chatId={chatId} chats={chats} loadingTrue={() => setLoading(true)} />
       </TLayout>
       <BLayout>
-        <Comment apiType="chat" />
+        <CommentLayout>
+          <TxtBox>
+            <TxtComment>댓글</TxtComment>
+          </TxtBox>
+          <ChatCommentList ids={ids} />
+        </CommentLayout>
       </BLayout>
     </Layout>
   );
 };
 
 export default ChatRoom;
+
+const CommentLayout = styled.div`
+  display: flex;
+  padding: 10px 10px 10px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+`;
+
+const TxtBox = styled.div`
+  display: flex;
+  padding: 5px 0px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+  border-bottom: 1px solid ${COLORS.GRAY};
+`;
+
+const TxtComment = styled.div`
+  display: flex;
+  padding: 10px 15px;
+  align-items: flex-start;
+  gap: 10px;
+  color: ${COLORS.PURPLE100};
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 8px;
+`;
 
 const Layout = styled.div`
   display: flex;

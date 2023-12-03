@@ -4,23 +4,17 @@ import styled from 'styled-components';
 import userSrc from '../../assets/images/user.svg';
 import sendSrc from '../../assets/images/send.svg';
 import COLORS from '../../styles/color';
-import { postCommentForBoard, postCommentForChat } from '../../api/commentapi';
+import { postCommentForBoard } from '../../api/commentapi';
 
-const CommentForm = ({ apiType }) => {
+const CommentForm = () => {
   const id = window.location.pathname.split('/').pop();
   const [content, setContent] = useState('');
 
   const handleCommentSubmit = async () => {
     try {
-      if (apiType === 'board') {
-        const result = await postCommentForBoard(id, content);
-        console.log('게시판 댓글이 성공적으로 등록되었습니다:', result);
-        setContent('');
-      } else if (apiType === 'chat') {
-        const result = await postCommentForChat(id, content);
-        console.log('채팅 댓글이 성공적으로 등록되었습니다:', result);
-        setContent('');
-      }
+      const result = await postCommentForBoard(id, content);
+      console.log('게시판 댓글이 성공적으로 등록되었습니다:', result);
+      setContent('');
     } catch (error) {
       alert(error);
       console.error('댓글 등록 중 에러:', error);

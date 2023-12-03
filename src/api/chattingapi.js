@@ -27,7 +27,7 @@ export const postMildAsk = async (chatId, prompt) => {
 export const postRawAsk = async (chatId, prompt) => {
   try {
     const response = await axios.post(
-      `https://woowacourse.store/api/chats/${chatId}/mild`,
+      `https://woowacourse.store/api/chats/${chatId}/raw`,
       {
         prompt: prompt,
       },

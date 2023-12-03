@@ -23,9 +23,6 @@ const CommentList = ({ apiType }) => {
         if (apiType === 'board' && id != 'newChat') {
           const commentData = await getCommentsForBoard(id);
           setComments(commentData.commentResponse);
-        } else if (apiType === 'chat' && id != 'newChat') {
-          const commentData = await getCommentsForChat(id);
-          setComments(commentData.commentResponse);
         }
       } catch (error) {
         alert('Error fetching comments:', error);
@@ -33,7 +30,7 @@ const CommentList = ({ apiType }) => {
     };
 
     fetchData();
-  }, [comments]);
+  }, []);
 
   const handleDeleteComment = async (commentId) => {
     try {

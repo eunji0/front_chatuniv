@@ -24,6 +24,8 @@ const Header = () => {
     }
   }, [authToken]);
 
+  // console.log(isLogin);
+
   return (
     <Box>
       <Layout>

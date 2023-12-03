@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import COLORS from '../../styles/color';
+import ChatCommentList from './ChatCommentList';
 
 const Comment = ({ apiType }) => {
   return (
@@ -10,13 +11,21 @@ const Comment = ({ apiType }) => {
       <TxtBox>
         <TxtComment>댓글</TxtComment>
       </TxtBox>
-      <CommentForm apiType={apiType} />
-      <CommentList apiType={apiType} />
+      {apiType === 'board' && (
+        <Box>
+          <CommentForm />
+          <CommentList apiType={apiType} />
+        </Box>
+      )}
     </Layout>
   );
 };
 
 export default Comment;
+
+const Box = styled.div`
+  width: 100%;
+`;
 
 const Layout = styled.div`
   display: flex;
