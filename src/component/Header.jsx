@@ -19,10 +19,10 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (authToken) {
+    if (authToken != '') {
       setIsLogin(true);
     }
-  }, [isLogin]);
+  }, [authToken]);
 
   return (
     <Box>

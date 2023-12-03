@@ -8,6 +8,7 @@ import NewButton from '../component/button/NewButton';
 import chatSrc from '../assets/images/make_chatting.svg';
 import Chat from '../component/Chat';
 import { getChatSearch, getChats } from '../api/chatapi';
+import { authToken } from './Login';
 
 const Main = () => {
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
@@ -53,7 +54,7 @@ const Main = () => {
         console.error('Error chats:', error);
         setError('로그인해주세요.');
       });
-  }, [error]);
+  }, [authToken]);
 
   const renderChatRoom = (chat) => (
     <Link

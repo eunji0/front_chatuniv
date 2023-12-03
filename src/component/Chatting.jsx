@@ -5,6 +5,7 @@ import COLORS from '../styles/color';
 import { getChatRoom } from '../api/chatapi';
 import ModeButton from './button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
+import commentSrc from '../assets/images/comment.svg';
 import { postChat, postMildAsk, postRawAsk } from '../api/chattingapi';
 
 const Chatting = () => {
@@ -127,6 +128,9 @@ const Chatting = () => {
                 <AnswerLayout>
                   <AnswerBox>
                     <AnswerText>{conversation.answer}</AnswerText>
+                    <CommentBox>
+                      <CommentImg alt="댓글 달기" src={commentSrc} />
+                    </CommentBox>
                   </AnswerBox>
                 </AnswerLayout>
               </ChatLayout>
@@ -150,6 +154,21 @@ const Chatting = () => {
 };
 
 export default Chatting;
+
+const CommentBox = styled.button`
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.5);
+`;
+
+const CommentImg = styled.img`
+  width: 16px;
+  height: 12px;
+`;
 
 const ImgBox2 = styled.img`
   width: 26px;
