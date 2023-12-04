@@ -102,6 +102,15 @@ const Chatting = ({ chatId, chats, loadingTrue }) => {
             chats.map((conversation) => (
               <ChatLayout key={conversation.conversationId}>
                 <AskLayout>
+                  {/* <CommentBox2
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    onClick={() =>
+                      handleCommentForm(conversation.conversationId, conversation.content)
+                    }
+                  >
+                    <CommentImg alt="댓글 달기" src={isHovered ? fillCommentSrc : commentSrc} />
+                  </CommentBox2> */}
                   <AskBox>
                     <AskText>{conversation.content}</AskText>
                   </AskBox>
@@ -165,13 +174,36 @@ const ChatLayout = styled.div`
   width: 100%;
 `;
 
+const CommentBox2 = styled.button`
+  border: none;
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.5);
+
+  &:hover {
+    > ${CommentImg} {
+      content: url(${fillCommentSrc});
+    }
+  }
+`;
+
 const AskLayout = styled.div`
   display: flex;
   padding: 10px;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
   gap: 5px;
   align-self: stretch;
+
+  &:hover {
+    > ${CommentBox2} {
+      display: flex;
+    }
+  }
 `;
 
 const CommentBox = styled.button`

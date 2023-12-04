@@ -56,6 +56,8 @@ const Main = () => {
       });
   }, [authToken]);
 
+  console.log(authToken);
+
   const renderChatRoom = (chat) => (
     <Link
       to={`/chatting/${chat.chatId || chat.conversationId}`}

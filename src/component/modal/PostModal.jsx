@@ -66,7 +66,8 @@ const Layout = styled.div`
   position: relative;
   bottom: 500px;
   display: flex;
-  max-width: 450px;
+  min-width: 350px;
+  width: auto;
   padding-bottom: 0px;
   flex-direction: column;
   align-items: center;
