@@ -5,104 +5,62 @@ import { getCommentsForChat } from '../../api/commentapi';
 import COLORS from '../../styles/color';
 import userSrc from '../../assets/images/user.svg';
 
-const ChatCommentList = ({ ids }) => {
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // try {
-      //   if (apiType === 'chat' && id != 'newChat') {
-      //     const commentData = await getCommentsForChat(ids);
-      //     setComments(commentData.commentResponse);
-      //   }
-      // } catch (error) {
-      //   alert('Error fetching comments:', error);
-      // }
-    };
-
-    fetchData();
-  }, []);
-
-  console.log(comments);
-
+const ChatCommentList = ({ id, content }) => {
   return (
-    <Layout>
-      <Box>
-        <ImgLayout>
-          <ImgBox>
-            <Imgimg alt="user" src={userSrc} />
-          </ImgBox>
-        </ImgLayout>
-        <InfoLayout>
-          <IdBox>id</IdBox>
-          <CommentBox>
-            <HistoryBox>...</HistoryBox>
-            <ContentBox>
-              <ContentDiv>sd</ContentDiv>
-              <EditBox>
-                <FixBox onClick={() => handleEditComment(comment.commentId)}>수정</FixBox>
-                <FixBox onClick={() => handleDeleteComment(comment.commentId)}>삭제</FixBox>
-              </EditBox>
-            </ContentBox>
-          </CommentBox>
-        </InfoLayout>
-      </Box>
-    </Layout>
+    <CommentLayout>
+      <CommentInfoLayout>
+        <CmtInfoBox>
+          <TextDiv>대화에 대한 댓글</TextDiv>
+          <InfoBox>{truncateText(isContent.content, 30)}</InfoBox>
+        </CmtInfoBox>
+        <CloseBox onClick={() => setAddCommentList(false)}>
+          <CloseImg alt="close" src={closeSrc} />
+        </CloseBox>
+      </CommentInfoLayout>
+      <ListLayout>
+        <ListBox>
+          <UserBox>
+            <UserImg alt="user" src={userSrc} />
+          </UserBox>
+          <UserInfoBox>
+            <UserEmailText>12...</UserEmailText>
+            <CommentContentBox>
+              <CommentContentTxt>dssd</CommentContentTxt>
+            </CommentContentBox>
+          </UserInfoBox>
+        </ListBox>
+      </ListLayout>
+    </CommentLayout>
   );
 };
 
 export default ChatCommentList;
 
-const Layout = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-const Box = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 10px;
-  align-items: flex-start;
-  gap: 2px;
-`;
-
-const ImgLayout = styled.div`
-  display: flex;
-  padding: 15px 0px;
-  align-items: flex-start;
-  gap: 10px;
-  align-self: stretch;
-`;
-
-const ImgBox = styled.div`
+const CloseBox = styled.div`
   display: flex;
   padding: 5px;
   align-items: flex-start;
   gap: 10px;
 `;
 
-const Imgimg = styled.img`
-  width: 25px;
-  height: 25px;
+const CloseImg = styled.img`
+  width: 17.188px;
+  height: 17.188px;
 `;
 
-const InfoLayout = styled.div`
+const CmtInfoBox = styled.div`
   display: flex;
-  padding: 5px;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
   flex: 1 0 0;
 `;
 
-const IdBox = styled.div`
+const UserEmailText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   color: ${COLORS.BLACK};
   font-size: 12px;
   font-style: normal;
@@ -110,42 +68,22 @@ const IdBox = styled.div`
   line-height: normal;
 `;
 
-const CommentBox = styled.div`
+const CommentContentBox = styled.div`
   display: flex;
+  flex: 1 0 0;
+  width: 100%;
   padding: 5px;
   flex-direction: column;
   align-items: flex-start;
   gap: 3px;
-  align-self: stretch;
-
-  border-radius: 5px;
-  border: 1px solid ${COLORS.GRAY};
-`;
-
-const HistoryBox = styled.div`
-  display: flex;
-  padding-bottom: 5px;
-  align-items: center;
-  gap: 10px;
-  align-self: stretch;
   border-bottom: 1px solid ${COLORS.GRAY};
-
-  color: ${COLORS.GRAY};
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
 `;
 
-const ContentBox = styled.div`
+const CommentContentTxt = styled.div`
   display: flex;
   padding: 5px;
-  justify-content: space-between;
   align-items: center;
-  align-self: stretch;
-`;
-
-const ContentDiv = styled.div`
+  gap: 10px;
   color: ${COLORS.BLACK};
   font-size: 16px;
   font-style: normal;
@@ -153,27 +91,86 @@ const ContentDiv = styled.div`
   line-height: normal;
 `;
 
-const EditBox = styled.div`
+const CommentLayout = styled.div`
+  width: 100%;
   display: flex;
-  align-items: flex-end;
-  width: auto;
+  padding: 20px 10px;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 5px;
+  background: ${COLORS.WHITE};
 `;
 
-const FixBox = styled.div`
-  width: auto;
-  border-radius: 5px;
-  border: 1px solid ${COLORS.PURPLE100};
-  background: ${COLORS.WHITE};
-  cursor: pointer;
-
+const CommentInfoLayout = styled.div`
   display: flex;
-  padding: 3px;
+  padding: 5px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-bottom: 1px solid ${COLORS.GRAY};
+`;
+
+const ListLayout = styled.div`
+  width: 100%;
+  display: flex;
+  padding-top: 10px;
+  flex-direction: column;
   align-items: flex-start;
+`;
+
+const TextDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
   color: ${COLORS.PURPLE100};
-  font-size: 12px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  flex: 1 0 0;
+`;
+
+const InfoBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: ${COLORS.BLACK};
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+const ListBox = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 5px 10px;
+  align-items: flex-start;
+  gap: 2px;
+  border-radius: 10px;
+  background: ${COLORS.WHITE};
+`;
+
+const UserBox = styled.div`
+  display: flex;
+  padding: 15px 0px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+`;
+
+const UserInfoBox = styled.div`
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 0;
+  background: ${COLORS.WHITE};
+`;
+
+const UserImg = styled.img`
+  width: 35px;
+  height: 35px;
 `;

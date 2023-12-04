@@ -2,19 +2,26 @@ import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 
 import COLORS from '../styles/color';
-import { getChatRoom } from '../api/chatapi';
 import ModeButton from './button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
 import commentSrc from '../assets/images/comment.svg';
+import commentlistSrc from '../assets/images/commentlist.svg';
+import closeSrc from '../assets/images/modal_close.svg';
+import fillCommentlistSrc from '../assets/images/fill_commentlist.svg';
+import userSrc from '../assets/images/user.svg';
 import fillCommentSrc from '../assets/images/fill_comment.svg';
 import { postChat, postMildAsk, postRawAsk } from '../api/chattingapi';
 import { truncateText } from '../utils/utils';
 import ChatCommentForm from './comment/ChatCommentForm';
+import { getCommentsForChat } from '../api/commentapi';
 
 const Chatting = ({ chatId, chats, loadingTrue }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isAnswerListHovered, setIsAnswerListHovered] = useState(false);
+  const [isAnswerFormHovered, setIsAnswerFormHovered] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [changeComment, setChangeComment] = useState(false);
+  const [addCommentList, setAddCommentList] = useState(false);
+  const [isCommentList, setCommentList] = useState([]);
   const [selectedMode, setSelectedMode] = useState('순한맛');
   const [isContent, setContent] = useState({});
   const contentBoxRef = useRef();
@@ -81,88 +88,293 @@ const Chatting = ({ chatId, chats, loadingTrue }) => {
     setContent({ id, content });
   };
 
+  const handleGetList = async (id, content) => {
+    setAddCommentList(true);
+    try {
+      setContent({ id, content });
+      const commentData = await getCommentsForChat(id);
+      setCommentList(commentData.commentResponse);
+    } catch (error) {
+      alert('댓글 생성 중 에러가 발생했습니다.');
+    }
+  };
+
   return (
-    <InLayout>
-      <TitleLayout>
-        {chats && chats.length > 0 ? (
-          <TitleText>{truncateText(chats[0].content, 20)}</TitleText>
-        ) : (
-          <TitleText>New Chat</TitleText>
-        )}
-      </TitleLayout>
-      <ContentLayout>
-        <ModeButton
-          selectedMode={selectedMode}
-          onSpicyClick={() => handleModeChange('매운맛')}
-          onMildClick={() => handleModeChange('순한맛')}
-        />
-
-        <ContentBox ref={contentBoxRef}>
-          {chats.length > 0 &&
-            chats.map((conversation) => (
-              <ChatLayout key={conversation.conversationId}>
-                <AskLayout>
-                  {/* <CommentBox2
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                    onClick={() =>
-                      handleCommentForm(conversation.conversationId, conversation.content)
-                    }
-                  >
-                    <CommentImg alt="댓글 달기" src={isHovered ? fillCommentSrc : commentSrc} />
-                  </CommentBox2> */}
-                  <AskBox>
-                    <AskText>{conversation.content}</AskText>
-                  </AskBox>
-                </AskLayout>
-                <AnswerLayout>
-                  <AnswerBox>
-                    <AnswerText>{conversation.answer}</AnswerText>
-                  </AnswerBox>
-                  <CommentBox
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                    onClick={() =>
-                      handleCommentForm(conversation.conversationId, conversation.answer)
-                    }
-                  >
-                    <CommentImg alt="댓글 달기" src={isHovered ? fillCommentSrc : commentSrc} />
-                  </CommentBox>
-                </AnswerLayout>
-              </ChatLayout>
-            ))}
-        </ContentBox>
-
-        <InputLayout>
-          {changeComment ? (
-            <ChatCommentForm info={isContent} resetChange={() => setChangeComment(false)} />
+    <TLayout>
+      <InLayout>
+        <TitleLayout>
+          {chats && chats.length > 0 ? (
+            <TitleText>{truncateText(chats[0].content, 20)}</TitleText>
           ) : (
-            <InputBox>
-              <InputText
-                placeholder="무엇이든 물어보세요!"
-                type="text"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                onKeyDown={handleKeyDown}
-              />
-              <ImgBox2 alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />
-            </InputBox>
+            <TitleText>New Chat</TitleText>
           )}
-        </InputLayout>
-      </ContentLayout>
-    </InLayout>
+        </TitleLayout>
+        <ContentLayout>
+          <ModeButton
+            selectedMode={selectedMode}
+            onSpicyClick={() => handleModeChange('매운맛')}
+            onMildClick={() => handleModeChange('순한맛')}
+          />
+
+          <ContentBox ref={contentBoxRef}>
+            {chats.length > 0 &&
+              chats.map((conversation) => (
+                <ChatLayout key={conversation.conversationId}>
+                  <AskLayout>
+                    <AskBox>
+                      <AskText>{conversation.content}</AskText>
+                    </AskBox>
+                  </AskLayout>
+                  <AnswerLayout>
+                    <AnswerBox>
+                      <AnswerText>{conversation.answer}</AnswerText>
+                    </AnswerBox>
+                    <CommentBox
+                      onMouseEnter={() => setIsAnswerFormHovered(true)}
+                      onMouseLeave={() => setIsAnswerFormHovered(false)}
+                      onClick={() =>
+                        handleCommentForm(conversation.conversationId, conversation.answer)
+                      }
+                    >
+                      <CommentImg
+                        alt="댓글 달기"
+                        src={isAnswerFormHovered ? fillCommentSrc : commentSrc}
+                      />
+                    </CommentBox>
+                    <CommentBox
+                      onMouseEnter={() => setIsAnswerListHovered(true)}
+                      onMouseLeave={() => setIsAnswerListHovered(false)}
+                    >
+                      <CommentListImg
+                        onClick={() =>
+                          handleGetList(conversation.conversationId, conversation.answer)
+                        }
+                        alt="댓글목록"
+                        src={isAnswerListHovered ? fillCommentlistSrc : commentlistSrc}
+                      />
+                    </CommentBox>
+                  </AnswerLayout>
+                </ChatLayout>
+              ))}
+          </ContentBox>
+
+          <InputLayout>
+            {changeComment ? (
+              <ChatCommentForm info={isContent} resetChange={() => setChangeComment(false)} />
+            ) : (
+              <InputBox>
+                <InputText
+                  placeholder="무엇이든 물어보세요!"
+                  type="text"
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                />
+                <ImgBox2 alt="send" src={sendSrc} type="submit" onClick={handleChatAskSubmit} />
+              </InputBox>
+            )}
+          </InputLayout>
+        </ContentLayout>
+      </InLayout>
+
+      {/* 댓글 */}
+      {addCommentList === true ? (
+        <CommentLayout>
+          <CommentInfoLayout>
+            <CmtInfoBox>
+              <TextDiv>대화에 대한 댓글</TextDiv>
+              <InfoBox>{truncateText(isContent.content, 30)}</InfoBox>
+            </CmtInfoBox>
+            <CloseBox onClick={() => setAddCommentList(false)}>
+              <CloseImg alt="close" src={closeSrc} />
+            </CloseBox>
+          </CommentInfoLayout>
+          <ListLayout>
+            {isCommentList.length > 0 ? (
+              isCommentList.map((v) => (
+                <ListBox key={v.commentId}>
+                  <UserBox>
+                    <UserImg alt="user" src={userSrc} />
+                  </UserBox>
+                  <UserInfoBox>
+                    <UserEmailText>{truncateText(v.email, 2)}</UserEmailText>
+                    <CommentContentBox>
+                      <CommentContentTxt>{v.content}</CommentContentTxt>
+                    </CommentContentBox>
+                  </UserInfoBox>
+                </ListBox>
+              ))
+            ) : (
+              <div>아직 달린 댓글이 없습니다.</div>
+            )}
+          </ListLayout>
+        </CommentLayout>
+      ) : (
+        <div></div>
+      )}
+    </TLayout>
   );
 };
 
 export default Chatting;
 
+const CloseBox = styled.div`
+  display: flex;
+  padding: 5px;
+  align-items: flex-start;
+  gap: 10px;
+`;
+
+const CloseImg = styled.img`
+  width: 17.188px;
+  height: 17.188px;
+`;
+
+const CmtInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+`;
+
+const UserEmailText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: ${COLORS.BLACK};
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+const CommentContentBox = styled.div`
+  display: flex;
+  flex: 1 0 0;
+  width: 100%;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  border-bottom: 1px solid ${COLORS.GRAY};
+`;
+
+const CommentContentTxt = styled.div`
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  gap: 10px;
+  color: ${COLORS.BLACK};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+const CommentLayout = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 20px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  background: ${COLORS.WHITE};
+`;
+
+const CommentInfoLayout = styled.div`
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-bottom: 1px solid ${COLORS.GRAY};
+`;
+
+const ListLayout = styled.div`
+  width: 100%;
+  display: flex;
+  padding-top: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+const TextDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: ${COLORS.PURPLE100};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  flex: 1 0 0;
+`;
+
+const InfoBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: ${COLORS.BLACK};
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+const ListBox = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 5px 10px;
+  align-items: flex-start;
+  gap: 2px;
+  border-radius: 10px;
+  background: ${COLORS.WHITE};
+`;
+
+const UserBox = styled.div`
+  display: flex;
+  padding: 15px 0px;
+  align-items: flex-start;
+  gap: 10px;
+  align-self: stretch;
+`;
+
+const UserInfoBox = styled.div`
+  display: flex;
+  padding: 5px;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 0;
+  background: ${COLORS.WHITE};
+`;
+
+const UserImg = styled.img`
+  width: 35px;
+  height: 35px;
+`;
+
+const TLayout = styled.div`
+  display: flex;
+  height: 100%;
+  padding: 15px 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  align-self: stretch;
+`;
+
 const CommentImg = styled.img`
   width: 16px;
   height: 12px;
+`;
 
-  &:hover {
-    fill: ${COLORS.BLACK};
-  }
+const CommentListImg = styled.img`
+  width: 16px;
+  height: 12px;
 `;
 
 const ImgBox2 = styled.img`
@@ -221,6 +433,12 @@ const CommentBox = styled.button`
       content: url(${fillCommentSrc});
     }
   }
+
+  &:hover {
+    > ${CommentListImg} {
+      content: url(${fillCommentlistSrc});
+    }
+  }
 `;
 
 const AnswerLayout = styled.div`
@@ -274,8 +492,10 @@ const AnswerText = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
+
 const InLayout = styled.div`
   display: flex;
+  min-height: 500px;
   flex-direction: column;
   align-items: flex-end;
   flex: 1 0 0;

@@ -79,10 +79,10 @@ export const deleteComment = async (commentId) => {
 };
 
 //채팅 댓글 리스트
-export const getCommentsForChat = async (chatId) => {
+export const getCommentsForChat = async (conversationId) => {
   try {
     const response = await axios.get(
-      `https://woowacourse.store/api/conversations/${chatId}/comments`,
+      `https://woowacourse.store/api/conversations/${conversationId}/comments`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -99,7 +99,6 @@ export const getCommentsForChat = async (chatId) => {
 
 //채팅 댓글 생성
 export const postCommentForChat = async (chatId, content) => {
-  console.log(chatId, authToken);
   try {
     const response = await axios.post(
       `https://woowacourse.store/api/conversations/${chatId}/comments`,

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 
 import Chatting from '../component/Chatting';
-import Comment from '../component/comment/Comment';
 import { getChatRoom } from '../api/chatapi';
 import ChatCommentList from '../component/comment/ChatCommentList';
 import COLORS from '../styles/color';
@@ -32,23 +31,21 @@ const ChatRoom = () => {
     }
   }, [chats, loading]);
 
-  const ids = chats.map((v) => v.conversationId);
-
-  console.log(chatId);
-
   return (
     <Layout>
-      <TLayout>
-        <Chatting chatId={chatId} chats={chats} loadingTrue={() => setLoading(true)} />
-      </TLayout>
-      <BLayout>
+      <Chatting chatId={chatId} chats={chats} loadingTrue={() => setLoading(true)} />
+
+      {/* <BLayout>
         <CommentLayout>
           <TxtBox>
-            <TxtComment>댓글</TxtComment>
+            <TxtComment>해당 대화에 대한 댓글 목록</TxtComment>
           </TxtBox>
-          <ChatCommentList ids={ids} />
+          <ChatCommentList
+          // id={commentContent.content.id}
+          // content={commentContent.content.content}
+          />
         </CommentLayout>
-      </BLayout>
+      </BLayout> */}
     </Layout>
   );
 };
