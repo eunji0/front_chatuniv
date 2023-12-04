@@ -15,7 +15,6 @@ const Header = () => {
     setIsLogin(false);
     localStorage.setItem('authToken', '');
     localStorage.setItem('userEmail', '');
-    console.log('logout', localStorage);
   };
 
   useEffect(() => {
@@ -23,8 +22,6 @@ const Header = () => {
       setIsLogin(true);
     }
   }, [authToken]);
-
-  // console.log(isLogin);
 
   return (
     <Box>

@@ -12,12 +12,10 @@ const CommentForm = () => {
 
   const handleCommentSubmit = async () => {
     try {
-      const result = await postCommentForBoard(id, content);
-      console.log('게시판 댓글이 성공적으로 등록되었습니다:', result);
+      await postCommentForBoard(id, content);
       setContent('');
     } catch (error) {
-      alert(error);
-      console.error('댓글 등록 중 에러:', error);
+      alert('댓글 등록 중 에러:', error);
     }
   };
 

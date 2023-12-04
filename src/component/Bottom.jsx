@@ -12,7 +12,6 @@ import FillLanking from '../assets/images/fill_lanking.svg';
 const Bottom = () => {
   const location = useLocation();
   const isHomePath = location.pathname === '/';
-  // const isBoardPath = location.pathname.startsWith('/board');
   const isBoardPath = location.pathname === '/board';
   const isLankingPath = location.pathname === '/lanking';
 

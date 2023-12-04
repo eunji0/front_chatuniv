@@ -2,13 +2,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import COLORS from '../../styles/color';
-import {
-  deleteComment,
-  getCommentsForBoard,
-  getCommentsForChat,
-  updateComment,
-} from '../../api/commentapi';
+import { deleteComment, getCommentsForBoard, updateComment } from '../../api/commentapi';
 import userSrc from '../../assets/images/user.svg';
+import { truncateText } from '../../utils/utils';
 
 const CommentList = ({ apiType }) => {
   const id = window.location.pathname.split('/').pop();
@@ -19,7 +15,6 @@ const CommentList = ({ apiType }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //더보기 버튼 추가하기
         if (apiType === 'board' && id != 'newChat') {
           const commentData = await getCommentsForBoard(id);
           setComments(commentData.commentResponse);
@@ -67,10 +62,6 @@ const CommentList = ({ apiType }) => {
     }
   };
 
-  const truncateEmail = (text, maxLength) => {
-    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-  };
-
   return (
     <Layout>
       {comments.length === 0 ? (
@@ -84,9 +75,7 @@ const CommentList = ({ apiType }) => {
                 <CommentBox>
                   <CommentLayout>
                     <MyUserBox>
-                      {userEmail === comment.email
-                        ? comment.email
-                        : truncateEmail(comment.email, 2)}
+                      {userEmail === comment.email ? comment.email : truncateText(comment.email, 2)}
                       {editedComment === comment.commentId ? (
                         <FixBox
                           onClick={() => handleUpdateComment(comment.commentId, comment.content)}

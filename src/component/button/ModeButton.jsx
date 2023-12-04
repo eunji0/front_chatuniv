@@ -19,7 +19,7 @@ const ModeButton = ({ selectedMode, onSpicyClick, onMildClick }) => {
   };
 
   const handleMildClick = () => {
-    onMildClick('순한맛'); // 새로 추가된 함수로 인해 "순한맛" 모드로 변경
+    onMildClick('순한맛');
     setSpicyModalOpen(false);
   };
 

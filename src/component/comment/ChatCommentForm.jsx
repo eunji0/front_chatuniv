@@ -12,8 +12,7 @@ const ChatCommentForm = ({ info, resetChange }) => {
 
   const handleCommentSubmit = async () => {
     try {
-      const result = await postCommentForChat(info.id, content);
-      console.log('채팅 댓글이 성공적으로 등록되었습니다:', result);
+      await postCommentForChat(info.id, content);
       setContent('');
       resetChange();
       alert('해당 대화에 대한 댓글이 등록되었습니다.');

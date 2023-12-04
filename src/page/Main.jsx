@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import Search from '../component/Search';
 import { handleResize } from '../utils/handleResize';
@@ -8,9 +9,10 @@ import NewButton from '../component/button/NewButton';
 import chatSrc from '../assets/images/make_chatting.svg';
 import Chat from '../component/Chat';
 import { getChatSearch, getChats } from '../api/chatapi';
-import { authToken } from './Login';
+import { isLoginState } from '../recoil/atoms';
 
 const Main = () => {
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
   const [chats, setChats] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,6 +20,7 @@ const Main = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const location = useLocation();
+  const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
     const cleanupResize = handleResize(setLayoutHeight);
@@ -45,6 +48,9 @@ const Main = () => {
       });
   }, [location.search]);
 
+  console.log(authToken);
+  console.log(isLogin);
+
   useEffect(() => {
     getChats()
       .then((data) => {
@@ -54,9 +60,7 @@ const Main = () => {
         console.error('Error chats:', error);
         setError('로그인해주세요.');
       });
-  }, [authToken]);
-
-  console.log(authToken);
+  }, [authToken, isLogin]);
 
   const renderChatRoom = (chat) => (
     <Link
