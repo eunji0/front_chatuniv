@@ -17,7 +17,12 @@ export const updatePassword = async ({ currentPassword, newPassword, newPassword
 
   try {
     const response = await axios.patch(url, data, { headers });
-    console.log('응답 데이터:', response.data);
+    if (response.status === 200) {
+      alert('비밀번호가 변경되었습니다.');
+      return response;
+    } else {
+      alert(error.response.data);
+    }
   } catch (error) {
     console.error('API 호출 중 에러 발생:', error);
     alert(error.response.data);

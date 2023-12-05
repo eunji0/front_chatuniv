@@ -27,8 +27,6 @@ const Header = () => {
     }
   }, [authToken]);
 
-  console.log('s', sessionStorage);
-
   return (
     <Box>
       <Layout>

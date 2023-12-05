@@ -53,13 +53,9 @@ const Main = () => {
   }, [location.search]);
 
   useEffect(() => {
-    console.log('authToken:', authToken);
-    console.log('isLogin:', isLogin);
-
     if (authToken !== null && isLogin === true) {
       getChats()
         .then((data) => {
-          console.log('Chats data:', data);
           setChats(data);
         })
         .catch((error) => {

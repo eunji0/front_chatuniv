@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import COLORS from '../styles/color';
 import { handleResize } from '../utils/handleResize';
+import { getStatistics } from '../api/lankingapi';
 
 const Lanking = () => {
   const [data, setData] = useState('');
@@ -15,15 +16,15 @@ const Lanking = () => {
     return () => cleanupResize();
   }, []);
 
-  // useEffect(() => {
-  //   getStatistics()
-  //     .then((data) => {
-  //       setData(data.statistics);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    getStatistics()
+      .then((data) => {
+        setData(data.statistics);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleClick = (word) => {
     navigate(`/?q=${word}`);
