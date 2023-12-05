@@ -12,6 +12,8 @@ const ChatContent = ({ chats, handleCommentForm, handleGetList }) => {
   const contentBoxRef = useRef();
   const [isAnswerListHovered, setIsAnswerListHovered] = useState(false);
   const [isAnswerFormHovered, setIsAnswerFormHovered] = useState(false);
+  const [isAskListHovered, setIsAskListHovered] = useState(false);
+  const [isAskFormHovered, setIsAskFormHovered] = useState(false);
 
   useEffect(() => {
     scrollToBottom(contentBoxRef);
@@ -23,6 +25,26 @@ const ChatContent = ({ chats, handleCommentForm, handleGetList }) => {
         chats.map((conversation) => (
           <ChatLayout key={conversation.conversationId}>
             <AskLayout>
+              <CommentBox2
+                onMouseEnter={() => setIsAskFormHovered(true)}
+                onMouseLeave={() => setIsAskFormHovered(false)}
+                onClick={() => handleCommentForm(conversation.conversationId, conversation.content)}
+              >
+                <CommentImg
+                  alt="질문에 댓글 달기"
+                  src={isAskFormHovered ? fillCommentSrc : commentSrc}
+                />
+              </CommentBox2>
+              <CommentBox2
+                onMouseEnter={() => setIsAskListHovered(true)}
+                onMouseLeave={() => setIsAskListHovered(false)}
+              >
+                <CommentListImg
+                  onClick={() => handleGetList(conversation.conversationId, conversation.content)}
+                  alt="질문댓글목록"
+                  src={isAskListHovered ? fillCommentlistSrc : commentlistSrc}
+                />
+              </CommentBox2>
               <AskBox>
                 <AskText>{conversation.content}</AskText>
               </AskBox>
@@ -76,7 +98,7 @@ const CommentListImg = styled.img`
 
 const CommentBox2 = styled.button`
   border: none;
-  display: flex;
+  display: none;
   padding: 5px;
   flex-direction: column;
   align-items: flex-start;
@@ -87,6 +109,12 @@ const CommentBox2 = styled.button`
   &:hover {
     > ${CommentImg} {
       content: url(${fillCommentSrc});
+    }
+  }
+
+  &:hover {
+    > ${CommentListImg} {
+      content: url(${fillCommentlistSrc});
     }
   }
 `;
