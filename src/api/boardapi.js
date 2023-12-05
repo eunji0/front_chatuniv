@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { authToken } from '../page/Login';
+import { authToken } from '../component/Header';
+
 //게시글 전체 조회
 export const getPosts = async () => {
   try {

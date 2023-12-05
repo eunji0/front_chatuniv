@@ -7,9 +7,8 @@ export const loginUser = async (email, password) => {
       password: password,
     });
 
-    // 로컬 스토리지에 저장
-    localStorage.setItem('authToken', response.data.accessToken);
-    localStorage.setItem('userEmail', email);
+    sessionStorage.setItem('authToken', response.data.accessToken);
+    sessionStorage.setItem('userEmail', email);
 
     return response.data.accessToken;
   } catch (error) {

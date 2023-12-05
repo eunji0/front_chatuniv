@@ -8,12 +8,13 @@ const ChatRoom = () => {
   const chatId = window.location.pathname.split('/').pop();
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (chatId !== 'newChat') {
-          const data = await getChatRoom({ chatId });
+          const data = await getChatRoom({ chatId, authToken });
           console.log(data);
           setChats(data.conversations);
           setLoading(false);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { authToken } from '../page/Login';
+import { authToken } from '../component/Header';
 
 //채팅 질문하기(순한맛)
 export const postMildAsk = async (chatId, prompt) => {

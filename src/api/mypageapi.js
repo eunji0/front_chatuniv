@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { authToken } from '../page/Login';
+import { authToken } from '../component/Header';
 
 export const updatePassword = async ({ currentPassword, newPassword, newPasswordCheck }) => {
   const url = 'https://woowacourse.store/api/members';

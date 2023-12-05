@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { authToken } from '../page/Login';
+import { authToken } from '../component/Header';
 
 //게시판 댓글 리스트
 export const getCommentsForBoard = async (boardId) => {

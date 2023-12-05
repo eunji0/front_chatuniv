@@ -20,7 +20,7 @@ const Main = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const location = useLocation();
-  const authToken = localStorage.getItem('authToken');
+  const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
     const cleanupResize = handleResize(setLayoutHeight);
@@ -35,31 +35,40 @@ const Main = () => {
     setLoading(true);
     setError(null);
 
-    getChatSearch(newSearchTerm, 10, 4)
-      .then((data) => {
-        setSearchList(data);
-      })
-      .catch((error) => {
-        console.error('Error search:', error);
-        setError('검색 중 오류가 발생했습니다.');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    if (newSearchTerm) {
+      getChatSearch(newSearchTerm, 10, 4)
+        .then((data) => {
+          setSearchList(data);
+        })
+        .catch((error) => {
+          console.error('Error search:', error);
+          setError('검색 중 오류가 발생했습니다.');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
   }, [location.search]);
 
-  console.log(authToken);
-  console.log(isLogin);
-
   useEffect(() => {
-    getChats()
-      .then((data) => {
-        setChats(data);
-      })
-      .catch((error) => {
-        console.error('Error chats:', error);
-        setError('로그인해주세요.');
-      });
+    console.log('authToken:', authToken);
+    console.log('isLogin:', isLogin);
+
+    if (authToken !== null && isLogin === true) {
+      getChats()
+        .then((data) => {
+          console.log('Chats data:', data);
+          setChats(data);
+        })
+        .catch((error) => {
+          console.error('Error chats:', error);
+          setError('로그인해주세요.');
+        });
+    } else {
+      setLoading(false);
+    }
   }, [authToken, isLogin]);
 
   const renderChatRoom = (chat) => (

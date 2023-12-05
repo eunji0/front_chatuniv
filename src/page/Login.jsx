@@ -7,8 +7,7 @@ import { isLoginState } from '../recoil/atoms';
 import COLORS from '../styles/color';
 import { validateEmail, validatePassword } from '../utils/validation';
 import { loginUser } from '../api/loginapi';
-
-export const authToken = localStorage.getItem('authToken');
+import { authToken } from '../component/Header';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -27,7 +26,6 @@ const Login = () => {
         await loginUser(email, password);
         setIsLogin(true);
         navigate('/');
-        console.log('login', localStorage);
       } catch (error) {
         console.error('로그인 오류:', error);
       }

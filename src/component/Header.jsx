@@ -7,21 +7,27 @@ import { isLoginState } from '../recoil/atoms';
 import COLORS from '../styles/color';
 import mypageSrc from '../assets/images/mypage.svg';
 
+export const authToken = sessionStorage.getItem('authToken');
+
 const Header = () => {
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);
-  const authToken = localStorage.getItem('authToken');
 
   const handleLogout = () => {
     setIsLogin(false);
-    localStorage.setItem('authToken', '');
-    localStorage.setItem('userEmail', '');
+    sessionStorage.setItem('authToken', '');
+    sessionStorage.setItem('userEmail', '');
+    sessionStorage.clear();
   };
 
   useEffect(() => {
-    if (authToken != '') {
+    if (authToken !== null) {
       setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
   }, [authToken]);
+
+  console.log('s', sessionStorage);
 
   return (
     <Box>

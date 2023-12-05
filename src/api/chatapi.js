@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-import { authToken } from '../page/Login';
+const authToken = localStorage.getItem('authToken');
 
 //채팅방 전체 조회
-export const getChats = async () => {
+export const getChats = async (authToken) => {
   try {
     const response = await axios.get('https://woowacourse.store/api/chats', {
       headers: {
@@ -38,7 +38,7 @@ export const getChatSearch = async (keyword) => {
 };
 
 //기존 채팅방 조회
-export const getChatRoom = async ({ chatId }) => {
+export const getChatRoom = async ({ chatId, authToken }) => {
   try {
     const response = await axios.get(`https://woowacourse.store/api/chats/${chatId}`, {
       headers: {
