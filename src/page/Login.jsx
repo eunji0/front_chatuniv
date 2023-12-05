@@ -7,7 +7,7 @@ import { isLoginState } from '../recoil/atoms';
 import COLORS from '../styles/color';
 import { validateEmail, validatePassword } from '../utils/validation';
 import { loginUser } from '../api/loginapi';
-import { authToken } from '../component/Header';
+import { authToken } from '../component/header/Header';
 
 const Login = () => {
   const [email, setEmail] = useState('');

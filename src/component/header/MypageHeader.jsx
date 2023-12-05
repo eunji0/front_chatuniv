@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import goBackSrc from '../assets/images/goBack.svg';
-import COLORS from '../styles/color';
+import goBackSrc from '../../assets/images/goBack.svg';
+import COLORS from '../../styles/color';
 
 const MypageHeader = () => {
   const url = window.location.href;

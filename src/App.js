@@ -3,18 +3,18 @@ import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom
 import { RecoilRoot } from 'recoil';
 
 import IntroductionSrc from './assets/images/introduction.svg';
-import Header from './component/Header';
+import Header from './component/header/Header';
 import COLORS from './styles/color';
 import Main from './page/Main';
 import Bottom from './component/Bottom';
 import Lanking from './page/Lanking';
 import Board from './page/Board';
 import Login from './page/Login';
-import ChatRoom from './page/ChatRoom';
 import BoardDetail from './page/BoardDetail';
 import Members from './page/mypage/Members';
 import MyPage from './page/MyPage';
-import MypageHeader from './component/MypageHeader';
+import MypageHeader from './component/header/MypageHeader';
+import Chatting from './page/Chatting';
 
 const App = () => {
   return (
@@ -30,7 +30,7 @@ const App = () => {
                   <Route path="/lanking" element={<Lanking />} />
                   <Route path="/board" element={<Board />} />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/chatting/:chatId" element={<ChatRoom />} />
+                  <Route path="/chatting/:chatId" element={<Chatting />} />
                   <Route path="/board/:boardId" element={<BoardDetail />} />
                   <Route path="/mypage" element={<MyPage />} />
                 </Route>

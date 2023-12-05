@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-import { authToken } from '../component/Header';
-
 //채팅 질문하기(순한맛)
-export const postMildAsk = async (chatId, prompt) => {
+export const postMildAsk = async (chatId, prompt, authToken) => {
   try {
     const response = await axios.post(
       `https://woowacourse.store/api/chats/${chatId}/mild`,
@@ -24,7 +22,7 @@ export const postMildAsk = async (chatId, prompt) => {
   }
 };
 
-export const postRawAsk = async (chatId, prompt) => {
+export const postRawAsk = async (chatId, prompt, authToken) => {
   try {
     const response = await axios.post(
       `https://woowacourse.store/api/chats/${chatId}/raw`,
@@ -46,7 +44,7 @@ export const postRawAsk = async (chatId, prompt) => {
 };
 
 //새로운 채팅방 생성
-export const postChat = async () => {
+export const postChat = async (authToken) => {
   try {
     // 채팅방 생성 요청
     const response = await axios.post(

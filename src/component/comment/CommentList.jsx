@@ -10,14 +10,16 @@ const CommentList = ({ apiType }) => {
   const id = window.location.pathname.split('/').pop();
   const [comments, setComments] = useState([]);
   const [editedComment, setEditedComment] = useState(null);
-  const userEmail = localStorage.getItem('userEmail');
+  const userEmail = sessionStorage.getItem('userEmail');
+  const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (apiType === 'board' && id != 'newChat') {
-          const commentData = await getCommentsForBoard(id);
+          const commentData = await getCommentsForBoard(id, authToken);
           setComments(commentData.commentResponse);
+          console.log(commentData.commentResponse);
         }
       } catch (error) {
         alert('Error fetching comments:', error);
@@ -29,7 +31,7 @@ const CommentList = ({ apiType }) => {
 
   const handleDeleteComment = async (commentId) => {
     try {
-      await deleteComment(commentId);
+      await deleteComment(commentId, authToken);
       setComments((prevComments) =>
         prevComments.filter((comment) => comment.commentId !== commentId),
       );
@@ -50,7 +52,7 @@ const CommentList = ({ apiType }) => {
 
   const handleUpdateComment = async (commentId, newContent) => {
     try {
-      await updateComment(commentId, newContent);
+      await updateComment(commentId, newContent, authToken);
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment.commentId === commentId ? { ...comment, content: newContent } : comment,

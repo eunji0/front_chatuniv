@@ -7,8 +7,14 @@ export const truncateText = (text, maxLength) => {
   return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 };
 
-//엔터
-export const handleEnterKeyPress = (callback) => (e) => {
+// 스크롤
+export const scrollToBottom = (ref) => {
+  if (ref.current) {
+    ref.current.scrollTop = ref.current.scrollHeight;
+  }
+};
+
+export const handleEnterKey = (e, callback) => {
   if (e.key === 'Enter') {
     callback();
   }

@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import COLORS from '../styles/color';
 import userSrc from '../assets/images/user.svg';
-import moreSrc from '../assets/images/more.svg';
 import { deletePost, getPost, getPosts } from '../api/boardapi';
 
 const Post = ({ boardId }) => {
   const [post, setPost] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
   const userEmail = localStorage.getItem('userEmail');
   const navigate = useNavigate();
 
@@ -19,6 +18,7 @@ const Post = ({ boardId }) => {
       try {
         if (boardId !== 'newBoard') {
           const data = await getPost({ boardId });
+          console.log(data);
           setPost(data);
           setLoading(false);
         }
@@ -31,9 +31,6 @@ const Post = ({ boardId }) => {
 
     fetchData();
   }, [boardId]);
-
-  console.log(post);
-  console.log(userEmail);
 
   const handleDeleteClick = async () => {
     try {
@@ -63,7 +60,8 @@ const Post = ({ boardId }) => {
             <ButtonBox onClick={handleDeleteClick}>삭제</ButtonBox>
           </ButtonLayout>
         ) : (
-          <MoreImg alt="more" src={moreSrc} />
+          // <MoreImg alt="more" src={moreSrc} />
+          <></>
         )}
       </TopBox>
       <BottomBox>
@@ -111,10 +109,10 @@ const UserImg = styled.img`
   height: 35px;
 `;
 
-const MoreImg = styled.img`
-  width: 25px;
-  height: 25px;
-`;
+// const MoreImg = styled.img`
+//   width: 25px;
+//   height: 25px;
+// `;
 
 const UserInfoBox = styled.div`
   display: flex;

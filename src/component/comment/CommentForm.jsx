@@ -9,10 +9,11 @@ import { postCommentForBoard } from '../../api/commentapi';
 const CommentForm = () => {
   const id = window.location.pathname.split('/').pop();
   const [content, setContent] = useState('');
+  const authToken = sessionStorage.getItem('authToken');
 
   const handleCommentSubmit = async () => {
     try {
-      await postCommentForBoard(id, content);
+      await postCommentForBoard(id, content, authToken);
       setContent('');
     } catch (error) {
       alert('댓글 등록 중 에러:', error);

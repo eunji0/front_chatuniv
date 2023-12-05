@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import searchSrc from '../assets/images/search.svg';
-import closeSrc from '../assets/images/search_close.svg';
-import COLORS from '../styles/color';
+import searchSrc from '../../assets/images/search.svg';
+import closeSrc from '../../assets/images/search_close.svg';
+import COLORS from '../../styles/color';
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');

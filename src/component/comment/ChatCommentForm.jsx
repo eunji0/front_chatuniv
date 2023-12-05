@@ -9,15 +9,16 @@ import { postCommentForChat } from '../../api/commentapi';
 
 const ChatCommentForm = ({ info, resetChange }) => {
   const [content, setContent] = useState('');
+  const authToken = sessionStorage.getItem('authToken');
 
   const handleCommentSubmit = async () => {
     try {
-      await postCommentForChat(info.id, content);
+      await postCommentForChat(info.id, content, authToken);
       setContent('');
       resetChange();
       alert('해당 대화에 대한 댓글이 등록되었습니다.');
     } catch (error) {
-      alert(error);
+      alert(error.response.data);
       console.error('댓글 등록 중 에러:', error);
     }
   };

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { useEffect } from 'react';
 
-import { isLoginState } from '../recoil/atoms';
-import COLORS from '../styles/color';
-import mypageSrc from '../assets/images/mypage.svg';
+import { isLoginState } from '../../recoil/atoms';
+import COLORS from '../../styles/color';
+import mypageSrc from '../../assets/images/mypage.svg';
 
 export const authToken = sessionStorage.getItem('authToken');
 

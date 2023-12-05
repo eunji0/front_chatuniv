@@ -72,8 +72,6 @@ const Board = () => {
     }
   };
 
-  console.log(isModalOpen);
-
   return (
     <Layout>
       <TopBox>

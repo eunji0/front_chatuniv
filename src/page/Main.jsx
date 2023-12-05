@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import Search from '../component/Search';
+import Search from '../component/header/Search';
 import { handleResize } from '../utils/handleResize';
 import NewButton from '../component/button/NewButton';
 import chatSrc from '../assets/images/make_chatting.svg';
