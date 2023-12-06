@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import COLORS from '../styles/color';
-import { handleResize } from '../utils/handleResize';
 import { getStatistics } from '../api/lankingapi';
+import { handleResize } from '../utils/utils';
 
 const Lanking = () => {
   const [data, setData] = useState('');

@@ -4,10 +4,32 @@ import { useState } from 'react';
 import COLORS from '../../styles/color';
 import { updatePassword } from '../../api/mypageapi';
 
+const PasswordInputSection = ({ label, value, onChange }) => (
+  <InputLayout>
+    <PasswordLayout>
+      <DivText>{label}</DivText>
+      <InputBox type="password" value={value} onChange={onChange} />
+    </PasswordLayout>
+  </InputLayout>
+);
+
+const SaveSection = ({ onClick }) => (
+  <SaveLayout>
+    <SaveBox onClick={onClick}>저장</SaveBox>
+  </SaveLayout>
+);
+
 const Members = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const authToken = sessionStorage.getItem('authToken');
+
+  const resetPasswords = () => {
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+  };
 
   const handleSave = async () => {
     try {
@@ -17,47 +39,30 @@ const Members = () => {
         newPasswordCheck: confirmPassword,
         authToken,
       });
-      setCurrentPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
+      resetPasswords();
     } catch (error) {
-      setCurrentPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
+      resetPasswords();
     }
   };
 
   return (
     <Layout>
-      <InputLauout>
-        <PasswordLayout>
-          <DivText>현재 비밀번호</DivText>
-          <InputBox
-            type="password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-          />
-        </PasswordLayout>
-        <PasswordLayout>
-          <DivText>새로운 비밀번호</DivText>
-          <InputBox
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-        </PasswordLayout>
-        <PasswordLayout>
-          <DivText>비밀번호 확인</DivText>
-          <InputBox
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </PasswordLayout>
-      </InputLauout>
-      <SaveLayout>
-        <SaveBox onClick={handleSave}>저장</SaveBox>
-      </SaveLayout>
+      <PasswordInputSection
+        label="현재 비밀번호"
+        value={currentPassword}
+        onChange={(e) => setCurrentPassword(e.target.value)}
+      />
+      <PasswordInputSection
+        label="새로운 비밀번호"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+      />
+      <PasswordInputSection
+        label="비밀번호 확인"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
+      <SaveSection onClick={handleSave} />
     </Layout>
   );
 };
@@ -69,13 +74,11 @@ const Layout = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 50px;
   align-self: stretch;
 `;
 
-const InputLauout = styled.div`
+const InputLayout = styled.div`
   display: flex;
-  padding: 10px;
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
@@ -83,7 +86,7 @@ const InputLauout = styled.div`
 
 const SaveLayout = styled.div`
   display: flex;
-  padding: 0px 35px;
+  padding: 30px 35px;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;

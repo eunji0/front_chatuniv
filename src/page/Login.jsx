@@ -22,7 +22,6 @@ const Login = () => {
   const handleSubmit = async () => {
     if (isEmailValid && isPasswordValid) {
       try {
-        // 로그인 api 호출
         await loginUser(email, password);
         setIsLogin(true);
         navigate('/');

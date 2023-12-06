@@ -14,8 +14,26 @@ export const scrollToBottom = (ref) => {
   }
 };
 
+//엔터키
 export const handleEnterKey = (e, callback) => {
   if (e.key === 'Enter') {
     callback();
   }
 };
+
+//브라우저 크기 조절
+export const handleResize = (setHeight) => {
+  const handleResize = () => {
+    setHeight(window.innerHeight);
+  };
+  window.addEventListener('resize', handleResize);
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+};
+
+//hover
+export const createHoverHandlers = (setter) => ({
+  onMouseEnter: () => setter(true),
+  onMouseLeave: () => setter(false),
+});

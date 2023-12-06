@@ -5,6 +5,8 @@ import CommentList from './CommentList';
 import COLORS from '../../styles/color';
 
 const Comment = ({ apiType }) => {
+  const id = window.location.pathname.split('/').pop();
+
   return (
     <Layout>
       <TxtBox>
@@ -12,8 +14,8 @@ const Comment = ({ apiType }) => {
       </TxtBox>
       {apiType === 'board' && (
         <Box>
-          <CommentForm />
-          <CommentList apiType={apiType} />
+          <CommentForm id={id} />
+          <CommentList id={id} apiType={apiType} />
         </Box>
       )}
     </Layout>

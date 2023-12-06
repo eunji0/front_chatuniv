@@ -6,15 +6,16 @@ import closeSrc from '../../assets/images/modal_close.svg';
 import { getPosts, postBoard } from '../../api/boardapi';
 
 const PostModal = ({ onClose }) => {
+  const authToken = sessionStorage.getItem('authToken');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   const handleSaveClick = async () => {
     try {
       if (title.trim() !== '' && content.trim() !== '') {
-        await postBoard({ title, content });
+        await postBoard({ title, content, authToken });
 
-        await getPosts();
+        await getPosts(authToken);
 
         onClose();
         setTitle('');

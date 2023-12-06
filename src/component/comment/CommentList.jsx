@@ -6,8 +6,7 @@ import { deleteComment, getCommentsForBoard, updateComment } from '../../api/com
 import userSrc from '../../assets/images/user.svg';
 import { truncateText } from '../../utils/utils';
 
-const CommentList = ({ apiType }) => {
-  const id = window.location.pathname.split('/').pop();
+const CommentList = ({ id, apiType }) => {
   const [comments, setComments] = useState([]);
   const [editedComment, setEditedComment] = useState(null);
   const userEmail = sessionStorage.getItem('userEmail');

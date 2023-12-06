@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import baseURL from './apiConfig';
+
 //채팅방 전체 조회
 export const getChats = async (authToken) => {
   try {

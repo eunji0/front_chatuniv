@@ -4,29 +4,38 @@ import { useState } from 'react';
 import COLORS from '../../styles/color';
 import closeSrc from '../../assets/images/modal_close.svg';
 import sendSrc from '../../assets/images/send.svg';
-import { truncateText } from '../../utils/utils';
+import { handleEnterKey, truncateText } from '../../utils/utils';
 import { postCommentForChat } from '../../api/commentapi';
 
 const ChatCommentForm = ({ info, resetChange }) => {
   const [content, setContent] = useState('');
   const authToken = sessionStorage.getItem('authToken');
 
+  // 댓글 제출 후 처리 로직 분리
   const handleCommentSubmit = async () => {
     try {
       await postCommentForChat(info.id, content, authToken);
-      setContent('');
-      resetChange();
-      alert('해당 대화에 대한 댓글이 등록되었습니다.');
+      handleSuccess();
     } catch (error) {
-      alert(error.response.data);
-      console.error('댓글 등록 중 에러:', error);
+      handleFailure(error);
     }
   };
 
+  // 댓글 제출 성공 시 처리
+  const handleSuccess = () => {
+    setContent('');
+    resetChange();
+    alert('해당 대화에 대한 댓글이 등록되었습니다.');
+  };
+
+  // 댓글 제출 실패 시 처리
+  const handleFailure = (error) => {
+    alert(error.response?.data || '댓글 등록 중 에러가 발생했습니다.');
+    console.error('댓글 등록 중 에러:', error);
+  };
+
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleCommentSubmit();
-    }
+    handleEnterKey(e, handleCommentSubmit);
   };
 
   return (

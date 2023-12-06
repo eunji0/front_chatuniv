@@ -7,6 +7,8 @@ import { truncateText } from '../../utils/utils';
 import { deleteComment, updateComment } from '../../api/commentapi';
 
 const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
+  const authToken = sessionStorage.getItem('authToken');
+
   const handleDeleteComment = async (commentId) => {
     try {
       await deleteComment(commentId, authToken);
@@ -42,7 +44,7 @@ const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
     }
   };
 
-  console.log(isCommentList);
+  // console.log(isCommentList);
 
   return (
     <CommentLayout>

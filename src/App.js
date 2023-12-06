@@ -6,7 +6,6 @@ import IntroductionSrc from './assets/images/introduction.svg';
 import Header from './component/header/Header';
 import COLORS from './styles/color';
 import Main from './page/Main';
-import Bottom from './component/Bottom';
 import Lanking from './page/Lanking';
 import Board from './page/Board';
 import Login from './page/Login';
@@ -15,6 +14,7 @@ import Members from './page/mypage/Members';
 import MyPage from './page/MyPage';
 import MypageHeader from './component/header/MypageHeader';
 import Chatting from './page/Chatting';
+import NavigationBar from './component/NavigationBar';
 
 const App = () => {
   return (
@@ -38,7 +38,7 @@ const App = () => {
                   <Route path="/mypage/members" element={<Members />} />
                 </Route>
               </Routes>
-              <Bottom />
+              <NavigationBar />
             </Frame>
           </InLayout>
         </Layout>
@@ -81,6 +81,7 @@ const InLayout = styled.div`
   width: 1100px;
   align-items: flex-start;
   flex-shrink: 0;
+  gap: 50px;
   align-self: stretch;
   height: 100vh;
   margin: 0 auto;

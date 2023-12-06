@@ -6,8 +6,7 @@ import sendSrc from '../../assets/images/send.svg';
 import COLORS from '../../styles/color';
 import { postCommentForBoard } from '../../api/commentapi';
 
-const CommentForm = () => {
-  const id = window.location.pathname.split('/').pop();
+const CommentForm = ({ id }) => {
   const [content, setContent] = useState('');
   const authToken = sessionStorage.getItem('authToken');
 
@@ -20,11 +19,20 @@ const CommentForm = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    handleEnterKey(e, handleCommentSubmit);
+  };
+
   return (
     <Layout>
       <User alt="user" src={userSrc} />
       <CommentFormBox>
-        <Commentinput type="text" value={content} onChange={(e) => setContent(e.target.value)} />
+        <Commentinput
+          type="text"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
         <SendBox type="submit" onClick={handleCommentSubmit}>
           <ImgBox alt="send" src={sendSrc} />
         </SendBox>

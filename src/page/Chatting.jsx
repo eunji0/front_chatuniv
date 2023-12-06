@@ -55,33 +55,30 @@ const Chatting = () => {
   const handleChatAskSubmit = async () => {
     try {
       const isCurrentChat = chatId !== 'newChat';
-
-      if (isCurrentChat) {
-        const result =
-          selectedMode === '순한맛'
-            ? await postMildAsk(chatId, prompt, authToken)
-            : await postRawAsk(chatId, prompt, authToken);
-
-        setLoading(true);
-        alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
-        console.log(`${selectedMode} 질문이 성공적으로 등록되었습니다:`, result);
-        setPrompt('');
-      } else {
+      const createChatAndPostAsk = async () => {
         const response = await postChat(authToken);
         chatId = response;
         const newUrl = `/chatting/${chatId}`;
         window.history.pushState({}, '', newUrl);
+        return chatId;
+      };
 
-        const result =
-          selectedMode === '순한맛'
-            ? await postMildAsk(chatId, prompt, authToken)
-            : await postRawAsk(chatId, prompt, authToken);
+      const chatIdToUse = isCurrentChat ? chatId : await createChatAndPostAsk();
 
-        setLoading(true);
-        alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
-        console.log(`채팅방 생성 및 ${selectedMode} 질문이 성공적으로 등록되었습니다:`, result);
-        setPrompt('');
-      }
+      const result =
+        selectedMode === '순한맛'
+          ? await postMildAsk(chatIdToUse, prompt, authToken)
+          : await postRawAsk(chatIdToUse, prompt, authToken);
+
+      setLoading(true);
+      alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
+      console.log(
+        `${
+          isCurrentChat ? '' : '채팅방 생성 및 '
+        }${selectedMode} 질문이 성공적으로 등록되었습니다:`,
+        result,
+      );
+      setPrompt('');
     } catch (error) {
       console.error('채팅 질문 등록 중 에러:', error);
       alert(error.response.data);
@@ -155,14 +152,12 @@ const Chatting = () => {
         </InLayout>
 
         {/* 댓글 */}
-        {addCommentList === true ? (
+        {addCommentList && (
           <ChatCommentList
             isContent={isContent}
             falseCommentList={falseCommentList}
             isCommentList={isCommentList}
           />
-        ) : (
-          <></>
         )}
       </TLayout>
     </Layout>
