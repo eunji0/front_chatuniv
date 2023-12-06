@@ -115,7 +115,6 @@ const WordBox = styled.div`
   display: flex;
   padding: 5px;
   align-items: center;
-  gap: 5px;
   border-radius: 20px;
   background: ${COLORS.PURPLE100};
   color: ${COLORS.WHITE};

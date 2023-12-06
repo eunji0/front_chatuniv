@@ -10,6 +10,7 @@ const Lanking = () => {
   const [data, setData] = useState('');
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
   const navigate = useNavigate();
+  const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
     const cleanupResize = handleResize(setLayoutHeight);
@@ -17,14 +18,14 @@ const Lanking = () => {
   }, []);
 
   useEffect(() => {
-    getStatistics()
+    getStatistics(authToken)
       .then((data) => {
         setData(data.statistics);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [data]);
 
   const handleClick = (word) => {
     navigate(`/?q=${word}`);

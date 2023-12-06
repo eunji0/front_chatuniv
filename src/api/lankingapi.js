@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-import { authToken } from '../component/header/Header';
-
-export const getStatistics = async () => {
-  const response = await axios.get('https://woowacourse.store/api/api/statistics', {
+export const getStatistics = async (authToken) => {
+  const response = await axios.get('https://woowacourse.store/api/statistics', {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },

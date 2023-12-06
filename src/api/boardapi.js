@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-import { authToken } from '../component/header/Header';
+import baseURL from './apiConfig';
 
 //게시글 전체 조회
-export const getPosts = async () => {
+export const getPosts = async (authToken) => {
   try {
-    const response = await axios.get('https://woowacourse.store/api/boards/all', {
+    const response = await axios.get(`${baseURL}/boards/all`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -20,9 +20,9 @@ export const getPosts = async () => {
 };
 
 //게시글 단건 조회
-export const getPost = async ({ boardId }) => {
+export const getPost = async ({ boardId, authToken }) => {
   try {
-    const response = await axios.get(`https://woowacourse.store/api/boards/${boardId}`, {
+    const response = await axios.get(`${baseURL}/boards/${boardId}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -36,10 +36,10 @@ export const getPost = async ({ boardId }) => {
 };
 
 //게시글 생성하기
-export const postBoard = async ({ title, content }) => {
+export const postBoard = async ({ title, content, authToken }) => {
   try {
     const response = await axios.post(
-      'https://woowacourse.store/api/boards',
+      `${baseURL}/boards`,
       {
         title: title,
         content: content,
@@ -59,9 +59,9 @@ export const postBoard = async ({ title, content }) => {
 };
 
 //게시글 삭제
-export const deletePost = async ({ boardId }) => {
+export const deletePost = async ({ boardId, authToken }) => {
   try {
-    const response = await axios.delete(`https://woowacourse.store/api/boards/${boardId}`, {
+    const response = await axios.delete(`${baseURL}/boards/${boardId}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },

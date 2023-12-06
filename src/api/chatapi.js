@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const authToken = localStorage.getItem('authToken');
-
 //채팅방 전체 조회
 export const getChats = async (authToken) => {
   try {
-    const response = await axios.get('https://woowacourse.store/api/chats', {
+    const response = await axios.get(`${baseURL}/chats`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -19,16 +17,13 @@ export const getChats = async (authToken) => {
 };
 
 //채팅방 검색
-export const getChatSearch = async (keyword) => {
+export const getChatSearch = async (keyword, authToken) => {
   try {
-    const response = await axios.get(
-      `https://woowacourse.store/api/chats/search?keyword=${keyword}`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+    const response = await axios.get(`${baseURL}/chats/search?keyword=${keyword}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
       },
-    );
+    });
 
     return response.data;
   } catch (error) {
@@ -40,7 +35,7 @@ export const getChatSearch = async (keyword) => {
 //기존 채팅방 조회
 export const getChatRoom = async ({ chatId, authToken }) => {
   try {
-    const response = await axios.get(`https://woowacourse.store/api/chats/${chatId}`, {
+    const response = await axios.get(`${baseURL}/chats/${chatId}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },

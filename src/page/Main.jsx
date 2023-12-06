@@ -21,7 +21,7 @@ const Main = () => {
   const [error, setError] = useState(null);
   const location = useLocation();
   const authToken = sessionStorage.getItem('authToken');
-
+  console.log(authToken);
   useEffect(() => {
     const cleanupResize = handleResize(setLayoutHeight);
     return () => cleanupResize();
@@ -36,7 +36,7 @@ const Main = () => {
     setError(null);
 
     if (newSearchTerm) {
-      getChatSearch(newSearchTerm, 10, 4)
+      getChatSearch(newSearchTerm, authToken)
         .then((data) => {
           setSearchList(data);
         })

@@ -10,14 +10,15 @@ const Post = ({ boardId }) => {
   const [post, setPost] = useState([]);
   const [, setLoading] = useState(true);
   const [, setError] = useState(null);
-  const userEmail = localStorage.getItem('userEmail');
+  const authToken = sessionStorage.getItem('authToken');
+  const userEmail = sessionStorage.getItem('userEmail');
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (boardId !== 'newBoard') {
-          const data = await getPost({ boardId });
+          const data = await getPost({ boardId, authToken });
           console.log(data);
           setPost(data);
           setLoading(false);
@@ -34,8 +35,8 @@ const Post = ({ boardId }) => {
 
   const handleDeleteClick = async () => {
     try {
-      await deletePost({ boardId });
-      await getPosts();
+      await deletePost({ boardId, authToken });
+      await getPosts(authToken);
       navigate('/board');
     } catch (error) {
       console.error('Error deleting post:', error);

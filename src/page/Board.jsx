@@ -14,9 +14,10 @@ const Board = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
-    getPosts()
+    getPosts(authToken)
       .then((data) => {
         setPosts(data.boards);
         setLoading(false);

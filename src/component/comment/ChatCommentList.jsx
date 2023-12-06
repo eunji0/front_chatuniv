@@ -4,8 +4,46 @@ import COLORS from '../../styles/color';
 import closeSrc from '../../assets/images/modal_close.svg';
 import userSrc from '../../assets/images/user.svg';
 import { truncateText } from '../../utils/utils';
+import { deleteComment, updateComment } from '../../api/commentapi';
 
 const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await deleteComment(commentId, authToken);
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.commentId !== commentId),
+      );
+    } catch (error) {
+      console.error('댓글 삭제 에러:', error);
+    }
+  };
+
+  const handleEditComment = (commentId) => setEditedComment(commentId);
+
+  const handleEditContentChange = (commentId, newContent) => {
+    setComments((prevComments) =>
+      prevComments.map((comment) =>
+        comment.commentId === commentId ? { ...comment, content: newContent } : comment,
+      ),
+    );
+  };
+
+  const handleUpdateComment = async (commentId, newContent) => {
+    try {
+      await updateComment(commentId, newContent, authToken);
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.commentId === commentId ? { ...comment, content: newContent } : comment,
+        ),
+      );
+      setEditedComment(null);
+    } catch (error) {
+      console.error('댓글 수정 에러:', error);
+    }
+  };
+
+  console.log(isCommentList);
+
   return (
     <CommentLayout>
       <CommentInfoLayout>
@@ -28,6 +66,10 @@ const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
                 <UserEmailText>{truncateText(v.email, 2)}</UserEmailText>
                 <CommentContentBox>
                   <CommentContentTxt>{v.content}</CommentContentTxt>
+                  <EditBox>
+                    <FixBox onClick={() => handleEditComment(v.commentId)}>수정</FixBox>
+                    <FixBox onClick={() => handleDeleteComment(v.commentId)}>삭제</FixBox>
+                  </EditBox>
                 </CommentContentBox>
               </UserInfoBox>
             </ListBox>
@@ -41,6 +83,31 @@ const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
 };
 
 export default ChatCommentList;
+
+const EditBox = styled.div`
+  display: flex;
+  align-items: flex-end;
+  width: auto;
+  gap: 5px;
+`;
+
+const FixBox = styled.div`
+  width: auto;
+  border-radius: 5px;
+  border: 1px solid ${COLORS.PURPLE100};
+  background: ${COLORS.WHITE};
+  cursor: pointer;
+
+  display: flex;
+  padding: 3px;
+  align-items: flex-start;
+  gap: 10px;
+  color: ${COLORS.PURPLE100};
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
 
 const CloseBox = styled.div`
   display: flex;
@@ -76,17 +143,15 @@ const UserEmailText = styled.div`
 
 const CommentContentBox = styled.div`
   display: flex;
-  flex: 1 0 0;
   width: 100%;
   padding: 5px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
+  align-items: center;
   border-bottom: 1px solid ${COLORS.GRAY};
 `;
 
 const CommentContentTxt = styled.div`
   display: flex;
+  flex: 1 0 0;
   padding: 5px;
   align-items: center;
   gap: 10px;

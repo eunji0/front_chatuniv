@@ -7,7 +7,6 @@ import COLORS from '../../styles/color';
 const MypageHeader = () => {
   const url = window.location.href;
   const title = url.split('/').pop();
-  console.log(title);
 
   return (
     <Box>

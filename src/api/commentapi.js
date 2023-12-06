@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+import baseURL from './apiConfig';
+
 //게시판 댓글 리스트
 export const getCommentsForBoard = async (boardId, authToken) => {
   try {
-    const response = await axios.get(`https://woowacourse.store/api/boards/${boardId}/comments`, {
+    const response = await axios.get(`${baseURL}/boards/${boardId}/comments`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -20,7 +22,7 @@ export const getCommentsForBoard = async (boardId, authToken) => {
 export const postCommentForBoard = async (boardId, content, authToken) => {
   try {
     const response = await axios.post(
-      `https://woowacourse.store/api/boards/${boardId}/comments`,
+      `${baseURL}/boards/${boardId}/comments`,
       {
         content: content,
       },
@@ -42,7 +44,7 @@ export const postCommentForBoard = async (boardId, content, authToken) => {
 export const updateComment = async (commentId, newContent, authToken) => {
   try {
     const response = await axios.patch(
-      `https://woowacourse.store/api/comments/${commentId}`,
+      `${baseURL}/comments/${commentId}`,
       {
         content: newContent,
       },
@@ -63,7 +65,7 @@ export const updateComment = async (commentId, newContent, authToken) => {
 //댓글 삭제
 export const deleteComment = async (commentId, authToken) => {
   try {
-    const response = await axios.delete(`https://woowacourse.store/api/comments/${commentId}`, {
+    const response = await axios.delete(`${baseURL}/comments/${commentId}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -79,14 +81,11 @@ export const deleteComment = async (commentId, authToken) => {
 //채팅 댓글 리스트
 export const getCommentsForChat = async (conversationId, authToken) => {
   try {
-    const response = await axios.get(
-      `https://woowacourse.store/api/conversations/${conversationId}/comments`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
+    const response = await axios.get(`${baseURL}/conversations/${conversationId}/comments`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
       },
-    );
+    });
 
     return response.data;
   } catch (error) {
@@ -99,7 +98,7 @@ export const getCommentsForChat = async (conversationId, authToken) => {
 export const postCommentForChat = async (chatId, content, authToken) => {
   try {
     const response = await axios.post(
-      `https://woowacourse.store/api/conversations/${chatId}/comments`,
+      `${baseURL}/conversations/${chatId}/comments`,
       {
         content: content,
       },

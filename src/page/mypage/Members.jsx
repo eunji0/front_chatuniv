@@ -15,6 +15,7 @@ const Members = () => {
         currentPassword,
         newPassword,
         newPasswordCheck: confirmPassword,
+        authToken,
       });
       setCurrentPassword('');
       setNewPassword('');

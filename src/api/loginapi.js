@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+import baseURL from './apiConfig';
+
 export const loginUser = async (email, password) => {
   try {
-    const response = await axios.post('https://woowacourse.store/api/auth/sign-in', {
+    const response = await axios.post(`${baseURL}/auth/sign-in`, {
       email: email,
       password: password,
     });
