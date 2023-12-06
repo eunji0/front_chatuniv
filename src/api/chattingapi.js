@@ -68,6 +68,7 @@ export const postChat = async (authToken) => {
       return +locationHeader.split('/').pop();
     }
   } catch (error) {
-    console.error('채팅방 생성 중 에러 발생:', error);
+    console.error(error);
+    throw error;
   }
 };

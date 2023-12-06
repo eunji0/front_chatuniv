@@ -55,6 +55,7 @@ export const postBoard = async ({ title, content, authToken }) => {
     }
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
 
