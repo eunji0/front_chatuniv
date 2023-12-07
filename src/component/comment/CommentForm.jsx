@@ -5,6 +5,7 @@ import userSrc from '../../assets/images/user.svg';
 import sendSrc from '../../assets/images/send.svg';
 import COLORS from '../../styles/color';
 import { postCommentForBoard } from '../../api/commentapi';
+import { handleEnterKey } from '../../utils/utils';
 
 const CommentForm = ({ id }) => {
   const [content, setContent] = useState('');

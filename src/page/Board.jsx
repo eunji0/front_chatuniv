@@ -66,7 +66,7 @@ const Board = () => {
 
   const updatePostList = async () => {
     try {
-      const data = await getPosts();
+      const data = await getPosts(authToken);
       setPosts(data.boards);
     } catch (error) {
       console.error('Error updating post list:', error);

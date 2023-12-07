@@ -11,7 +11,6 @@ export const getPosts = async (authToken) => {
       },
     });
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -37,6 +36,7 @@ export const getPost = async ({ boardId, authToken }) => {
 
 //게시글 생성하기
 export const postBoard = async ({ title, content, authToken }) => {
+  console.log(authToken);
   try {
     const response = await axios.post(
       `${baseURL}/boards`,

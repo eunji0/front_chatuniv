@@ -11,6 +11,7 @@ const CommentList = ({ id, apiType }) => {
   const [editedComment, setEditedComment] = useState(null);
   const userEmail = sessionStorage.getItem('userEmail');
   const authToken = sessionStorage.getItem('authToken');
+  console.log(comments);
 
   useEffect(() => {
     const fetchData = async () => {
