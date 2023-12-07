@@ -80,3 +80,28 @@ export const deletePost = async ({ boardId, authToken }) => {
 };
 
 //게시글 수정
+const updateBoard = async (boardId, title, content, authToken) => {
+  console.log(boardId, title, content, authToken);
+  try {
+    const response = await axios.patch(
+      `${baseURL}/boards/${boardId}`,
+      {
+        title,
+        content,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
+
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating board:', error);
+    throw error;
+  }
+};
+
+export default updateBoard;

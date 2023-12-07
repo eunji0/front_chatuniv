@@ -4,22 +4,23 @@ import { useNavigate } from 'react-router-dom';
 
 import COLORS from '../styles/color';
 import userSrc from '../assets/images/user.svg';
-import { deletePost, getPost, getPosts } from '../api/boardapi';
+import updateBoard, { deletePost, getPost, getPosts } from '../api/boardapi';
 
 const Post = ({ boardId }) => {
   const [post, setPost] = useState([]);
   const [, setLoading] = useState(true);
   const [, setError] = useState(null);
   const authToken = sessionStorage.getItem('authToken');
-  const userEmail = sessionStorage.getItem('userEmail');
   const navigate = useNavigate();
+  const [isEditing, setEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedContent, setEditedContent] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (boardId !== 'newBoard') {
           const data = await getPost({ boardId, authToken });
-          console.log(data);
           setPost(data);
           setLoading(false);
         }
@@ -43,6 +44,28 @@ const Post = ({ boardId }) => {
     }
   };
 
+  const handleEditClick = () => {
+    setEditing(true);
+    setEditedTitle(post.title);
+    setEditedContent(post.content);
+  };
+
+  const handleCancelEdit = () => {
+    setEditing(false);
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      await updateBoard(boardId, editedTitle, editedContent, authToken);
+      const data = await getPost({ boardId, authToken });
+      setPost(data);
+      setEditing(false);
+    } catch (error) {
+      alert('게시판 수정에 실패하였습니다.');
+      console.error('Error updating post:', error);
+    }
+  };
+
   return (
     <Layout>
       <TopBox>
@@ -57,8 +80,17 @@ const Post = ({ boardId }) => {
         </UserInfoBox>
         {post.isMine ? (
           <ButtonLayout>
-            <ButtonBox>수정</ButtonBox>
-            <ButtonBox onClick={handleDeleteClick}>삭제</ButtonBox>
+            {isEditing ? (
+              <>
+                <ButtonBox onClick={handleSaveEdit}>저장</ButtonBox>
+                <ButtonBox onClick={handleCancelEdit}>취소</ButtonBox>
+              </>
+            ) : (
+              <>
+                <ButtonBox onClick={handleEditClick}>수정</ButtonBox>
+                <ButtonBox onClick={handleDeleteClick}>삭제</ButtonBox>
+              </>
+            )}
           </ButtonLayout>
         ) : (
           // <MoreImg alt="more" src={moreSrc} />
@@ -66,14 +98,69 @@ const Post = ({ boardId }) => {
         )}
       </TopBox>
       <BottomBox>
-        <TitleText>{post.title}</TitleText>
-        <ContentText>{post.content}</ContentText>
+        {isEditing ? (
+          <>
+            <TitleInput
+              type="text"
+              value={editedTitle}
+              onChange={(e) => setEditedTitle(e.target.value)}
+            />
+            <ContentTextarea
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+            />
+          </>
+        ) : (
+          <>
+            <TitleText>{post.title}</TitleText>
+            <ContentText>{post.content}</ContentText>
+          </>
+        )}
       </BottomBox>
     </Layout>
   );
 };
 
 export default Post;
+
+const TitleInput = styled.input`
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid ${COLORS.GRAY};
+  color: ${COLORS.BLACK};
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const ContentTextarea = styled.textarea`
+  outline: none;
+  width: 100%;
+  height: 100%;
+  flex: 1 0 0;
+  resize: none;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
+`;
 
 const Layout = styled.div`
   display: flex;
@@ -86,6 +173,7 @@ const Layout = styled.div`
   border: 2px solid ${COLORS.GRAY};
   background: ${COLORS.WHITE};
 `;
+
 const TopBox = styled.div`
   display: flex;
   padding: 10px;
@@ -96,13 +184,14 @@ const TopBox = styled.div`
 `;
 
 const BottomBox = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   padding: 10px;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
   flex: 1 0 0;
-  align-self: stretch;
 `;
 
 const UserImg = styled.img`
@@ -161,10 +250,10 @@ const TimeBox = styled.div`
 `;
 
 const TitleText = styled.div`
+  width: 100%;
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  align-self: stretch;
 
   color: ${COLORS.BLACK};
   font-size: 20px;
@@ -174,12 +263,11 @@ const TitleText = styled.div`
 `;
 
 const ContentText = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  flex: 1 0 0;
-  align-self: stretch;
+
   color: ${COLORS.BLACK};
   font-size: 16px;
   font-style: normal;
@@ -188,6 +276,7 @@ const ContentText = styled.div`
 `;
 
 const ButtonLayout = styled.div`
+  width: auto;
   display: flex;
   padding: 10px;
   justify-content: center;
@@ -196,6 +285,7 @@ const ButtonLayout = styled.div`
 `;
 
 const ButtonBox = styled.div`
+  width: 38px !important;
   cursor: pointer;
   display: flex;
   padding: 5px;

@@ -86,7 +86,7 @@ const InLayout = styled.div`
   height: 100vh;
   margin: 0 auto;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1150px) {
     justify-content: center;
     width: 550px;
   }
@@ -101,7 +101,7 @@ const ImgBox = styled.img`
   width: 50%;
   height: 100vh;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1150px) {
     display: none;
   }
 `;

@@ -13,6 +13,7 @@ const CommentForm = ({ id }) => {
 
   const handleCommentSubmit = async () => {
     try {
+      console.log(id, content, authToken);
       await postCommentForBoard(id, content, authToken);
       setContent('');
     } catch (error) {

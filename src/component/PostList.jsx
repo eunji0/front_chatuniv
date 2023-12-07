@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 import COLORS from '../styles/color';
+import { truncateText } from '../utils/utils';
 
 const PostList = ({ title, content, user, timeinfo }) => {
   return (
     <Layout>
       <TitleContentBox>
-        <Title>{title}</Title>
+        <Title>{truncateText(title, 15)}</Title>
         <Content>{content}</Content>
       </TitleContentBox>
       <PostInfo>
