@@ -11,7 +11,6 @@ const CommentList = ({ id, apiType }) => {
   const [editedComment, setEditedComment] = useState(null);
   const userEmail = sessionStorage.getItem('userEmail');
   const authToken = sessionStorage.getItem('authToken');
-  console.log(comments);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +18,6 @@ const CommentList = ({ id, apiType }) => {
         if (apiType === 'board' && id != 'newChat') {
           const commentData = await getCommentsForBoard(id, authToken);
           setComments(commentData.commentResponse);
-          console.log(commentData.commentResponse);
         }
       } catch (error) {
         alert('Error fetching comments:', error);
@@ -51,8 +49,12 @@ const CommentList = ({ id, apiType }) => {
 
   const handleUpdateComment = async (commentId, newContent) => {
     try {
-      console.log(commentId, newContent, authToken);
       await updateComment(commentId, newContent, authToken);
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.commentId === commentId ? { ...comment, content: newContent } : comment,
+        ),
+      );
       setEditedComment(null);
     } catch (error) {
       console.error('댓글 수정 에러:', error);

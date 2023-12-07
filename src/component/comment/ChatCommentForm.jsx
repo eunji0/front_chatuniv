@@ -4,7 +4,7 @@ import { useState } from 'react';
 import COLORS from '../../styles/color';
 import closeSrc from '../../assets/images/modal_close.svg';
 import sendSrc from '../../assets/images/send.svg';
-import { handleEnterKey, truncateText } from '../../utils/utils';
+import { truncateText } from '../../utils/utils';
 import { postCommentForChat } from '../../api/commentapi';
 
 const ChatCommentForm = ({ info, resetChange }) => {
@@ -34,10 +34,6 @@ const ChatCommentForm = ({ info, resetChange }) => {
     console.error('댓글 등록 중 에러:', error);
   };
 
-  const handleKeyDown = (e) => {
-    handleEnterKey(e, handleCommentSubmit);
-  };
-
   return (
     <Layout>
       <CommentInfoLayout>
@@ -55,7 +51,6 @@ const ChatCommentForm = ({ info, resetChange }) => {
           type="text"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
         <ImgBox2 alt="send" src={sendSrc} onClick={handleCommentSubmit} />
       </ContentLayout>
@@ -65,7 +60,7 @@ const ChatCommentForm = ({ info, resetChange }) => {
 
 export default ChatCommentForm;
 
-const Layout = styled.div`
+const Layout = styled.form`
   display: flex;
   padding: 5px 10px;
   flex-direction: column;
@@ -147,4 +142,5 @@ const ContentInput = styled.input`
 const ImgBox2 = styled.img`
   width: 26px;
   height: 26px;
+  cursor: pointer;
 `;

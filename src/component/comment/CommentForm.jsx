@@ -5,7 +5,6 @@ import userSrc from '../../assets/images/user.svg';
 import sendSrc from '../../assets/images/send.svg';
 import COLORS from '../../styles/color';
 import { postCommentForBoard } from '../../api/commentapi';
-import { handleEnterKey } from '../../utils/utils';
 
 const CommentForm = ({ id }) => {
   const [content, setContent] = useState('');
@@ -13,16 +12,11 @@ const CommentForm = ({ id }) => {
 
   const handleCommentSubmit = async () => {
     try {
-      console.log(id, content, authToken);
       await postCommentForBoard(id, content, authToken);
       setContent('');
     } catch (error) {
       alert('댓글 등록 중 에러:', error);
     }
-  };
-
-  const handleKeyDown = (e) => {
-    handleEnterKey(e, handleCommentSubmit);
   };
 
   return (
@@ -31,9 +25,9 @@ const CommentForm = ({ id }) => {
       <CommentFormBox>
         <Commentinput
           type="text"
+          placeholder="댓글을 입력해주세요."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          onKeyDown={handleKeyDown}
         />
         <SendBox type="submit" onClick={handleCommentSubmit}>
           <ImgBox alt="send" src={sendSrc} />
