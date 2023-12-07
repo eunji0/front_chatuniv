@@ -6,18 +6,22 @@ import closeSrc from '../../assets/images/modal_close.svg';
 import sendSrc from '../../assets/images/send.svg';
 import { truncateText } from '../../utils/utils';
 import { postCommentForChat } from '../../api/commentapi';
+// import LoadingModal from '../modal/LoadingModal';
 
 const ChatCommentForm = ({ info, resetChange }) => {
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
   const authToken = sessionStorage.getItem('authToken');
 
   // 댓글 제출 후 처리 로직 분리
   const handleCommentSubmit = async () => {
     try {
+      setLoading(true);
       await postCommentForChat(info.id, content, authToken);
       handleSuccess();
     } catch (error) {
       handleFailure(error);
+      setLoading(false);
     }
   };
 
@@ -60,7 +64,7 @@ const ChatCommentForm = ({ info, resetChange }) => {
 
 export default ChatCommentForm;
 
-const Layout = styled.form`
+const Layout = styled.div`
   display: flex;
   padding: 5px 10px;
   flex-direction: column;

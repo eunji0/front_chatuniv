@@ -22,6 +22,7 @@ const Main = () => {
   const location = useLocation();
   const authToken = sessionStorage.getItem('authToken');
   console.log(authToken);
+
   useEffect(() => {
     const cleanupResize = handleResize(setLayoutHeight);
     return () => cleanupResize();
@@ -38,6 +39,7 @@ const Main = () => {
     if (newSearchTerm) {
       getChatSearch(newSearchTerm, authToken)
         .then((data) => {
+          console.log(data);
           setSearchList(data);
         })
         .catch((error) => {

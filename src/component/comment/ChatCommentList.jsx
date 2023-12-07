@@ -1,50 +1,60 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 
 import COLORS from '../../styles/color';
 import closeSrc from '../../assets/images/modal_close.svg';
 import userSrc from '../../assets/images/user.svg';
 import { truncateText } from '../../utils/utils';
-import { deleteComment, updateComment } from '../../api/commentapi';
+import { deleteComment, getCommentsForChat, updateComment } from '../../api/commentapi';
 
-const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
+const ChatCommentList = ({ isContent, falseCommentList }) => {
   const authToken = sessionStorage.getItem('authToken');
+  const [data, setData] = useState([]);
+  const [editedCommentId, setEditedCommentId] = useState(null);
+  const [editedContent, setEditedContent] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const commentData = await getCommentsForChat(isContent.id, authToken);
+        setData(commentData.commentResponse);
+      } catch (error) {
+        alert('Error fetching comments:', error);
+      }
+    };
+    fetchData();
+  }, [data]);
 
   const handleDeleteComment = async (commentId) => {
     try {
       await deleteComment(commentId, authToken);
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.commentId !== commentId),
-      );
+      alert('댓글이 삭제되었습니다.');
     } catch (error) {
       console.error('댓글 삭제 에러:', error);
     }
   };
 
-  const handleEditComment = (commentId) => setEditedComment(commentId);
-
-  const handleEditContentChange = (commentId, newContent) => {
-    setComments((prevComments) =>
-      prevComments.map((comment) =>
-        comment.commentId === commentId ? { ...comment, content: newContent } : comment,
-      ),
-    );
+  const handleEditComment = (commentId, content) => {
+    setEditedCommentId(commentId);
+    setEditedContent(content);
   };
 
-  const handleUpdateComment = async (commentId, newContent) => {
+  const handleCancelEdit = () => {
+    setEditedCommentId(null);
+    setEditedContent('');
+  };
+
+  const handleSaveEdit = async (commentId) => {
     try {
-      await updateComment(commentId, newContent, authToken);
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.commentId === commentId ? { ...comment, content: newContent } : comment,
-        ),
-      );
-      setEditedComment(null);
+      await updateComment(commentId, editedContent, authToken);
+      alert('댓글이 수정되었습니다.');
+      const commentData = await getCommentsForChat(isContent.id, authToken);
+      setData(commentData.commentResponse);
+      handleCancelEdit();
     } catch (error) {
       console.error('댓글 수정 에러:', error);
     }
   };
-
-  // console.log(isCommentList);
 
   return (
     <CommentLayout>
@@ -58,21 +68,61 @@ const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
         </CloseBox>
       </CommentInfoLayout>
       <ListLayout>
-        {isCommentList.length > 0 ? (
-          isCommentList.map((v) => (
+        {data.length > 0 ? (
+          data.map((v) => (
             <ListBox key={v.commentId}>
               <UserBox>
                 <UserImg alt="user" src={userSrc} />
               </UserBox>
+              {/* <UserInfoBox>
+                <UserEmailText>{truncateText(v.email, 2)}</UserEmailText>
+                {v.isMine ? (
+                  <CommentContentBox>
+                    <CommentContentTxt>{v.content}</CommentContentTxt>
+                    <EditBox>
+                      <FixBox onClick={() => handleEditComment(v.commentId)}>수정</FixBox>
+                      <FixBox onClick={() => handleDeleteComment(v.commentId)}>삭제</FixBox>
+                    </EditBox>
+                  </CommentContentBox>
+                ) : (
+                  <CommentContentBox>
+                    <CommentContentTxt>{v.content}</CommentContentTxt>
+                  </CommentContentBox>
+                )}
+              </UserInfoBox> */}
               <UserInfoBox>
                 <UserEmailText>{truncateText(v.email, 2)}</UserEmailText>
-                <CommentContentBox>
-                  <CommentContentTxt>{v.content}</CommentContentTxt>
-                  <EditBox>
-                    <FixBox onClick={() => handleEditComment(v.commentId)}>수정</FixBox>
-                    <FixBox onClick={() => handleDeleteComment(v.commentId)}>삭제</FixBox>
-                  </EditBox>
-                </CommentContentBox>
+                {v.isMine ? (
+                  <CommentContentBox>
+                    {editedCommentId === v.commentId ? (
+                      <>
+                        <CommentContentInput
+                          type="text"
+                          value={editedContent}
+                          onChange={(e) => setEditedContent(e.target.value)}
+                        />
+                        <EditBox>
+                          <FixBox onClick={() => handleSaveEdit(v.commentId)}>저장</FixBox>
+                          <FixBox onClick={handleCancelEdit}>취소</FixBox>
+                        </EditBox>
+                      </>
+                    ) : (
+                      <>
+                        <CommentContentTxt>{v.content}</CommentContentTxt>
+                        <EditBox>
+                          <FixBox onClick={() => handleEditComment(v.commentId, v.content)}>
+                            수정
+                          </FixBox>
+                          <FixBox onClick={() => handleDeleteComment(v.commentId)}>삭제</FixBox>
+                        </EditBox>
+                      </>
+                    )}
+                  </CommentContentBox>
+                ) : (
+                  <CommentContentBox>
+                    <CommentContentTxt>{v.content}</CommentContentTxt>
+                  </CommentContentBox>
+                )}
               </UserInfoBox>
             </ListBox>
           ))
@@ -85,6 +135,25 @@ const ChatCommentList = ({ isContent, falseCommentList, isCommentList }) => {
 };
 
 export default ChatCommentList;
+
+const CommentContentInput = styled.input`
+  width: 100%;
+  display: flex;
+  flex: 1 0 0;
+  padding: 5px;
+  align-items: center;
+  border: none;
+  gap: 10px;
+  color: ${COLORS.BLACK};
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 const EditBox = styled.div`
   display: flex;

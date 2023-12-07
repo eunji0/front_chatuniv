@@ -13,6 +13,7 @@ const CommentForm = ({ id }) => {
   const handleCommentSubmit = async () => {
     try {
       await postCommentForBoard(id, content, authToken);
+      alert('댓글을 생성했습니다.');
       setContent('');
     } catch (error) {
       alert('댓글 등록 중 에러:', error);
@@ -52,7 +53,7 @@ const Layout = styled.div`
   width: 100%;
 `;
 
-const CommentFormBox = styled.form`
+const CommentFormBox = styled.div`
   display: flex;
   padding: 10px;
   align-items: flex-start;

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import COLORS from '../styles/color';
 import ModeButton from '../component/button/ModeButton';
 import sendSrc from '../assets/images/send.svg';
 import { postChat, postMildAsk, postRawAsk } from '../api/chattingapi';
-import { handleEnterKey, scrollToBottom, truncateText } from '../utils/utils';
+import { handleEnterKey, truncateText } from '../utils/utils';
 import ChatCommentForm from '../component/comment/ChatCommentForm';
 import { getCommentsForChat } from '../api/commentapi';
 import { getChatRoom } from '../api/chatapi';
@@ -19,7 +19,6 @@ const Chatting = () => {
   const [isCommentList, setCommentList] = useState([]);
   const [selectedMode, setSelectedMode] = useState('순한맛');
   const [isContent, setContent] = useState({});
-  const contentBoxRef = useRef();
   const authToken = sessionStorage.getItem('authToken');
   let chatId = window.location.pathname.split('/').pop();
   const [chats, setChats] = useState([]);
@@ -44,9 +43,7 @@ const Chatting = () => {
     }
   }, [chats, loading, chatId]);
 
-  useEffect(() => {
-    scrollToBottom(contentBoxRef);
-  }, [chats]);
+  console.log(chats);
 
   const handleKeyDown = (e) => {
     handleEnterKey(e, handleChatAskSubmit);
@@ -63,6 +60,8 @@ const Chatting = () => {
         return chatId;
       };
 
+      setLoading(true);
+
       const chatIdToUse = isCurrentChat ? chatId : await createChatAndPostAsk();
 
       const result =
@@ -70,7 +69,6 @@ const Chatting = () => {
           ? await postMildAsk(chatIdToUse, prompt, authToken)
           : await postRawAsk(chatIdToUse, prompt, authToken);
 
-      setLoading(true);
       alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
       console.log(
         `${
@@ -78,6 +76,8 @@ const Chatting = () => {
         }${selectedMode} 질문이 성공적으로 등록되었습니다:`,
         result,
       );
+      const data = await getChatRoom({ chatId, authToken });
+      setChats(data.conversations);
       setPrompt('');
     } catch (error) {
       console.error('채팅 질문 등록 중 에러:', error);
@@ -98,10 +98,11 @@ const Chatting = () => {
     setAddCommentList(true);
     try {
       setContent({ id, content });
+      //댓글리스트 가져오기
       const commentData = await getCommentsForChat(id, authToken);
       setCommentList(commentData.commentResponse);
     } catch (error) {
-      alert('댓글 생성 중 에러가 발생했습니다.');
+      console.log('chatting error');
     }
   };
 
@@ -153,11 +154,7 @@ const Chatting = () => {
 
         {/* 댓글 */}
         {addCommentList && (
-          <ChatCommentList
-            isContent={isContent}
-            falseCommentList={falseCommentList}
-            isCommentList={isCommentList}
-          />
+          <ChatCommentList isContent={isContent} falseCommentList={falseCommentList} />
         )}
       </TLayout>
     </Layout>

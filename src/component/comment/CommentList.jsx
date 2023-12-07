@@ -9,7 +9,6 @@ import { truncateText } from '../../utils/utils';
 const CommentList = ({ id, apiType }) => {
   const [comments, setComments] = useState([]);
   const [editedComment, setEditedComment] = useState(null);
-  const userEmail = sessionStorage.getItem('userEmail');
   const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
@@ -68,13 +67,13 @@ const CommentList = ({ id, apiType }) => {
       ) : (
         comments.map((comment) => (
           <CLayout key={comment.commentId}>
-            {comment.email === userEmail ? (
+            {comment.isMine ? (
               <MyBox key={comment.commentId}>
                 <User alt="user" src={userSrc} />
                 <CommentBox>
                   <CommentLayout>
                     <MyUserBox>
-                      {userEmail === comment.email ? comment.email : truncateText(comment.email, 2)}
+                      {truncateText(comment.email, 2)}
                       {editedComment === comment.commentId ? (
                         <FixBox
                           onClick={() => handleUpdateComment(comment.commentId, comment.content)}

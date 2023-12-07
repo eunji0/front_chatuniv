@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { scrollToBottom } from '../utils/utils';
 import commentSrc from '../assets/images/comment.svg';
 import commentlistSrc from '../assets/images/commentlist.svg';
 import fillCommentlistSrc from '../assets/images/fill_commentlist.svg';
@@ -16,11 +15,17 @@ const ChatContent = ({ chats, handleCommentForm, handleGetList }) => {
   const [isAskFormHovered, setIsAskFormHovered] = useState(false);
 
   useEffect(() => {
-    scrollToBottom(contentBoxRef);
+    scrollToBottom();
   }, [chats]);
 
+  const scrollToBottom = () => {
+    if (contentBoxRef.current) {
+      contentBoxRef.current.scrollTop = contentBoxRef.current.scrollHeight;
+    }
+  };
+
   return (
-    <ContentBox>
+    <ContentBox ref={contentBoxRef}>
       {chats.length > 0 &&
         chats.map((conversation) => (
           <ChatLayout key={conversation.conversationId}>

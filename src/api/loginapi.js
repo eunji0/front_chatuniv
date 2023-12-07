@@ -15,7 +15,7 @@ export const loginUser = async (email, password) => {
     return response.data.accessToken;
   } catch (error) {
     console.error('로그인 오류:', error);
-    alert(error);
+    alert('로그인에 실패하였습니다.');
     throw error;
   }
 };

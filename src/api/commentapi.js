@@ -32,7 +32,7 @@ export const postCommentForBoard = async (boardId, content, authToken) => {
         },
       },
     );
-    alert('댓글을 생성했습니다.');
+
     return response.data;
   } catch (error) {
     console.error(error);
