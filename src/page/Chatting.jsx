@@ -169,6 +169,7 @@ const Layout = styled.div`
   flex: 1 0 0;
   align-self: stretch;
   overflow-y: auto;
+  padding-bottom: 20px;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -224,6 +225,7 @@ const ContentLayout = styled.div`
   flex: 1 0 0;
   align-self: stretch;
   background: ${COLORS.PURPLE10};
+  border-bottom: 10px;
 `;
 
 const TitleText = styled.div`
