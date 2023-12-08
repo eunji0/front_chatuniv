@@ -26,10 +26,12 @@ const Search = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    queryParams.set('q', searchTerm);
-    const searchPath = `${location.pathname}?${queryParams.toString()}`;
-    navigate(searchPath);
-    setSearchSubmitted(true);
+    if (searchTerm !== '') {
+      queryParams.set('q', searchTerm);
+      const searchPath = `${location.pathname}?${queryParams.toString()}`;
+      navigate(searchPath);
+      setSearchSubmitted(true);
+    }
   };
 
   const handleClearSearch = () => {
@@ -47,7 +49,7 @@ const Search = () => {
             <ClearSearchBtn onClick={handleClearSearch}>
               <ImgBox2 alt="close" src={closeSrc} />
             </ClearSearchBtn>
-            <span>{searchTerm}</span>
+            {searchTerm}
           </WordBox>
           <SearchBtn type="submit">
             <ImgBox alt="search" src={searchSrc} />
@@ -114,6 +116,7 @@ const WordBox = styled.div`
   width: auto;
   display: flex;
   padding: 5px;
+  padding-right: 10px;
   align-items: center;
   border-radius: 20px;
   background: ${COLORS.PURPLE100};

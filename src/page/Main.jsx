@@ -21,7 +21,6 @@ const Main = () => {
   const [error, setError] = useState(null);
   const location = useLocation();
   const authToken = sessionStorage.getItem('authToken');
-  console.log(authToken);
 
   useEffect(() => {
     const cleanupResize = handleResize(setLayoutHeight);
@@ -39,7 +38,6 @@ const Main = () => {
     if (newSearchTerm) {
       getChatSearch(newSearchTerm, authToken)
         .then((data) => {
-          console.log(data);
           setSearchList(data);
         })
         .catch((error) => {
@@ -115,6 +113,11 @@ const Main = () => {
 };
 
 export default Main;
+
+const SearchTerm = styled.span`
+  color: black;
+  font-weight: 600;
+`;
 
 const LinkBox = styled(Link)`
   display: flex;

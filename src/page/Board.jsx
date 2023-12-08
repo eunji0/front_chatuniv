@@ -23,7 +23,6 @@ const Board = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error chats:', error);
         setError('로그인해주세요.');
         setLoading(false);
       });

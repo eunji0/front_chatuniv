@@ -43,8 +43,6 @@ const Chatting = () => {
     }
   }, [chats, loading, chatId]);
 
-  console.log(chats);
-
   const handleKeyDown = (e) => {
     handleEnterKey(e, handleChatAskSubmit);
   };
