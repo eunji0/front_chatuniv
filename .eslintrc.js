@@ -4,17 +4,20 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  extends: ['prettier', 'eslint:recommended', 'plugin:@typescript-eslint/recommended'],
-  plugins: ['@babel', 'import'],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    parser: '@babel/eslint-parser',
-    requireConfigFile: false,
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 13,
+    ecmaVersion: 2022, // 최신 ECMAScript 버전
     sourceType: 'module',
   },
+  plugins: ['@typescript-eslint', 'import'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier', // Prettier 규칙을 가장 마지막에 추가
+  ],
   rules: {
     semi: 'error',
     'prefer-const': 'warn',
