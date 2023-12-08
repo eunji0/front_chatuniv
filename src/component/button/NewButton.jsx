@@ -14,6 +14,7 @@ const NewButton = ({ img, text }) => {
 export default NewButton;
 
 const Layout = styled.div`
+  z-index: 99;
   display: flex;
   width: auto;
   padding: 10px;

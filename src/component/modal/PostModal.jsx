@@ -64,8 +64,6 @@ const ImgBox = styled.img`
 
 const Layout = styled.div`
   z-index: 100;
-  position: relative;
-  bottom: 500px;
   display: flex;
   min-width: 350px;
   width: auto;
