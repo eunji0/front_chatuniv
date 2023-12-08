@@ -22,7 +22,7 @@ const Board = () => {
         setPosts(data.boards);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setError('로그인해주세요.');
         setLoading(false);
       });

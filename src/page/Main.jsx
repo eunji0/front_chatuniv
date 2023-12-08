@@ -114,11 +114,6 @@ const Main = () => {
 
 export default Main;
 
-const SearchTerm = styled.span`
-  color: black;
-  font-weight: 600;
-`;
-
 const LinkBox = styled(Link)`
   display: flex;
   padding: 0px;
