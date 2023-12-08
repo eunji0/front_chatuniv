@@ -225,7 +225,7 @@ const ContentLayout = styled.div`
   flex: 1 0 0;
   align-self: stretch;
   background: ${COLORS.PURPLE10};
-  border-bottom: 10px;
+  border-radius: 0px 0px 20px 20px;
 `;
 
 const TitleText = styled.div`
