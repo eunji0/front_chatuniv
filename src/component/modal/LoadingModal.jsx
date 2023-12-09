@@ -16,6 +16,9 @@ const ModalOverlay = styled.div`
 `;
 
 const LoadingSpinner = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
   border: 4px solid ${COLORS.WHITE};
   border-top: 4px solid #3498db;
   border-radius: 50%;
