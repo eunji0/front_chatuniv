@@ -11,6 +11,7 @@ import { getCommentsForChat } from '../api/commentapi';
 import { getChatRoom } from '../api/chatapi';
 import ChatCommentList from '../component/comment/ChatCommentList';
 import ChatContent from '../component/ChatContent';
+import LoadingModal from '../component/modal/LoadingModal';
 
 const Chatting = () => {
   const [prompt, setPrompt] = useState('');
@@ -22,7 +23,7 @@ const Chatting = () => {
   const authToken = sessionStorage.getItem('authToken');
   let chatId = window.location.pathname.split('/').pop();
   const [chats, setChats] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,15 +31,13 @@ const Chatting = () => {
         if (chatId !== 'newChat') {
           const data = await getChatRoom({ chatId, authToken });
           setChats(data.conversations);
-          setLoading(false);
         }
       } catch (error) {
         console.error('Error chat room:', error);
-        setLoading(false);
       }
     };
 
-    if (loading) {
+    if (!loading) {
       fetchData();
     }
   }, [chats, loading, chatId]);
@@ -67,7 +66,8 @@ const Chatting = () => {
           ? await postMildAsk(chatIdToUse, prompt, authToken)
           : await postRawAsk(chatIdToUse, prompt, authToken);
 
-      alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
+      // alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
+      setLoading(false);
       console.log(
         `${
           isCurrentChat ? '' : '채팅방 생성 및 '
@@ -110,6 +110,7 @@ const Chatting = () => {
 
   return (
     <Layout>
+      {loading && <LoadingModal />}
       <TLayout>
         <InLayout>
           <TitleLayout>

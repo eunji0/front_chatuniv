@@ -33,11 +33,15 @@ const LoadingSpinner = styled.div`
   }
 `;
 
+const WaitingText = styled.div`
+  padding-left: 20px;
+`;
+
 const LoadingModal = () => {
   return (
     <ModalOverlay>
       <LoadingSpinner />
-      <p>잠시만 기다려주세요.</p>
+      <WaitingText>잠시만 기다려주세요.</WaitingText>
     </ModalOverlay>
   );
 };

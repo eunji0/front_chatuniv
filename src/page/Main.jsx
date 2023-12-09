@@ -54,13 +54,16 @@ const Main = () => {
 
   useEffect(() => {
     if (authToken !== null && isLogin === true) {
+      setLoading(true);
       getChats()
         .then((data) => {
           setChats(data);
+          setLoading(false);
         })
         .catch((error) => {
           console.error('Error chats:', error);
           setError('로그인해주세요.');
+          setLoading(false);
         });
     } else {
       setLoading(false);
