@@ -20,18 +20,23 @@ const Board = () => {
   const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
-    getPosts(authToken)
-      .then((data) => {
-        setPosts(data.boards);
-        setLoading(false);
-      })
-      .catch((error) => {
-        if (error.response.data === 500) {
-          setIsLogin(false);
-        }
-        setError('로그인해주세요.');
-        setLoading(false);
-      });
+    if (authToken != null && isLogin === true) {
+      getPosts(authToken)
+        .then((data) => {
+          setPosts(data.boards);
+          setLoading(false);
+        })
+        .catch((error) => {
+          if (error.response.data === 500) {
+            setIsLogin(false);
+          }
+          setError('로그인해주세요.');
+          setLoading(false);
+        });
+    } else {
+      setError('로그인해주세요.');
+      setLoading(false);
+    }
   }, []);
 
   const renderPosts = (post) => (

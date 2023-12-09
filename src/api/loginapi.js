@@ -11,6 +11,7 @@ export const loginUser = async (email, password) => {
 
     sessionStorage.setItem('authToken', response.data.accessToken);
     sessionStorage.setItem('userEmail', email);
+    console.log(sessionStorage);
 
     return response.data.accessToken;
   } catch (error) {

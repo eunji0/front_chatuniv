@@ -21,15 +21,18 @@ const Lanking = () => {
   }, []);
 
   useEffect(() => {
-    getStatistics(authToken)
-      .then((data) => {
-        setData(data.statistics);
-      })
-      .catch((error) => {
-        if (error.response.data === 500) {
-          setIsLogin(false);
-        }
-      });
+    if (authToken != null && isLogin === true) {
+      getStatistics(authToken)
+        .then((data) => {
+          setData(data.statistics);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response.data === 500) {
+            setIsLogin(false);
+          }
+        });
+    }
   }, [data]);
 
   const handleClick = (word) => {

@@ -76,7 +76,7 @@ const Main = () => {
   const renderChatRoom = (chat) => (
     <Link
       to={`/chatting/${chat.chatId || chat.conversationId}`}
-      key={chat.chatId || chat.conversationId}
+      key={chat.conversationId ? chat.conversationId : chat.chatId}
     >
       <ChatListBox>
         <Chat title={chat.title || chat.ask} content={chat.content || chat.answer} />
