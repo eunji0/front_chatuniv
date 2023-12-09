@@ -77,6 +77,7 @@ const Layout = styled.div`
 `;
 
 const CommentInfoLayout = styled.div`
+  width: auto;
   display: flex;
   padding: 5px;
   justify-content: space-between;
@@ -86,6 +87,7 @@ const CommentInfoLayout = styled.div`
 `;
 
 const CommentInfoBox = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -94,6 +96,7 @@ const CommentInfoBox = styled.div`
 `;
 
 const CloseBox = styled.div`
+  width: 10%;
   display: flex;
   padding: 5px;
   align-items: flex-start;
@@ -106,6 +109,7 @@ const CloseImg = styled.img`
 `;
 
 const InfoText = styled.div`
+  width: 100%;
   color: ${COLORS.PURPLE100};
   font-size: 10px;
   font-style: normal;

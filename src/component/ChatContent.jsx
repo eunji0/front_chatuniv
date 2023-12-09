@@ -102,6 +102,7 @@ const CommentListImg = styled.img`
 `;
 
 const CommentBox2 = styled.button`
+  width: auto;
   border: none;
   display: none;
   padding: 5px;
@@ -141,6 +142,7 @@ const AskLayout = styled.div`
 
 const CommentBox = styled.button`
   border: none;
+  width: auto;
   display: none;
   padding: 5px;
   flex-direction: column;
