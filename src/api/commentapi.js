@@ -35,7 +35,7 @@ export const postCommentForBoard = async (boardId, content, authToken) => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
+    alert(error.response.data);
     throw error;
   }
 };
@@ -57,7 +57,7 @@ export const updateComment = async (commentId, newContent, authToken) => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     throw error;
   }
 };

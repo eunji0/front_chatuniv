@@ -9,6 +9,7 @@ import { truncateText } from '../../utils/utils';
 const CommentList = ({ id, apiType }) => {
   const [comments, setComments] = useState([]);
   const [editedComment, setEditedComment] = useState(null);
+  const [editing, setEditing] = useState(false);
   const authToken = sessionStorage.getItem('authToken');
 
   useEffect(() => {
@@ -22,7 +23,9 @@ const CommentList = ({ id, apiType }) => {
         alert('Error fetching comments:', error);
       }
     };
-    fetchData();
+    if (!editing) {
+      fetchData();
+    }
   }, [comments]);
 
   const handleDeleteComment = async (commentId) => {
@@ -36,7 +39,10 @@ const CommentList = ({ id, apiType }) => {
     }
   };
 
-  const handleEditComment = (commentId) => setEditedComment(commentId);
+  const handleEditComment = (commentId) => {
+    setEditing(true);
+    setEditedComment(commentId);
+  };
 
   const handleEditContentChange = (commentId, newContent) => {
     setComments((prevComments) =>
@@ -55,8 +61,9 @@ const CommentList = ({ id, apiType }) => {
         ),
       );
       setEditedComment(null);
+      setEditing(false);
     } catch (error) {
-      console.error('댓글 수정 에러:', error);
+      setEditing(false);
     }
   };
 

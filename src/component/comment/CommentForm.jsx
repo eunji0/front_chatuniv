@@ -16,7 +16,7 @@ const CommentForm = ({ id }) => {
       alert('댓글을 생성했습니다.');
       setContent('');
     } catch (error) {
-      alert('댓글 등록 중 에러:', error);
+      //  console.log(error)
     }
   };
 
