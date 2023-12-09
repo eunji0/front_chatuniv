@@ -23,7 +23,7 @@ const Lanking = () => {
         setData(data.statistics);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, [data]);
 

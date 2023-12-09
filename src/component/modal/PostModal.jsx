@@ -29,33 +29,45 @@ const PostModal = ({ onClose }) => {
   };
 
   return (
-    <Layout>
-      <TopBox>
-        <ImgBox alt="close" src={closeSrc} onClick={onClose} />
-        <TopTextBox>게시글 작성하기</TopTextBox>
-      </TopBox>
-      <BottomBox>
-        <TitleBox>
-          <TitleInput
-            placeholder="제목을 입력해주세요."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </TitleBox>
-        <ContentBox>
-          <ContentInput
-            placeholder="내용을 입력해주세요"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </ContentBox>
-      </BottomBox>
-      <SaveButton onClick={handleSaveClick}>완료</SaveButton>
-    </Layout>
+    <ModalWrapper>
+      <Layout>
+        <TopBox>
+          <ImgBox alt="close" src={closeSrc} onClick={onClose} />
+          <TopTextBox>게시글 작성하기</TopTextBox>
+        </TopBox>
+        <BottomBox>
+          <TitleBox>
+            <TitleInput
+              placeholder="제목을 입력해주세요."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </TitleBox>
+          <ContentBox>
+            <ContentInput
+              placeholder="내용을 입력해주세요"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </ContentBox>
+        </BottomBox>
+        <SaveButton onClick={handleSaveClick}>완료</SaveButton>
+      </Layout>
+    </ModalWrapper>
   );
 };
 
 export default PostModal;
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 400px;
+  z-index: 101;
+`;
 
 const ImgBox = styled.img`
   width: 25px;
