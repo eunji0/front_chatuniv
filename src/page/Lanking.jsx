@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import COLORS from '../styles/color';
 import { getStatistics } from '../api/lankingapi';
 import { handleResize } from '../utils/utils';
+import { isLoginState } from '../recoil/atoms';
 
 const Lanking = () => {
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const [data, setData] = useState('');
   const [layoutHeight, setLayoutHeight] = useState(window.innerHeight);
   const navigate = useNavigate();
@@ -23,7 +26,9 @@ const Lanking = () => {
         setData(data.statistics);
       })
       .catch((error) => {
-        // console.log(error);
+        if (error.response.data === 500) {
+          setIsLogin(false);
+        }
       });
   }, [data]);
 

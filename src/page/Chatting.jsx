@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 
 import COLORS from '../styles/color';
 import ModeButton from '../component/button/ModeButton';
@@ -12,8 +13,10 @@ import { getChatRoom } from '../api/chatapi';
 import ChatCommentList from '../component/comment/ChatCommentList';
 import ChatContent from '../component/ChatContent';
 import LoadingModal from '../component/modal/LoadingModal';
+import { isLoginState } from '../recoil/atoms';
 
 const Chatting = () => {
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const [prompt, setPrompt] = useState('');
   const [changeComment, setChangeComment] = useState(false);
   const [addCommentList, setAddCommentList] = useState(false);
@@ -33,6 +36,9 @@ const Chatting = () => {
           setChats(data.conversations);
         }
       } catch (error) {
+        if (error.response.data === 500) {
+          setIsLogin(false);
+        }
         console.error('Error chat room:', error);
       }
     };
@@ -68,12 +74,12 @@ const Chatting = () => {
 
       // alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
       setLoading(false);
-      console.log(
-        `${
-          isCurrentChat ? '' : '채팅방 생성 및 '
-        }${selectedMode} 질문이 성공적으로 등록되었습니다:`,
-        result,
-      );
+      // console.log(
+      //   `${
+      //     isCurrentChat ? '' : '채팅방 생성 및 '
+      //   }${selectedMode} 질문이 성공적으로 등록되었습니다:`,
+      //   result,
+      // );
       const data = await getChatRoom({ chatId, authToken });
       setChats(data.conversations);
       setPrompt('');

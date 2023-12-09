@@ -7,7 +7,7 @@ import { isLoginState } from '../../recoil/atoms';
 import COLORS from '../../styles/color';
 import mypageSrc from '../../assets/images/mypage.svg';
 
-export const authToken = sessionStorage.getItem('authToken');
+export const authToken = sessionStorage.getItem('authTokenㅁ');
 
 const Header = () => {
   const [isLogin, setIsLogin] = useRecoilState(isLoginState);

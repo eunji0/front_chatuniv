@@ -26,7 +26,6 @@ export const postMildAsk = async (chatId, prompt, authToken) => {
 
 //채팅 질문하기(매운맛)
 export const postRawAsk = async (chatId, prompt, authToken) => {
-  console.log(chatId, prompt, authToken);
   try {
     const response = await axios.post(
       `${baseURL}/chats/${chatId}/raw`,
@@ -64,8 +63,6 @@ export const postChat = async (authToken) => {
 
     if (response.status === 201) {
       const locationHeader = response.headers['location'];
-      console.log('생성된 채팅방의 위치:', locationHeader);
-
       return +locationHeader.split('/').pop();
     }
   } catch (error) {

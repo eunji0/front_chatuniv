@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 
 import COLORS from '../styles/color';
 import NewButton from '../component/button/NewButton';
@@ -8,8 +9,10 @@ import boardimg from '../assets/images/make_board.svg';
 import { getPosts } from '../api/boardapi';
 import PostList from '../component/PostList';
 import PostModal from '../component/modal/PostModal';
+import { isLoginState } from '../recoil/atoms';
 
 const Board = () => {
+  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
@@ -22,7 +25,10 @@ const Board = () => {
         setPosts(data.boards);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        if (error.response.data === 500) {
+          setIsLogin(false);
+        }
         setError('로그인해주세요.');
         setLoading(false);
       });

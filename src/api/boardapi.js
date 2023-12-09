@@ -96,7 +96,6 @@ const updateBoard = async (boardId, title, content, authToken) => {
       },
     );
 
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error('Error updating board:', error);

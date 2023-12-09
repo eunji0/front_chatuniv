@@ -62,6 +62,9 @@ const Main = () => {
         })
         .catch((error) => {
           console.error('Error chats:', error);
+          if (error.response.data === 500) {
+            setIsLogin(false);
+          }
           setError('로그인해주세요.');
           setLoading(false);
         });
