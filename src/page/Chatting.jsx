@@ -86,6 +86,7 @@ const Chatting = () => {
     } catch (error) {
       console.error('채팅 질문 등록 중 에러:', error);
       alert(error.response.data);
+      setLoading(false);
     }
   };
 
