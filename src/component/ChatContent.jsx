@@ -16,7 +16,7 @@ const ChatContent = ({ chats, handleCommentForm, handleGetList }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chats]);
+  }, [contentBoxRef.current]);
 
   const scrollToBottom = () => {
     if (contentBoxRef.current) {
