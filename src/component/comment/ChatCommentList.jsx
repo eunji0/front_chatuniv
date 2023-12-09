@@ -74,22 +74,6 @@ const ChatCommentList = ({ isContent, falseCommentList }) => {
               <UserBox>
                 <UserImg alt="user" src={userSrc} />
               </UserBox>
-              {/* <UserInfoBox>
-                <UserEmailText>{truncateText(v.email, 2)}</UserEmailText>
-                {v.isMine ? (
-                  <CommentContentBox>
-                    <CommentContentTxt>{v.content}</CommentContentTxt>
-                    <EditBox>
-                      <FixBox onClick={() => handleEditComment(v.commentId)}>수정</FixBox>
-                      <FixBox onClick={() => handleDeleteComment(v.commentId)}>삭제</FixBox>
-                    </EditBox>
-                  </CommentContentBox>
-                ) : (
-                  <CommentContentBox>
-                    <CommentContentTxt>{v.content}</CommentContentTxt>
-                  </CommentContentBox>
-                )}
-              </UserInfoBox> */}
               <UserInfoBox>
                 <UserEmailText>{truncateText(v.email, 2)}</UserEmailText>
                 {v.isMine ? (
@@ -181,6 +165,7 @@ const FixBox = styled.div`
 `;
 
 const CloseBox = styled.div`
+  width: 10%;
   display: flex;
   padding: 5px;
   align-items: flex-start;
@@ -193,6 +178,7 @@ const CloseImg = styled.img`
 `;
 
 const CmtInfoBox = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -202,7 +188,7 @@ const CmtInfoBox = styled.div`
 
 const UserEmailText = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
   color: ${COLORS.BLACK};
@@ -216,7 +202,7 @@ const CommentContentBox = styled.div`
   display: flex;
   width: 100%;
   padding: 5px;
-  align-items: center;
+  align-items: flex-end;
   border-bottom: 1px solid ${COLORS.GRAY};
 `;
 
@@ -244,6 +230,7 @@ const CommentLayout = styled.div`
 `;
 
 const CommentInfoLayout = styled.div`
+  width: 100%;
   display: flex;
   padding: 5px;
   justify-content: space-between;
@@ -262,7 +249,7 @@ const ListLayout = styled.div`
 
 const TextDiv = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
   color: ${COLORS.PURPLE100};
@@ -296,6 +283,7 @@ const ListBox = styled.div`
 `;
 
 const UserBox = styled.div`
+  max-width: 35px;
   display: flex;
   padding: 15px 0px;
   align-items: flex-start;
