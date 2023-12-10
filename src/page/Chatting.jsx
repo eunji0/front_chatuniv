@@ -72,14 +72,7 @@ const Chatting = () => {
           ? await postMildAsk(chatIdToUse, prompt, authToken)
           : await postRawAsk(chatIdToUse, prompt, authToken);
 
-      // alert(`${selectedMode} 질문이 성공적으로 등록되었습니다`);
       setLoading(false);
-      // console.log(
-      //   `${
-      //     isCurrentChat ? '' : '채팅방 생성 및 '
-      //   }${selectedMode} 질문이 성공적으로 등록되었습니다:`,
-      //   result,
-      // );
       const data = await getChatRoom({ chatId, authToken });
       setChats(data.conversations);
       setPrompt('');
