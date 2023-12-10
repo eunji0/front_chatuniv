@@ -110,9 +110,15 @@ const Main = () => {
       </InLayout>
 
       <BLayout>
-        <LinkBox to={`/chatting/newChat`}>
-          <NewButton img={chatSrc} text={'채팅방 만들기'} />
-        </LinkBox>
+        {authToken !== null && isLogin === true ? (
+          <LinkBox to={`/chatting/newChat`}>
+            <NewButton img={chatSrc} text={'채팅방 만들기'} />
+          </LinkBox>
+        ) : (
+          <LinkBox>
+            <NewButton img={chatSrc} text={'채팅방 만들기'} />
+          </LinkBox>
+        )}
       </BLayout>
     </Layout>
   );

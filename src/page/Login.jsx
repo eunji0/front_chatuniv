@@ -47,6 +47,7 @@ const Login = () => {
           {submitted && !isEmailValid && <ErrorMessage>올바른 이메일을 입력하세요.</ErrorMessage>}
           <InputBox
             placeholder="비밀번호"
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
