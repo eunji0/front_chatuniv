@@ -26,3 +26,7 @@
 ## 웹 사이트 링크
 
 https://chatuniv.netlify.app/
+
+## 시연영상
+
+https://mangddoddo.tistory.com/199
